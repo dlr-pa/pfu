@@ -1,0 +1,26 @@
+=========
+CHANGELOG
+=========
+
+:Version: 2017-01-08
+:Author: Daniel Mohr
+:Email: daniel.mohr@gmx.de
+
+.. contents::
+
+.. footer::
+
+   ###Page### / ###Total###
+
+CHANGELOG
++++++++++
+
+This is the changelog for simscrub.
+
+Due to early development status the verion numbers are dates.
+
+
+simscrub-2017-01-08.tar.gz
+=======================
+
+ * first version

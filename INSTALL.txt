@@ -1,0 +1,124 @@
+=================
+INSTALL: simscrub
+=================
+
+:Version: 2017-01-08
+:Author: Daniel Mohr
+:Email: daniel.mohr@gmx.de
+
+.. contents::
+
+.. footer::
+
+   ###Page### / ###Total###
+
+INSTALL: simscrub
++++++++++++++++++
+
+info
+====
+
+before you install
+==================
+
+Modules
+-------
+
+simscrub needs the following python modules (most of them are standard and
+already in your python installation from a package management)
+
+ * argparse
+ * base64
+ * hashlib
+ * logging
+ * logging.handlers
+ * os
+ * os.path
+ * pickle
+ * signal
+ * sys
+ * threading
+ * time
+
+and the own modules which comes with this package.
+
+You can also asked the installation routine/script for the python modules::
+
+  python setup.py --help
+  python setup.py --requires
+
+There is also a small extra command to check for availability of
+necessary python modules::
+
+  python setup.py check_modules
+
+If you want to use this complete software you should have no modules
+which are not available.
+
+Much more information you get from the following small extra command
+by using the modulefinder::
+
+  python setup.py check_modules_modulefinder
+
+It is normal that there are many missing modules reported. Please look
+at the details.
+
+
+install
+=======
+global-install
+--------------
+To install this software global to / the following steps are to perform::
+
+  tar xzf simscrub-*.tar.*
+  cd simscrub-*/
+  python setup.py install
+
+
+home-install
+------------
+To install this software to your $HOME the following steps are to perform::
+
+  tar xzf simscrub-*.tar.*
+  cd simscrub-*/
+  python setup.py install --home=~
+
+
+hints
+=====
+* Keep in mind to have the right pathes.
+
+  For the above installation to $HOME the software installs in::
+
+    ~/bin
+    ~/lib/python
+
+  Please make sure to have these pathes in $PATH and $PYTHONPATH, respectively.
+  For example::
+
+    export PATH=$PATH:~/bin
+    export PYTHONPATH=~/lib/python
+
+
+python3
+=======
+
+It should be no problem to convert the given python2 code to python3 by:
+
+    2to3 --write .
+
+The checking for availability of modules and the installation procedure is
+straight forward:
+
+  tar xzf simscrub-*.tar.*
+  cd simscrub-*/
+  python3 setup.py --help
+  python3 setup.py --requires
+  python3 setup.py check_modules
+  python3 setup.py check_modules_modulefinder
+  python3 setup.py install
+  python3 setup.py install --home=~
+
+
+after install
+=============

@@ -1,0 +1,6 @@
+include LICENSE.txt
+include gpl.txt
+include INSTALL.txt
+include CHANGELOG.txt
+include install2home
+include README.txt
