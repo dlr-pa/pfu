@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2017-01-22 (last change).
+:Date: 2017-01-29 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,14 +13,14 @@ import random
 import threading
 import time
 
-import SimScrub.scrubbing
-import SimScrub.tools
+import pfu_module.SimScrub.scrubbing
+import pfu_module.SimScrub.tools
 
 def do_scrubbing(args, log):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-22 (last change).
+    :Date: 2017-01-29 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     if os.path.exists(args.config_data_directory[0]):
@@ -33,7 +33,7 @@ def do_scrubbing(args, log):
         list_of_thread_stop_fct = []
         for directory in start_points:
             event_locks += [threading.Event()]
-            list_of_scrub_inst += [SimScrub.scrubbing.Scrubbing(
+            list_of_scrub_inst += [pfu_module.SimScrub.scrubbing.Scrubbing(
                 os.path.join(args.config_data_directory[0],
                              directory),
                 semaphore_lock,
@@ -49,7 +49,7 @@ def do_scrubbing(args, log):
                 list_of_scrub_inst[-1].stop_scrubbing]
         random.shuffle(list_of_scrub_inst)
         # create signal handling
-        my_signal_handling = SimScrub.tools.MySignalHandler(
+        my_signal_handling = pfu_module.SimScrub.tools.MySignalHandler(
             list_of_thread_stop_fct)
         my_signal_handling.init()
         my_signal_handling.set_alarm(args.scrub_time[0])

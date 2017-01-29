@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2017-01-08 (last change).
+:Date: 2017-01-29 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,13 +13,13 @@ import os
 import os.path
 import pickle
 
-import SimScrub
+import pfu_module.SimScrub
 
 def create_directory_trees(args, log):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-07 (last change).
+    :Date: 2017-01-29 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     log.debug("directory trees: %s" % args.dir)
@@ -36,7 +36,7 @@ def create_directory_trees(args, log):
         log.info(" configs: %s" % config_dir)
         with open(os.path.join(config_dir, 'dir'), 'wb') as file_desriptor:
             pickle.dump(reldir, file_desriptor)
-        list_of_files = SimScrub.create_file_list(reldir, log)
+        list_of_files = pfu_module.SimScrub.create_file_list(reldir, log)
         with open(os.path.join(config_dir, 'list'), 'wb') as file_desriptor:
             pickle.dump(list_of_files, file_desriptor)
         with open(os.path.join(config_dir, 'status'), 'wb') as file_desriptor:

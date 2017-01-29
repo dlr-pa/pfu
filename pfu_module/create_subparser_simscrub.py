@@ -1,34 +1,39 @@
-#!/usr/bin/env python2
 """
-:Author: Daniel Mohr
-:Email: daniel.mohr@gmx.de
-:Date: 2017-01-22
-:License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
-
-tested on ubuntu 16.04
-
-This script read every file in the given directory tree.
+Author: Daniel Mohr.
+Date: 2017-01-29 (last change).
+License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
-
-from __future__ import print_function
-import __future__
 
 import argparse
 import logging
-import logging.handlers
 import os
-import os.path
-import sys
 
-import SimScrub.script
+from .create_common_parameter import create_common_parameter
 
-__date__ = "2017-01-22"
+__date__ = "2017-01-29"
 
-def main():
+def simscrub(args):
     """
     :Author: Daniel Mohr
-    :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-22 (last change).
+    :Email: daniel.mohr@dlr.de
+    :Date: 2017-01-29 (last change).
+    :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+    """
+    log = logging.getLogger("pfu.simscrub")
+    import pfu_module.SimScrub.script
+    if args.dir is not None: # create file list
+        print "create_directory_trees"
+        pfu_module.SimScrub.script.create_directory_trees(args, log)
+    else: # search for configs and data
+        print "do_scrubbing"
+        pfu_module.SimScrub.script.do_scrubbing(args, log)
+    return 0
+
+def create_subparser_simscrub(subparsers):
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2017-01-29 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     myhelp = "You can scrub your data regularly by calling this script via cron or anacron."
@@ -41,10 +46,12 @@ def main():
     epilog += "Date: %s\n" % __date__
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n"
     epilog += "\n%s" % myhelp
-    parser = argparse.ArgumentParser(
+    parser = subparsers.add_parser(
+        'simscrub',
         description='This script read every file in the given directory tree.',
         epilog="%s" % epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.set_defaults(func=simscrub)
     parser.add_argument(
         '-dir',
         nargs='+',
@@ -128,26 +135,6 @@ def main():
         help='Set the seconds for scrubbing. If set to 0, scrubbing is done until all files are read. Only working on Unix systems. default: 0',
         metavar='n')
     parser.add_argument(
-        '-loglevel',
-        nargs=1,
-        default=[logging.WARNING],
-        choices=range(1, 51),
-        type=int,
-        required=False,
-        dest='loglevel',
-        help='Set how verbose should be the output to STDOUT. This is the level of logging. Lower numbers give more output. The parameter is a number between 1 and 50. default: %i (logging.WARNING)' % logging.WARNING,
-        metavar='i')
-    parser.add_argument(
-        '-fileloglevel',
-        nargs=1,
-        default=[logging.INFO],
-        choices=range(1, 51),
-        type=int,
-        required=False,
-        dest='logfilelevel',
-        help='Set how verbose should be the output to the log file. This is the level of logging. Lower numbers give more output. The parameter is a number between 1 and 50. default: %i (logging.INFO)' % logging.INFO,
-        metavar='i')
-    parser.add_argument(
         '-update',
         action='store_true',
         required=False,
@@ -160,21 +147,4 @@ def main():
         dest='update',
         help='If set do not update the directory tree before scrubbing.')
     parser.set_defaults(update=True)
-    args = parser.parse_args()
-    # create logging
-    log = logging.getLogger("simscrub")
-    log_console_handler = logging.StreamHandler()
-    log_console_handler.setFormatter(
-        logging.Formatter('%(asctime)s %(threadName)s %(levelname)s %(message)s',
-                          datefmt='%Y-%m-%d %H:%M:%S'))
-    log_console_handler.setLevel(args.loglevel[0])
-    log.addHandler(log_console_handler)
-    log.setLevel(min(args.loglevel[0], args.logfilelevel[0]))
-    if args.dir is not None: # create file list
-        SimScrub.script.create_directory_trees(args, log)
-    else: # search for configs and data
-        SimScrub.script.do_scrubbing(args, log)
-    sys.exit(0) # success
-
-if __name__ == "__main__":
-    main()
+    create_common_parameter(parser)

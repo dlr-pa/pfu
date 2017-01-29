@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2017-01-22
+:Date: 2017-01-29
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -72,7 +72,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='simscrub',
-    version='2017-01-22',
+    version='2017-01-29',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder},
@@ -80,18 +80,19 @@ setup(
     long_description='',
     keywords='scrubbing, silent data corruption',
     author='Daniel Mohr',
-    author_email='daniel.mohr@gmx.de',
+    author_email='daniel.mohr@dlr.de',
     maintainer='Daniel Mohr',
-    maintainer_email='daniel.mohr@gmx.de',
+    maintainer_email='daniel.mohr@dlr.de',
     url='',
     download_url='',
     packages=[
-        'SimScrub',
-        'SimScrub.script',
-        'SimScrub.scrubbing',
-        'SimScrub.tools'],
+        'pfu_module',
+        'pfu_module.SimScrub',
+        'pfu_module.SimScrub.script',
+        'pfu_module.SimScrub.scrubbing',
+        'pfu_module.SimScrub.tools'],
     scripts=[
-        'scripts/simscrub.py'],
+        'scripts/pfu.py'],
     license='GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007',
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -120,5 +121,5 @@ setup(
         'sys',
         'threading',
         'time'],
-    provides=['SimScrub']
+    provides=['pfu_module']
     )
