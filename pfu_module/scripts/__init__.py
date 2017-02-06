@@ -10,7 +10,7 @@ copyright + license
 ===================
 Author: Daniel Mohr.
 
-Date: 2017-02-06 (last change).
+Date: 2017-01-29 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
@@ -30,3 +30,6 @@ Copyright (C) 2016, 2017 Daniel Mohr
  http://www.gnu.org/licenses/
 """
 
+from .create_subparser_simscrub import create_subparser_simscrub
+
+__all__ = ['create_subparser_simscrub']

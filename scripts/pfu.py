@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 """
 Author: Daniel Mohr.
-Date: 2017-01-29 (last change).
+Date: 2017-02-06 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -11,15 +11,15 @@ import logging.handlers
 import os
 import sys
 
-import pfu_module
+import pfu_module.scripts
 
-__pfu_date__ = "2017-01-29"
+__pfu_date__ = "2017-02-06"
 
 def main():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-01-29 (last change).
+    :Date: 2017-02-06 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     myhelp = ""
@@ -39,7 +39,7 @@ def main():
     subparsers = parser.add_subparsers(
         help='There are different sub-commands with there own flags.')
     # subparser simscrub
-    pfu_module.create_subparser_simscrub(subparsers)
+    pfu_module.scripts.create_subparser_simscrub(subparsers)
     # parse arguments
     args = parser.parse_args()
     # create log
