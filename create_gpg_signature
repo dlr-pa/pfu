@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ 3 -eq $# ]; then
+    echo do $1 $2 $3
+    cd $2
+    f=$3.sha256
+    sha256sum $3 > $f
+    gpg2 --default-key $1 --armor --detach-sign $f
+else
+    echo "usage:"
+    echo "  ./create_gpg_signature [gpg_key] [directory] [filename]"
+    echo "e. g.:"
+    echo "  ./create_gpg_signature \"0BE07FC33348A2CD72C8480F2C9C67E6EFDF0E9F\" dist/ \$(ls -rt1 dist | tail -n 1)"
+fi

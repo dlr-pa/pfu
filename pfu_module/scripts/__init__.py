@@ -31,5 +31,6 @@ Copyright (C) 2016, 2017 Daniel Mohr
 """
 
 from .create_subparser_simscrub import create_subparser_simscrub
+from .create_subparser_create_checksum import create_subparser_create_checksum
 
-__all__ = ['create_subparser_simscrub']
+__all__ = ['create_subparser_simscrub','create_subparser_create_checksum']

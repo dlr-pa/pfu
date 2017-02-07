@@ -25,6 +25,8 @@ def main():
     myhelp = ""
     myhelp += "Examples:\n\n"
     myhelp += " pfu.py -h\n"
+    myhelp += " pfu.py simscrub -h\n"
+    myhelp += " pfu.py -h\n"
     parser = argparse.ArgumentParser(
         description='pfu.py is a python script for'+
         ' simple file handling. Command line parameters can be shorten,'+
@@ -40,6 +42,8 @@ def main():
         help='There are different sub-commands with there own flags.')
     # subparser simscrub
     pfu_module.scripts.create_subparser_simscrub(subparsers)
+    # subparser create_checksum
+    pfu_module.scripts.create_subparser_create_checksum(subparsers)
     # parse arguments
     args = parser.parse_args()
     # create log
