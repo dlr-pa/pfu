@@ -1,6 +1,6 @@
 """
 Author: Daniel Mohr.
-Date: 2017-01-29 (last change).
+Date: 2017-02-13 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -33,7 +33,7 @@ def create_subparser_simscrub(subparsers):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-01-29 (last change).
+    :Date: 2017-02-13 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     myhelp = "You can scrub your data regularly by calling this script via cron or anacron."
@@ -49,6 +49,7 @@ def create_subparser_simscrub(subparsers):
     parser = subparsers.add_parser(
         'simscrub',
         description='This script read every file in the given directory tree.',
+        help='This command read every file in the given directory tree.'+' For more help: pfu.py simscrub -h',
         epilog="%s" % epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=simscrub)

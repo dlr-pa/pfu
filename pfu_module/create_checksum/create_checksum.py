@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-02-07 (last change).
+Date: 2017-02-13 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -250,28 +250,3 @@ class CreateChecksumsClass(object):
                 self.log.warning("cannot handle '%s' (e. g. not a directory)", name)
         self.log_console_handler.flush()
         return 0 # success
-
-def create_checksum(args):
-    """
-    :Author: Daniel Mohr
-    :Email: daniel.mohr@dlr.de
-    :Date: 2016-12-03 (last change).
-    :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
-
-    This function should create (missing) checksums.
-
-    :param args: command line arguments given in a structure from argparse
-    """
-    # pylint: disable=invalid-name
-    c = CreateChecksumsClass(
-        directories=args.directories,
-        algorithm=args.algorithm[0],
-        coding=args.coding[0],
-        store=args.store[0],
-        ignore=args.ignore,
-        buf_size=args.buf_size[0],
-        chunk_size=args.chunk_size[0],
-        create_only_missing=args.create_only_missing[0],
-        level=args.loglevel[0],
-        hash_file_prefix=args.hash_file_prefix[0])
-    return c.create_all()

@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2017-02-07
+:Date: 2017-02-13
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -72,7 +72,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='simscrub',
-    version='2017-02-07',
+    version='2017-02-13',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder},
@@ -87,6 +87,7 @@ setup(
     download_url='',
     packages=[
         'pfu_module',
+        'pfu_module.check_checksum',
         'pfu_module.checksum_tools',
         'pfu_module.create_checksum',
         'pfu_module.scripts',

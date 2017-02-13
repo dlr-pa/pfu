@@ -1,15 +1,40 @@
 """
 Author: Daniel Mohr.
-Date: 2017-02-07 (last change).
+Date: 2017-02-13 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import argparse
 
 from .create_common_parameter import create_common_parameter
-from pfu_module.create_checksum import create_checksum
 
-__date__ = "2017-02-07"
+__date__ = "2017-02-13"
+
+def create_checksum(args):
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2017-02-13 (last change).
+    :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+
+    This function should create (missing) checksums.
+
+    :param args: command line arguments given in a structure from argparse
+    """
+    # pylint: disable=invalid-name
+    import pfu_module.create_checksum
+    c = pfu_module.create_checksum.CreateChecksumsClass(
+        directories=args.directories,
+        algorithm=args.algorithm[0],
+        coding=args.coding[0],
+        store=args.store[0],
+        ignore=args.ignore,
+        buf_size=args.buf_size[0],
+        chunk_size=args.chunk_size[0],
+        create_only_missing=args.create_only_missing[0],
+        level=args.loglevel[0],
+        hash_file_prefix=args.hash_file_prefix[0])
+    return c.create_all()
 
 def check_chunk_size(value):
     """

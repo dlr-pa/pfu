@@ -8,6 +8,6 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 import __future__
 
-from .create_checksum import CreateChecksumsClass
+from .check_checksum import CheckChecksumsClass
 
-__all__ = ['CreateChecksumsClass']
+__all__ = ['CheckChecksumsClass']

@@ -10,7 +10,7 @@ copyright + license
 ===================
 Author: Daniel Mohr.
 
-Date: 2017-01-29 (last change).
+Date: 2017-02-13 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
@@ -32,5 +32,6 @@ Copyright (C) 2016, 2017 Daniel Mohr
 
 from .create_subparser_simscrub import create_subparser_simscrub
 from .create_subparser_create_checksum import create_subparser_create_checksum
+from .create_subparser_check_checksum import create_subparser_check_checksum
 
-__all__ = ['create_subparser_simscrub','create_subparser_create_checksum']
+__all__ = ['create_subparser_simscrub','create_subparser_create_checksum','create_subparser_check_checksum']
