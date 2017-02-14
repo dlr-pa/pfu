@@ -1,10 +1,10 @@
-=================
-INSTALL: simscrub
-=================
+=====================================
+INSTALL: pfu -- Python File Utilities
+=====================================
 
-:Version: 2017-01-08
+:Version: 2017-02-14
 :Author: Daniel Mohr
-:Email: daniel.mohr@gmx.de
+:Email: daniel.mohr@dlr.de
 
 .. contents::
 
@@ -12,8 +12,8 @@ INSTALL: simscrub
 
    ###Page### / ###Total###
 
-INSTALL: simscrub
-+++++++++++++++++
+INSTALL: pfu
+++++++++++++
 
 info
 ====
@@ -24,7 +24,7 @@ before you install
 Modules
 -------
 
-simscrub needs the following python modules (most of them are standard and
+pfu needs the following python modules (most of them are standard and
 already in your python installation from a package management)
 
  * argparse
@@ -66,12 +66,13 @@ at the details.
 
 install
 =======
+
 global-install
 --------------
 To install this software global to / the following steps are to perform::
 
-  tar xzf simscrub-*.tar.*
-  cd simscrub-*/
+  tar xzf pfu-*.tar.*
+  cd pfu-*/
   python setup.py install
 
 
@@ -79,8 +80,8 @@ home-install
 ------------
 To install this software to your $HOME the following steps are to perform::
 
-  tar xzf simscrub-*.tar.*
-  cd simscrub-*/
+  tar xzf pfu-*.tar.*
+  cd pfu-*/
   python setup.py install --home=~
 
 
@@ -110,8 +111,8 @@ It should be no problem to convert the given python2 code to python3 by:
 The checking for availability of modules and the installation procedure is
 straight forward:
 
-  tar xzf simscrub-*.tar.*
-  cd simscrub-*/
+  tar xzf pfu-*.tar.*
+  cd pfu-*/
   python3 setup.py --help
   python3 setup.py --requires
   python3 setup.py check_modules

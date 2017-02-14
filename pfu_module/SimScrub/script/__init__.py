@@ -4,13 +4,13 @@
 
 description
 ===========
-This is the description for simscrub.
+This is the description for pfu_module.SimScrub.script.
 
 copyright + license
 ===================
 Author: Daniel Mohr.
 
-Date: 2017-01-08 (last change).
+Date: 2017-02-14 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 

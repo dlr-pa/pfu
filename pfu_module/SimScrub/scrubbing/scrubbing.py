@@ -169,13 +169,13 @@ class Scrubbing(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@gmx.de
-        :Date: 2017-01-11 (last change).
+        :Date: 2017-02-14 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
         """
         self._scrubbing = True
         self._semaphore_lock.acquire()
         if self._scrubbing:
-            log = logging.getLogger("simscrub."+threading.currentThread().name)
+            log = logging.getLogger("pfu.simscrub."+threading.currentThread().name)
             file_handler = logging.handlers.WatchedFileHandler(
                 os.path.join(self._config_dir, 'log')) # not thread safe
             file_handler.setFormatter(

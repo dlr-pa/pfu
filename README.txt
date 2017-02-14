@@ -22,6 +22,7 @@ The project pk4_checksums.py is also licensed by Daniel Mohr under the GPL.
 
 'plecs_replicate.py' is a part of plecs, which is under the GPL. This part
 has the only author Daniel Mohr.
+(This is partly already integrated. The other part is not necessary.)
 
 install
 =======
@@ -33,8 +34,8 @@ copyright + license
 
 Author: Daniel Mohr.
 
-Date: 2017-02-13 (last change).
+Date: 2017-02-14 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
-Copyright (C) 2016, 2017 Daniel Mohr
+Copyright (C) 2015, 2016, 2017 Daniel Mohr

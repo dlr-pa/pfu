@@ -2,9 +2,9 @@
 CHANGELOG
 =========
 
-:Version: 2017-01-08
+:Version: 2017-02-14
 :Author: Daniel Mohr
-:Email: daniel.mohr@gmx.de
+:Email: daniel.mohr@dlr.de
 
 .. contents::
 
@@ -20,7 +20,18 @@ This is the changelog for simscrub.
 Due to early development status the verion numbers are dates.
 
 
-simscrub-2017-01-08.tar.gz
-=======================
+pfu-2017-02-14.tar.gz
+=====================
 
- * first version
+  * first version with the most useful subcommands
+
+  * simscrub.py integrated now as a subcommand of pfu.py
+
+  * integrated subcommand "create_checksum" alias
+    "create" from project pk4_checksums.py
+
+  * integrated subcommand "check_checksum" alias "check"
+    from project pk4_checksums.py
+
+  * integrated subcommand "replicate"
+    from project plecs alias "plecs_replicate.py"

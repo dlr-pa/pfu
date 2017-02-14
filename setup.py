@@ -71,7 +71,7 @@ class CheckModulesModulefinder(Command):
             finder.report()
 
 setup(
-    name='simscrub',
+    name='pfu',
     version='2017-02-14',
     cmdclass={
         'check_modules': CheckModules,

@@ -1,5 +1,5 @@
-LICENSE: simscrub
-+++++++++++++++++
+LICENSE: pfu
+++++++++++++
 
 Author: Daniel Mohr.
 
