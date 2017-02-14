@@ -1,6 +1,6 @@
 """
 Author: Daniel Mohr.
-Date: 2017-02-13 (last change).
+Date: 2017-02-14 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -8,7 +8,7 @@ import argparse
 
 from .create_common_parameter import create_common_parameter
 
-__date__ = "2017-02-13"
+__date__ = "2017-02-14"
 
 def check_checksum(args):
     """
@@ -35,14 +35,14 @@ def create_subparser_check_checksum(subparsers):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-02-13 (last change).
+    :Date: 2017-02-14 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     # pylint: disable=line-too-long
     myprehelp = "This command will check checksums. We assume relative pathes in each hash file. Command line parameters can be shorten, as far as they are unique."
     myposthelp = "Example:\n\n"
-    myposthelp += " pfu.py check_checksum -d . -le 15 -logfile output.log\n"
-    myposthelp += " pfu.py check_checksum -d . -le 15 -i \"~\" .tmp .bak .md5\n"
+    myposthelp += " pfu.py check_checksum -d . -loglevel 15 -logfile output.log\n"
+    myposthelp += " pfu.py check_checksum -d . -loglevel 15 -i \"~\" .tmp .bak .md5\n"
     myposthelp += " pfu.py check_checksum -directory . -loglevel 20"
     parser = subparsers.add_parser(
         'check_checksum',

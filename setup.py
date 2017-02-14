@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2017-02-13
+:Date: 2017-02-14
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -72,7 +72,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='simscrub',
-    version='2017-02-13',
+    version='2017-02-14',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder},
@@ -90,6 +90,9 @@ setup(
         'pfu_module.check_checksum',
         'pfu_module.checksum_tools',
         'pfu_module.create_checksum',
+        'pfu_module.replicate',
+        'pfu_module.replicate.script',
+        'pfu_module.replicate.tools',
         'pfu_module.scripts',
         'pfu_module.SimScrub',
         'pfu_module.SimScrub.script',
@@ -111,17 +114,23 @@ setup(
         'Operating System :: MacOS',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7'],
+    # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | egrep -i --only-matching "import .*$" | sort -u
     requires=[
         'argparse',
         'base64',
+        'copy',
+        'datetime',
         'hashlib',
         'logging',
         'logging.handlers',
         'os',
         'os.path',
         'pickle',
+        'platform',
         'random',
+        're',
         'signal',
+        'subprocess',
         'sys',
         'threading',
         'time'],

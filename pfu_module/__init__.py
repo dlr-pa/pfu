@@ -4,7 +4,7 @@
 
 description
 ===========
-This is the description for simscrub.
+This is the description for pfu_module.replicate.
 
 copyright + license
 ===================

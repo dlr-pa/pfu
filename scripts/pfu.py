@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 """
 Author: Daniel Mohr.
-Date: 2017-02-13 (last change).
+Date: 2017-02-14 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,13 +13,13 @@ import sys
 
 import pfu_module.scripts
 
-__pfu_date__ = "2017-02-13"
+__pfu_date__ = "2017-02-14"
 
 def main():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-02-13 (last change).
+    :Date: 2017-02-14 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     myhelp = ""
@@ -28,6 +28,7 @@ def main():
     myhelp += " pfu.py simscrub -h\n"
     myhelp += " pfu.py create_checksum -h\n"
     myhelp += " pfu.py check_checksum -h\n"
+    myhelp += " pfu.py replicate -h\n"
     myhelp += " pfu.py -h\n"
     parser = argparse.ArgumentParser(
         description='pfu.py is a python script for'+
@@ -48,6 +49,8 @@ def main():
     pfu_module.scripts.create_subparser_create_checksum(subparsers)
     # subparser check_checksum
     pfu_module.scripts.create_subparser_check_checksum(subparsers)
+    # subparser replicate
+    pfu_module.scripts.create_subparser_replicate(subparsers)
     # parse arguments
     args = parser.parse_args()
     # create log

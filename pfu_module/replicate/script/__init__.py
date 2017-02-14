@@ -1,10 +1,10 @@
-"""pfu
+"""simscrub
 
 .. contents::
 
 description
 ===========
-This is the description for simscrub.
+This is the description for pfu_module.replicate.script.
 
 copyright + license
 ===================
@@ -14,7 +14,7 @@ Date: 2017-02-14 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-Copyright (C) 2016, 2017 Daniel Mohr
+Copyright (C) 2015, 2016, 2017 Daniel Mohr
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License as
  published by the Free Software Foundation; either version 3 of
@@ -30,12 +30,6 @@ Copyright (C) 2016, 2017 Daniel Mohr
  http://www.gnu.org/licenses/
 """
 
-from .create_subparser_simscrub import create_subparser_simscrub
-from .create_subparser_create_checksum import create_subparser_create_checksum
-from .create_subparser_check_checksum import create_subparser_check_checksum
-from .create_subparser_replicate import create_subparser_replicate
+from .replicate import replicate
 
-__all__ = ['create_subparser_simscrub',
-           'create_subparser_create_checksum',
-           'create_subparser_check_checksum',
-           'create_subparser_replicate']
+__all__ = ['replicate']
