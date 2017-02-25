@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-02-13 (last change).
+Date: 2017-02-25 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -15,14 +15,16 @@ import logging
 import os
 import re
 
-import pfu_module.checksum_tools # own_logger
+ # own_logger:
+import pfu_module.checksum_tools # pylint: disable=unused-import
+
 from pfu_module.checksum_tools import read_data_from_file
 
 class CheckChecksumsClass(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2016-12-15 (last change).
+    :Date: 2017-02-25 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to check checksums in directory or directories
@@ -59,7 +61,7 @@ class CheckChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-04 (last change).
+        :Date: 2017-02-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         class to create checksums in directory or directories
@@ -85,10 +87,7 @@ class CheckChecksumsClass(object):
         self.not_file_extension = hash_extension & self.ignore_extension
         self.buf_size = buf_size
         self.level = level
-        self.log = logging.getLogger("pk4_checksums.check")
-        self.log_console_handler = logging.StreamHandler()
-        self.log_console_handler.setLevel(self.level)
-        self.log.addHandler(self.log_console_handler)
+        self.log = logging.getLogger("pfu.check")
         self.log.setLevel(1)
         self.hash_files = []
         self.data_files = []
@@ -96,7 +95,9 @@ class CheckChecksumsClass(object):
         self.result_number = {'data file without hash': 0,
                               'hash without data file': 0,
                               'data file with matching hash(es)': 0,
-                              'data file with not matching hash(es)': 0}
+                              'data file with not matching hash(es)': 0,
+                              'hash for ignored file': 0,
+                              'data file not handled': 0}
 
     def determine_hash_encode(self, hash_string):
         """
@@ -196,77 +197,133 @@ class CheckChecksumsClass(object):
                 elif self.is_accept_data_file2(absfilename):
                     self.data_files += [absfilename]
 
+    def _analyse_hashline_of_chunk(self, sres, hashfilename):
+        """
+        :Author: Daniel Mohr
+        :Email: daniel.mohr@dlr.de
+        :Date: 2017-02-25 (last change).
+        :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+
+        Analyse line of a hash file describing hash of a chunk.
+        This method should not be called from outside.
+
+        :param sres: re instance
+        :param hashfilename: file name of the hash (here only path is used)
+        """
+        relfilename = os.path.normpath(
+            os.path.join(os.path.dirname(hashfilename),
+                         sres.group('filename')))
+        if relfilename in self.hash_dicts[0]:
+            self.hash_dicts[0][relfilename] += [(
+                sres.group('hash').lower(),
+                self.determine_hash_encode(sres.group('hash')),
+                hashfilename,
+                int(sres.group('start')),
+                int(sres.group('stop')))]
+        else:
+            self.hash_dicts[0][relfilename] = [(
+                sres.group('hash').lower(),
+                self.determine_hash_encode(sres.group('hash')),
+                hashfilename,
+                int(sres.group('start')),
+                int(sres.group('stop')))]
+
+    def _analyse_hashline_of_file(self, sres, hashfilename):
+        """
+        :Author: Daniel Mohr
+        :Email: daniel.mohr@dlr.de
+        :Date: 2017-02-25 (last change).
+        :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+
+        Analyse line of a hash file describing hash of complete file.
+        This method should not be called from outside.
+
+        :param sres: re instance
+        :param hashfilename: file name of the hash (here only path is used)
+        """
+        relfilename = os.path.normpath(
+            os.path.join(
+                os.path.dirname(hashfilename),
+                sres.group('filename')))
+        if relfilename in self.hash_dicts[1]:
+            self.hash_dicts[1][relfilename] += [(
+                sres.group('hash').lower(),
+                self.determine_hash_encode(sres.group('hash')),
+                hashfilename)]
+        else:
+            self.hash_dicts[1][relfilename] = [(
+                sres.group('hash').lower(),
+                self.determine_hash_encode(sres.group('hash')),
+                hashfilename)]
+
+    def _analyse_hashline_of_file_bsd(self, sres, hashfilename):
+        """
+        :Author: Daniel Mohr
+        :Email: daniel.mohr@dlr.de
+        :Date: 2017-02-25 (last change).
+        :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+
+        Analyse line of a hash file describing hash of complete file in
+        BSD-style.
+        This method should not be called from outside.
+
+        :param sres: re instance
+        :param hashfilename: file name of the hash (here only path is used)
+        """
+        relfilename = os.path.normpath(
+            os.path.join(
+                os.path.dirname(hashfilename),
+                sres.group('filename')))
+        if relfilename in self.hash_dicts[1]:
+            self.hash_dicts[1][relfilename] += [(
+                sres.group('hash').lower(),
+                (sres.group('type').lower(), 'base16'),
+                hashfilename)]
+        else:
+            self.hash_dicts[1][relfilename] = [(
+                sres.group('hash').lower(),
+                (sres.group('type').lower(), 'base16'),
+                hashfilename)]
+
     def read_hash_file(self, hashfilename):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-15 (last change).
+        :Date: 2017-02-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         read hash file
 
         :param hashfilename: read this file
         """
-        self.log.debug("read hash file \"%s\"", hashfilename)
-        with open(hashfilename, 'rU') as hash_file:
-            for line in hash_file:
-                sres = self.regexps[0].search(line)
-                if sres: # hash of a chunk
-                    relfilename = os.path.normpath(
-                        os.path.join(os.path.dirname(hashfilename),
-                                     sres.group('filename')))
-                    if relfilename in self.hash_dicts[0]:
-                        self.hash_dicts[0][relfilename] += [(
-                            sres.group('hash').lower(),
-                            self.determine_hash_encode(sres.group('hash')),
-                            hashfilename,
-                            int(sres.group('start')),
-                            int(sres.group('stop')))]
+        if (os.path.isfile(hashfilename) and
+                os.access(hashfilename, os.R_OK)):
+            self.log.debug("read hash file \"%s\"", hashfilename)
+            with open(hashfilename, 'rU') as hash_file:
+                for line in hash_file:
+                    sres = self.regexps[0].search(line)
+                    if sres: # hash of a chunk
+                        self._analyse_hashline_of_chunk(
+                            sres, hashfilename)
                     else:
-                        self.hash_dicts[0][relfilename] = [(
-                            sres.group('hash').lower(),
-                            self.determine_hash_encode(sres.group('hash')),
-                            hashfilename,
-                            int(sres.group('start')),
-                            int(sres.group('stop')))]
-                else:
-                    sres = self.regexps[1].search(line)
-                    if sres: # hash of a complete file
-                        relfilename = os.path.normpath(
-                            os.path.join(
-                                os.path.dirname(hashfilename),
-                                sres.group('filename')))
-                        if relfilename in self.hash_dicts[1]:
-                            self.hash_dicts[1][relfilename] += [(
-                                sres.group('hash').lower(),
-                                self.determine_hash_encode(sres.group('hash')),
-                                hashfilename)]
+                        sres = self.regexps[1].search(line)
+                        if sres: # hash of a complete file
+                            self._analyse_hashline_of_file(
+                                sres, hashfilename)
                         else:
-                            self.hash_dicts[1][relfilename] = [(
-                                sres.group('hash').lower(),
-                                self.determine_hash_encode(sres.group('hash')),
-                                hashfilename)]
-                    else:
-                        sres = self.regexps[2].search(line)
-                        if sres: # hash of a complete file (BSD-style)
-                            relfilename = os.path.normpath(
-                                os.path.join(
-                                    os.path.dirname(hashfilename),
-                                    sres.group('filename')))
-                            if relfilename in self.hash_dicts[1]:
-                                self.hash_dicts[1][relfilename] += [(
-                                    sres.group('hash').lower(),
-                                    (sres.group('type').lower(), 'base16'),
-                                    hashfilename)]
+                            sres = self.regexps[2].search(line)
+                            if sres: # hash of a complete file (BSD-style)
+                                self._analyse_hashline_of_file_bsd(
+                                    sres, hashfilename)
                             else:
-                                self.hash_dicts[1][relfilename] = [(
-                                    sres.group('hash').lower(),
-                                    (sres.group('type').lower(), 'base16'),
-                                    hashfilename)]
-                        else:
-                            self.log.warning(
-                                "do not understand line in hash file \"%s\": %s",
-                                hashfilename, line)
+                                self.log.warning(
+                                    "do not understand line in hash file \"%s\": %s",
+                                    hashfilename, line)
+        elif not os.access(hashfilename, os.R_OK):
+            self.log.warning('hash file "%s" is not readable', hashfilename)
+        else:
+            self.log.warning('hash file "%s" not existing (anymore?)',
+                             hashfilename)
 
     def read_all_hash_files(self):
         """
@@ -386,7 +443,7 @@ class CheckChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-04 (last change).
+        :Date: 2017-02-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         analyse all files and compare hashes
@@ -400,11 +457,14 @@ class CheckChecksumsClass(object):
                               'hash without data file': 0,
                               'data file with matching hash(es)': 0,
                               'data file with not matching hash(es)': 0,
-                              'hash for ignored file': 0}
+                              'hash for ignored file': 0,
+                              'data file not handled': 0}
         for filename in files:
             if filename in self.data_files:
-                if ((filename in self.hash_dicts[0]) or
-                        (filename in self.hash_dicts[1])):
+                if (((filename in self.hash_dicts[0]) or
+                     (filename in self.hash_dicts[1])) and
+                        os.path.isfile(filename) and
+                        os.access(filename, os.R_OK)):
                     # data file and related hash(es) available
                     (match,
                      number_hashes,
@@ -426,11 +486,21 @@ class CheckChecksumsClass(object):
                             filesize,
                             number_hashes,
                             number_chunk_hashes)
-                else:
+                elif not ((filename in self.hash_dicts[0]) or
+                          (filename in self.hash_dicts[1])):
                     self.result_number['data file without hash'] += 1
                     self.log.verboseinfo( # pylint: disable=no-member
                         'file \"%s\": no corresponding hash(es) found',
                         filename)
+                else:
+                    self.result_number['data file not handled'] += 1
+                    if not os.access(filename, os.R_OK):
+                        self.log.warning('file "%s" is not readable', filename)
+                    if not os.path.isfile(filename):
+                        self.log.warning('file "%s" not existing (anymore?)',
+                                         filename)
+                    else:
+                        self.log.warning('cannot handle file "%s"', filename)
             else:
                 if os.path.isfile(filename) is True:
                     filesize = os.path.getsize(filename)
@@ -449,7 +519,7 @@ class CheckChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-04 (last change).
+        :Date: 2017-02-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         check checksums
@@ -476,8 +546,10 @@ class CheckChecksumsClass(object):
                 self.log.info(
                     'hash for ignored file: %i',
                     self.result_number['hash for ignored file'])
+                self.log.info(
+                    'data file not handled (not ignored): %i',
+                    self.result_number['data file not handled'])
                 #raise NotImplementedError("not finished")
             else:
                 self.log.warning("cannot handle '%s' (e. g. not a directory)", name)
-        self.log_console_handler.flush()
         return 0 # success

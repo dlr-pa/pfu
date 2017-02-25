@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-02-13 (last change).
+Date: 2017-02-25 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -18,7 +18,7 @@ class CreateChecksumsClass(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-02-07 (last change).
+    :Date: 2017-02-25 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to create checksums in directory or directories
@@ -39,7 +39,7 @@ class CreateChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2017-02-07 (last change).
+        :Date: 2017-02-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         class to create checksums in directory or directories
@@ -83,9 +83,6 @@ class CreateChecksumsClass(object):
         self.buf_size = buf_size
         self.created_hash_files = [] # list of already created hash files
         self.log = logging.getLogger("pfu.create")
-        self.log_console_handler = logging.StreamHandler()
-        self.log_console_handler.setLevel(self.level)
-        self.log.addHandler(self.log_console_handler)
         self.log.setLevel(1)
         self.hashfkt = {'sha512': hashlib.sha512,
                         'sha256': hashlib.sha256,
@@ -151,11 +148,36 @@ class CreateChecksumsClass(object):
                       filename)
         return out
 
+    def _calculate_store_hash(self, data_file_name, hash_file_name):
+        """
+        :Author: Daniel Mohr
+        :Email: daniel.mohr@dlr.de
+        :Date: 2017-02-25 (last change).
+        :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+
+        Calculate hash and store hash in file and list.
+        This method should not be called from outside.
+
+        :param data_file_name: file name of the file to analyse
+        :param hash_file_name: file name of the file to store hash
+        """
+        # calculate hash for data_file_name
+        out = self.calculate_hash(data_file_name)
+        # store hash in hash_file_name
+        with open(hash_file_name, 'a') as hash_file:
+            for line in out:
+                hash_file.write(''.join(line)+"\n")
+            self.log.verboseinfo(
+                "file \"%s\": write %i hashes", data_file_name, len(out))
+        # store hash file name in list
+        if hash_file_name not in self.created_hash_files:
+            self.created_hash_files += [hash_file_name]
+
     def create_checksum(self, dirpath, data_file_name):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-04 (last change).
+        :Date: 2017-02-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         Create hashes for the file name.
@@ -163,37 +185,38 @@ class CreateChecksumsClass(object):
         :param dirpath: directory of the file
         :param data_file_name: file name of the file to analyse
         """
-        hash_file_name = ""
-        if self.store == 'dir':
-            hash_file_name = os.path.join(dirpath, self.hash_file_prefix + '.' + self.algorithm)
-        elif self.store == 'single':
-            hash_file_name = self.hash_file_prefix + '.' + self.algorithm
-        elif self.store == 'many':
-            hash_file_name = data_file_name + '.' + self.algorithm
-        self.log.debug("possible write hash to \"%s\"", hash_file_name)
-        if ((self.create_only_missing == 0) or
-                (not os.path.exists(hash_file_name)) or
-                (hash_file_name in self.created_hash_files)):
-            if ((self.create_only_missing == 0) and
-                    os.path.exists(hash_file_name) and
-                    (hash_file_name not in self.created_hash_files)):
-                os.remove(hash_file_name)
-            # calculate hash for data_file_name
-            out = self.calculate_hash(data_file_name)
-            # store hash in hash_file_name
-            with open(hash_file_name, 'a') as hash_file:
-                for line in out:
-                    hash_file.write(''.join(line)+"\n")
-                self.log.verboseinfo(
-                    "file \"%s\": write %i hashes", data_file_name, len(out))
-            # store hash file name in list
-            if hash_file_name not in self.created_hash_files:
-                self.created_hash_files += [hash_file_name]
-        elif (os.path.exists(hash_file_name) and
-              (hash_file_name not in self.created_hash_files)):
-            self.log.debug("hash file \"%s\" already exists", hash_file_name)
+        if (os.path.isfile(data_file_name) and
+            os.access(data_file_name, os.R_OK)):
+            hash_file_name = ""
+            if self.store == 'dir':
+                hash_file_name = os.path.join(
+                    dirpath,
+                    self.hash_file_prefix + '.' + self.algorithm)
+            elif self.store == 'single':
+                hash_file_name = self.hash_file_prefix + '.' + self.algorithm
+            elif self.store == 'many':
+                hash_file_name = data_file_name + '.' + self.algorithm
+            self.log.debug("possible write hash to \"%s\"", hash_file_name)
+            if ((self.create_only_missing == 0) or
+                    (not os.path.exists(hash_file_name)) or
+                    (hash_file_name in self.created_hash_files)):
+                if ((self.create_only_missing == 0) and
+                        os.path.exists(hash_file_name) and
+                        (hash_file_name not in self.created_hash_files)):
+                    os.remove(hash_file_name)
+                self._calculate_store_hash(data_file_name, hash_file_name)
+            elif (os.path.exists(hash_file_name) and
+                  (hash_file_name not in self.created_hash_files)):
+                self.log.debug(
+                    "hash file \"%s\" already exists", hash_file_name)
+            else:
+                self.log.debug(
+                    "hash file \"%s\" not used (no reason)", hash_file_name)
+        elif not os.access(data_file_name, os.R_OK):
+            self.log.warning('file "%s" is not readable', data_file_name)
         else:
-            self.log.debug("hash file \"%s\" not used (no reason)", hash_file_name)
+            self.log.warning('file "%s" not existing (anymore?)',
+                             data_file_name)
 
     def is_hash_file(self, name):
         """
@@ -217,7 +240,7 @@ class CreateChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-03 (last change).
+        :Date: 2017-02-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         Create hashes for every file in this directory.
@@ -229,7 +252,7 @@ class CreateChecksumsClass(object):
         for (dirpath, _, filenames) in os.walk(name):
             for filename in filenames:
                 if not self.is_hash_file(os.path.join(dirpath, filename)):
-                    self.log.debug("check file \"%s\"", os.path.join(dirpath, filename))
+                    self.log.debug("create hash for file \"%s\"", os.path.join(dirpath, filename))
                     self.create_checksum(
                         dirpath,
                         os.path.join(dirpath, filename))
@@ -238,7 +261,7 @@ class CreateChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-03 (last change).
+        :Date: 2017-02-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         create (missing) checksums
@@ -248,5 +271,4 @@ class CreateChecksumsClass(object):
                 self.create_hashes_in_directory(name)
             else:
                 self.log.warning("cannot handle '%s' (e. g. not a directory)", name)
-        self.log_console_handler.flush()
         return 0 # success

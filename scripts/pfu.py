@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 """
 Author: Daniel Mohr.
-Date: 2017-02-14 (last change).
+Date: 2017-02-25 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,7 +13,7 @@ import sys
 
 import pfu_module.scripts
 
-__pfu_date__ = "2017-02-14"
+__pfu_date__ = "2017-02-25"
 
 def main():
     """

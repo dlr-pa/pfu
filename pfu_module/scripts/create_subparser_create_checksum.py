@@ -1,6 +1,6 @@
 """
 Author: Daniel Mohr.
-Date: 2017-02-13 (last change).
+Date: 2017-02-25 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -58,7 +58,7 @@ def create_subparser_create_checksum(subparsers):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-02-07 (last change).
+    :Date: 2017-02-25 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     # pylint: disable=line-too-long
@@ -66,7 +66,8 @@ def create_subparser_create_checksum(subparsers):
     help_create = ""
     help_create += "This command will create (missing) checksums. Command line parameters can be shorten, as far as they are unique."
     myposthelp = "Example:\n\n"
-    myposthelp += " pfu.py create_checksum -d ."
+    myposthelp += " pfu.py create_checksum -d .\n"
+    myposthelp += " pfu.py create_checksum -d . -logfile l -fileloglevel 15"
     parser_create = subparsers.add_parser(
         'create_checksum',
         description=help_create,
