@@ -1,6 +1,6 @@
 """
 Author: Daniel Mohr.
-Date: 2017-02-14 (last change).
+Date: 2017-03-01 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -8,7 +8,7 @@ import argparse
 
 from .create_common_parameter import create_common_parameter
 
-__date__ = "2017-02-14"
+__date__ = "2017-03-01"
 
 def check_checksum(args):
     """
@@ -35,7 +35,7 @@ def create_subparser_check_checksum(subparsers):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-02-14 (last change).
+    :Date: 2017-03-01 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     # pylint: disable=line-too-long
@@ -62,10 +62,10 @@ def create_subparser_check_checksum(subparsers):
     parser.add_argument(
         '-hash_extension',
         nargs="+",
-        default=[".md5", ".sha256", ".sha512", ".checksum"],
+        default=[".md5", ".sha256", ".sha512", ".checksum", ".sha1"],
         type=str,
         dest='hash_extension',
-        help='Files with the given extension(s) are interpreted as hash files. The files have to be of the format r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$", r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$" or r"(?P<type>MD5|SHA256|SHA512) \((?P<filename>.+)\) = (?P<hash>[0-9a-zA-Z/+=]+)$". In the latter case base16 encoding is assumed. default: .md5 .sha256 .sha512 .checksum',
+        help='Files with the given extension(s) are interpreted as hash files. The files have to be of the format r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$", r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$" or r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$". In the latter case base16 encoding is assumed. The hash types sha1, sha224 and sha384 are only interpreted/used for the BSD-style. default: .md5 .sha256 .sha512 .checksum .sha1',
         metavar='ext')
     parser.add_argument(
         '-ignore_extension',

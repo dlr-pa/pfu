@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 """
 Author: Daniel Mohr.
-Date: 2017-02-25 (last change).
+Date: 2017-03-01 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,7 +13,7 @@ import sys
 
 import pfu_module.scripts
 
-__pfu_date__ = "2017-02-25"
+__pfu_date__ = "2017-03-01"
 
 def main():
     """
@@ -75,6 +75,7 @@ def main():
     log.debug("sys.platform: %s", sys.platform)
     log.debug("sys.version: %s", sys.version.replace("\n", " "))
     # call the programs
+    log.info("started as/with: %s", " ".join(sys.argv))
     exit_status = args.func(args)
     # flush log and exit with result from program
     log_console_handler.flush()

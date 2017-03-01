@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-02-25 (last change).
+Date: 2017-03-01 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -24,7 +24,7 @@ class CheckChecksumsClass(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-02-25 (last change).
+    :Date: 2017-03-01 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to check checksums in directory or directories
@@ -32,7 +32,10 @@ class CheckChecksumsClass(object):
     # pylint: disable=too-many-instance-attributes
     hashfcts = {'sha512': hashlib.sha512,
                 'sha256': hashlib.sha256,
-                'md5': hashlib.md5}
+                'md5': hashlib.md5,
+                'sha1': hashlib.sha1,
+                'sha224': hashlib.sha224,
+                'sha384': hashlib.sha384}
     encodes = {'hex': base64.b16encode,
                'base16': base64.b16encode,
                'Base16': base64.b16encode,
@@ -51,7 +54,7 @@ class CheckChecksumsClass(object):
     regexps = [
         re.compile(r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$"),
         re.compile(r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$"),
-        re.compile(r"(?P<type>MD5|SHA256|SHA512) \((?P<filename>.+)\) = (?P<hash>[0-9a-zA-Z/+=]+)$")]
+        re.compile(r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$")]
     def __init__(self,
                  directories=(),
                  hash_extension=[".md5", ".sha256", ".sha512"],
@@ -260,7 +263,7 @@ class CheckChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2017-02-25 (last change).
+        :Date: 2017-03-01 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         Analyse line of a hash file describing hash of complete file in
