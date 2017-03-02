@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2017-03-01
+:Date: 2017-03-02
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -72,7 +72,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pfu',
-    version='2017-03-01',
+    version='2017-03-02',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder},

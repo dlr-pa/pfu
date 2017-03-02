@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-03-01 (last change).
+Date: 2017-03-02 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -24,7 +24,7 @@ class CheckChecksumsClass(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-03-01 (last change).
+    :Date: 2017-03-02 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to check checksums in directory or directories
@@ -102,25 +102,43 @@ class CheckChecksumsClass(object):
                               'hash for ignored file': 0,
                               'data file not handled': 0}
 
-    def determine_hash_encode(self, hash_string):
+    def determine_hash_encode(self, hash_string, hashfilename=None):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-03 (last change).
+        :Date: 2017-03-02 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-        try to determine hash function and encode from hash
+        Try to determine hash function and encode from hash.
+        If this is not possible assume the file extension gives the hash type.
 
         :param hash_string: the hash to analyse
+        :param hashfilename: file name of the hash
+                             (if hash is not unique the file extension is used)
 
         :return: tuple of hash algorithm and encoding
+                 or None on error
         """
-        hash_encode = self.hashtype[len(hash_string)]
-        if hash_encode[1] == 'base16 or base32':
-            if hash_string[-6:] == '======':
-                hash_encode = (hash_encode[0], 'base32')
-            else:
-                hash_encode = (hash_encode[0], 'base16')
+        hash_encode = None
+        if len(hash_string) in self.hashtype:
+            hash_encode = self.hashtype[len(hash_string)]
+            if hash_encode[1] == 'base16 or base32':
+                if hash_string[-6:] == '======':
+                    hash_encode = (hash_encode[0], 'base32')
+                else:
+                    hash_encode = (hash_encode[0], 'base16')
+        if (hash_encode is None) and (hashfilename is not None):
+            extension = os.path.splitext(hashfilename)[1][1:].strip().lower()
+            if extension in self.hashfcts:
+                # assume file extension gives the hash type
+                # the coding is really hard to detect, therefore assume base16
+                # RFC 3548 defines the following alphabets:
+                # base64: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_
+                # base32: abcdefghijklmnopqrstuvwxyz234567
+                # base16: 0123456789ABCDEF
+                # Unfortunately typical used tools like *sum (e. g. md5sum)
+                # gives the output as base16 in lower letters.
+                hash_encode = (extension, 'base16')
         return hash_encode
 
     def is_accept_hash_file(self, filename):
@@ -204,60 +222,78 @@ class CheckChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2017-02-25 (last change).
+        :Date: 2017-03-02 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         Analyse line of a hash file describing hash of a chunk.
         This method should not be called from outside.
 
         :param sres: re instance
-        :param hashfilename: file name of the hash (here only path is used)
+        :param hashfilename: file name of the hash
+                             (normaly only path is used, if hash is not unique
+                             the file extension is used)
         """
-        relfilename = os.path.normpath(
-            os.path.join(os.path.dirname(hashfilename),
-                         sres.group('filename')))
-        if relfilename in self.hash_dicts[0]:
-            self.hash_dicts[0][relfilename] += [(
-                sres.group('hash').lower(),
-                self.determine_hash_encode(sres.group('hash')),
-                hashfilename,
-                int(sres.group('start')),
-                int(sres.group('stop')))]
-        else:
-            self.hash_dicts[0][relfilename] = [(
-                sres.group('hash').lower(),
-                self.determine_hash_encode(sres.group('hash')),
-                hashfilename,
-                int(sres.group('start')),
-                int(sres.group('stop')))]
+        hash_encode = self.determine_hash_encode(sres.group('hash'),
+                                                 hashfilename)
+        if hash_encode is not None:
+            relfilename = os.path.normpath(
+                os.path.join(os.path.dirname(hashfilename),
+                             sres.group('filename')))
+            if hash_encode[1] == 'base64':
+                hash_string = sres.group('hash')
+            else:
+                hash_string = sres.group('hash').lower()
+            if relfilename in self.hash_dicts[0]:
+                self.hash_dicts[0][relfilename] += [(
+                    hash_string,
+                    hash_encode,
+                    hashfilename,
+                    int(sres.group('start')),
+                    int(sres.group('stop')))]
+            else:
+                self.hash_dicts[0][relfilename] = [(
+                    hash_string,
+                    hash_encode,
+                    hashfilename,
+                    int(sres.group('start')),
+                    int(sres.group('stop')))]
 
     def _analyse_hashline_of_file(self, sres, hashfilename):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2017-02-25 (last change).
+        :Date: 2017-03-02 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         Analyse line of a hash file describing hash of complete file.
         This method should not be called from outside.
 
         :param sres: re instance
-        :param hashfilename: file name of the hash (here only path is used)
+        :param hashfilename: file name of the hash
+                             (normaly only path is used, if hash is not unique
+                             the file extension is used)
         """
-        relfilename = os.path.normpath(
-            os.path.join(
-                os.path.dirname(hashfilename),
-                sres.group('filename')))
-        if relfilename in self.hash_dicts[1]:
-            self.hash_dicts[1][relfilename] += [(
-                sres.group('hash').lower(),
-                self.determine_hash_encode(sres.group('hash')),
-                hashfilename)]
-        else:
-            self.hash_dicts[1][relfilename] = [(
-                sres.group('hash').lower(),
-                self.determine_hash_encode(sres.group('hash')),
-                hashfilename)]
+        hash_encode = self.determine_hash_encode(sres.group('hash'),
+                                                 hashfilename)
+        if hash_encode is not None:
+            relfilename = os.path.normpath(
+                os.path.join(
+                    os.path.dirname(hashfilename),
+                    sres.group('filename')))
+            if hash_encode[1] == 'base64':
+                hash_string = sres.group('hash')
+            else:
+                hash_string = sres.group('hash').lower()
+            if relfilename in self.hash_dicts[1]:
+                self.hash_dicts[1][relfilename] += [(
+                    hash_string,
+                    hash_encode,
+                    hashfilename)]
+            else:
+                self.hash_dicts[1][relfilename] = [(
+                    hash_string,
+                    hash_encode,
+                    hashfilename)]
 
     def _analyse_hashline_of_file_bsd(self, sres, hashfilename):
         """
@@ -349,7 +385,7 @@ class CheckChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-04 (last change).
+        :Date: 2017-03-02 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         compare hashes for the given filename
@@ -435,8 +471,9 @@ class CheckChecksumsClass(object):
         # compare global hash
         for i in range(number_hashes):
             encode = self.encodes[self.hash_dicts[1][filename][i][1][1]]
-            cal_hash = encode(
-                hash_objects[i].digest()).lower()
+            cal_hash = encode(hash_objects[i].digest())
+            if self.hash_dicts[1][filename][i][1][1] != 'base64':
+                cal_hash = cal_hash.lower()
             if cal_hash != self.hash_dicts[1][filename][i][0]:
                 match = False
                 break
