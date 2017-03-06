@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-03-02 (last change).
+Date: 2017-03-06 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -24,7 +24,7 @@ class CheckChecksumsClass(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-03-02 (last change).
+    :Date: 2017-03-06 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to check checksums in directory or directories
@@ -385,7 +385,7 @@ class CheckChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2017-03-02 (last change).
+        :Date: 2017-03-06 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         compare hashes for the given filename
@@ -443,9 +443,12 @@ class CheckChecksumsClass(object):
                 while i < len(chunk_objects):
                     if act_pos == chunks[chunk_objects_index[i]][4]:
                         # compare hash
+                        print("encode: %s" % chunks[chunk_objects_index[i]][1][1])
                         encode = self.encodes[chunks[chunk_objects_index[i]][1][1]]
                         cal_hash = encode(
-                            chunk_objects[chunk_objects_index[i]].digest()).lower()
+                            chunk_objects[chunk_objects_index[i]].digest())
+                        if chunks[chunk_objects_index[i]][1][1] != 'base64':
+                            cal_hash = cal_hash.lower()
                         if cal_hash != chunks[chunk_objects_index[i]][0]:
                             match = False
                             break

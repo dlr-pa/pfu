@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-02-25 (last change).
+Date: 2017-03-06 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -18,7 +18,7 @@ class CreateChecksumsClass(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-02-25 (last change).
+    :Date: 2017-03-06 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to create checksums in directory or directories
@@ -39,7 +39,7 @@ class CreateChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2017-02-25 (last change).
+        :Date: 2017-03-06 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         class to create checksums in directory or directories
@@ -102,6 +102,7 @@ class CreateChecksumsClass(object):
         #elif self.coding in ['base64', 'Base64']:
         #    self.encode = base64.b64encode
         self.encode = {'hex': base64.b16encode,
+                       'base16': base64.b16encode,
                        'Base16': base64.b16encode,
                        'base32': base64.b32encode,
                        'Base32': base64.b32encode,
