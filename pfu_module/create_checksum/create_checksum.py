@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-03-06 (last change).
+Date: 2017-03-07 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -18,7 +18,7 @@ class CreateChecksumsClass(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-03-06 (last change).
+    :Date: 2017-03-07 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to create checksums in directory or directories
@@ -153,26 +153,34 @@ class CreateChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2017-02-25 (last change).
+        :Date: 2017-03-07 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         Calculate hash and store hash in file and list.
         This method should not be called from outside.
+        If IOError occurred during hashing the file data_file_name,
+        no hashes are stored.
 
         :param data_file_name: file name of the file to analyse
         :param hash_file_name: file name of the file to store hash
         """
+        err = 0 # no error
         # calculate hash for data_file_name
-        out = self.calculate_hash(data_file_name)
-        # store hash in hash_file_name
-        with open(hash_file_name, 'a') as hash_file:
-            for line in out:
-                hash_file.write(''.join(line)+"\n")
-            self.log.verboseinfo(
-                "file \"%s\": write %i hashes", data_file_name, len(out))
-        # store hash file name in list
-        if hash_file_name not in self.created_hash_files:
-            self.created_hash_files += [hash_file_name]
+        try:
+            out = self.calculate_hash(data_file_name)
+        except IOError:
+            err = 1 # IOError
+            self.log.warning('IOError during hashing file "%s"', data_file_name)
+        if err == 0:
+            # store hash in hash_file_name
+            with open(hash_file_name, 'a') as hash_file:
+                for line in out:
+                    hash_file.write(''.join(line)+"\n")
+                self.log.verboseinfo(
+                    "file \"%s\": write %i hashes", data_file_name, len(out))
+            # store hash file name in list
+            if hash_file_name not in self.created_hash_files:
+                self.created_hash_files += [hash_file_name]
 
     def create_checksum(self, dirpath, data_file_name):
         """
