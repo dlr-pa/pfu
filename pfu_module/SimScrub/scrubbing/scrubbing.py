@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2017-02-14 (last change).
+:Date: 2017-08-23 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,13 +13,13 @@ import pickle
 import threading
 import time
 
-import pfu.SimScrub
+import pfu_module.SimScrub
 
 class Scrubbing(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
-    :Date: 2017-02-14 (last change).
+    :Date: 2017-08-23 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     # pylint: disable=too-many-instance-attributes
@@ -133,14 +133,14 @@ class Scrubbing(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@gmx.de
-        :Date: 2017-02-14 (last change).
+        :Date: 2017-08-23 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         old_list_of_files will be changed to be the new list
         """
         with open(os.path.join(self._config_dir, 'dir'), 'rb') as file_desriptor:
             reldir = pickle.load(file_desriptor)
-        new_list_of_files = pfu.SimScrub.create_file_list(reldir, log)
+        new_list_of_files = pfu_module.SimScrub.create_file_list(reldir, log)
         new_set_of_files = set(new_list_of_files)
         new_files = list(new_set_of_files.difference(old_list_of_files))
         old_files = list(set(old_list_of_files).difference(new_set_of_files))
@@ -169,7 +169,7 @@ class Scrubbing(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@gmx.de
-        :Date: 2017-02-14 (last change).
+        :Date: 2017-08-23 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
         """
         self._scrubbing = True
