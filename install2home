@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-python setup.py install --home=~
+/usr/bin/env python2 setup.py install --home=~
