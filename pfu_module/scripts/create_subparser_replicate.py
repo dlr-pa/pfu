@@ -72,7 +72,7 @@ def create_subparser_replicate(subparsers):
     epilog += "\n%s" % myhelp
     description = 'This is the command to copy/replicate data/files from one directory to other directories (one or more). '
     description += 'It uses the command line programs e. g. "rsync" and "sha256sum". '
-    description += 'Although we use by default rsync, the source and destination pathes have to be local. '
+    description += 'Although we use by default rsync, the source and destination paths have to be local. '
     description += 'If copy is done by "rsync" and this script is run on a windows system, the drive letters will be replaces by "/cygdrive/[drive letter]/". '
     description += 'All (long) options can be abbreviated to a prefix, if the abbreviation is unambiguous (the prefix matches a unique option) -- e. g. "-dest" or "-de" instead of "-destination".'
     parser = subparsers.add_parser(
@@ -211,7 +211,7 @@ def create_subparser_replicate(subparsers):
                         required=False,
                         dest='use_relpath',
                         choices=[0,1],
-                        help='If set to 1, convert the given pathes (source and destination(s)) to relative pathes. For copy program still absolute pathes will be created. default: 1',
+                        help='If set to 1, convert the given paths (source and destination(s)) to relative paths. For copy program still absolute paths will be created. default: 1',
                         metavar='i')
     parser.add_argument('-use_normcase',
                         nargs=1,

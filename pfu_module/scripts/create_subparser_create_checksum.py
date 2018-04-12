@@ -64,7 +64,7 @@ def create_subparser_create_checksum(subparsers):
     # pylint: disable=line-too-long
     # pylint: disable=invalid-name
     help_create = ""
-    help_create += "This command will create (missing) checksums. Command line parameters can be shorten, as far as they are unique."
+    help_create += "This command will create (missing) checksums. Command line parameters can be shortened, as far as they are unique."
     myposthelp = "Example:\n\n"
     myposthelp += " pfu.py create_checksum -d .\n"
     myposthelp += " pfu.py create_checksum -d . -logfile l -fileloglevel 15"

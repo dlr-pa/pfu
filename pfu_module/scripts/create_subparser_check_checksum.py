@@ -39,7 +39,7 @@ def create_subparser_check_checksum(subparsers):
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     # pylint: disable=line-too-long
-    myprehelp = "This command will check checksums. We assume relative pathes in each hash file. Command line parameters can be shorten, as far as they are unique."
+    myprehelp = "This command will check checksums. We assume relative paths in each hash file. Command line parameters can be shortened, as far as they are unique."
     myposthelp = "Example:\n\n"
     myposthelp += " pfu.py check_checksum -d . -loglevel 15 -logfile output.log\n"
     myposthelp += " pfu.py check_checksum -d . -loglevel 15 -i \"~\" .tmp .bak .md5\n"
