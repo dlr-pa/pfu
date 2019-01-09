@@ -10,11 +10,11 @@ copyright + license
 ===================
 Author: Daniel Mohr.
 
-Date: 2017-02-14 (last change).
+Date: 2019-01-09 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-Copyright (C) 2016, 2017 Daniel Mohr
+Copyright (C) 2016, 2017, 2018, 2019 Daniel Mohr
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License as
  published by the Free Software Foundation; either version 3 of
@@ -34,8 +34,10 @@ from .create_subparser_simscrub import create_subparser_simscrub
 from .create_subparser_create_checksum import create_subparser_create_checksum
 from .create_subparser_check_checksum import create_subparser_check_checksum
 from .create_subparser_replicate import create_subparser_replicate
+from .create_subparser_speed_test import create_subparser_speed_test
 
 __all__ = ['create_subparser_simscrub',
            'create_subparser_create_checksum',
            'create_subparser_check_checksum',
-           'create_subparser_replicate']
+           'create_subparser_replicate',
+           'create_subparser_speed_test']

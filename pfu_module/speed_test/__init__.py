@@ -1,13 +1,20 @@
-LICENSE: pfu
-++++++++++++
+"""speed_test
 
+.. contents::
+
+description
+===========
+This is the description for simscrub.
+
+copyright + license
+===================
 Author: Daniel Mohr.
 
 Date: 2019-01-09 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-Copyright (C) 2015, 2016, 2017, 2018, 2019 Daniel Mohr
+Copyright (C) 2019 Daniel Mohr
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License as
  published by the Free Software Foundation; either version 3 of
@@ -18,17 +25,7 @@ Copyright (C) 2015, 2016, 2017, 2018, 2019 Daniel Mohr
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License for more details.
 
- You should have received a copy (see :doc:`gpl` and gpl.txt) of the
- GNU General Public License along with this program.
- If not, see <http://www.gnu.org/licenses/>.
-
-Contact Informations
---------------------
-
- * Daniel Mohr, daniel.mohr@dlr.de
-
-Territory
----------
-
-This license applies to all components/files of the software.
-Most of them are listed in the following:
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, see
+ http://www.gnu.org/licenses/
+"""
