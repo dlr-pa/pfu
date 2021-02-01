@@ -1,8 +1,6 @@
-README: pfu -- Python File Utilities
-++++++++++++++++++++++++++++++++++++
+# README: pfu -- Python File Utilities
 
-intro
-=====
+## intro
 
 'pfu' is an acronym for Python File Utilities.
 
@@ -24,18 +22,16 @@ The project pk4_checksums.py is also licensed by Daniel Mohr under the GPL.
 has the only author Daniel Mohr.
 (This is partly already integrated. The other part is not necessary.)
 
-install
-=======
+## install
 
-see :doc:`INSTALL` 
+see [INSTALL](INSTALL)
 
-copyright + license
-===================
+## copyright + license
 
 Author: Daniel Mohr.
 
-Date: 2019-01-09 (last change).
+Date: 2021-02-01 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
-Copyright (C) 2015, 2016, 2017, 2018, 2019 Daniel Mohr
+Copyright (C) 2015, 2016, 2017, 2018, 2019, 2020, 2021 Daniel Mohr
