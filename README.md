@@ -1,10 +1,90 @@
 # README: pfu -- Python File Utilities
 
+
 ## intro
 
 'pfu' is an acronym for Python File Utilities.
 
-It will be a software combining:
+At the moment it combines a few tools described quickly in the next subsection.
+'pfu' is designed to work on each platform supported by Python.
+
+Using checksums for data exchange helps to verify the data integrity.
+
+
+### pfu.py create_checksum
+
+This command will create (missing) checksums in a directory tree.
+The checksums can be stored for each file, in each directory or in one file.
+Also you can choose different codings (e. g. base16 or base64).
+
+For example, it is compatible with the format produced by 
+sha256sum (GNU version) and sha256 (BSD version).
+
+Further it is compatible with the checksum format used in PK-4 [^a] [^b]
+and was/is used in this project.
+
+[^a]: https://en.wikipedia.org/wiki/PK-4_(ISS_experiment)
+[^b]: https://doi.org/10.1063/1.4962696
+
+In the projects PlasmaLab/Ekoplasma [^c] [^d] and COMPACT [^e]
+it was used and developed.
+
+[^c]: https://complex-plasmas.dlr.de/index.php/plasmalab.html
+[^d]: https://dx.doi.org/10.1063/1.5020392
+[^e]: https://sciences.ucf.edu/physics/microgravity/iss-compact/
+
+
+### pfu.py check_checksum
+
+This command will check checksums. We assume relative paths in each hash file.
+
+It can detect the used format and/or coding and supports the following
+formats (and more):
+
+	* sha256sum (GNU version)
+	* sha256 (BSD version)
+	* format used in PK-4
+	* format used in PlasmaLab/Ekoplasma and COMPACT
+
+
+### pfu.py simscrub
+
+This script read every file in the given directory tree.
+
+If you do this regularly (e. g. via crontab every month) you can 
+simulate a scrubbing and give the file system or storage device 
+(e. g. firmware of SSD) the chance to detect error and to fix them.
+
+
+### pfu.py speed_test
+
+This script tries to measure the read and write speed of a storage.
+
+It works on top of a file system and therefore measures the complete storage
+system. To get a significant measure you should read and write more data
+than the system could buffer in the main memory.
+
+
+### pfu.py replicate
+
+This is the command to copy/replicate data/files from one directory to other
+directories (one or more). It uses the command line programs e. g. "rsync" and
+"sha256sum". Although we use by default rsync, the source and destination
+paths have to be local. If copy is done by "rsync" and this script is run
+on a windows system, the drive letters will be replaced by
+"/cygdrive/[drive letter]/".
+
+It was used and developed in the project PlasmaLab/Ekoplasma [^f] [^g].
+
+[^f]: https://complex-plasmas.dlr.de/index.php/plasmalab.html
+[^g]: https://dx.doi.org/10.1063/1.5020392
+
+It was used 2015 and 2016 on the parabolic flight campaigns of PlasmaLab.
+
+
+## history
+
+'pfu' is a software combining:
 
   * simscrub.py
 
@@ -22,15 +102,17 @@ The project pk4_checksums.py is also licensed by Daniel Mohr under the GPL.
 has the only author Daniel Mohr.
 (This is partly already integrated. The other part is not necessary.)
 
+
 ## install
 
-see [INSTALL](INSTALL)
+see [INSTALL](INSTALL.txt)
+
 
 ## copyright + license
 
 Author: Daniel Mohr.
 
-Date: 2021-02-01 (last change).
+Date: 2021-05-03 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
