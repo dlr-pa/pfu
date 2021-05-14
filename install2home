@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-/usr/bin/env python2 setup.py install --home=~
+/usr/bin/env python2 setup.py install --home=~ --record installed_files.txt

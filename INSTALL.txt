@@ -2,7 +2,7 @@
 INSTALL: pfu -- Python File Utilities
 =====================================
 
-:Version: 2017-02-14
+:Version: 2021-05-14
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -64,6 +64,32 @@ It is normal that there are many missing modules reported. Please look
 at the details.
 
 
+unittests
+---------
+
+You can run a few unittests::
+
+  env python3 setup.py run_unittest --src local
+
+But the script is not tested before installing.
+
+After installation you can run unittests on the scripts as well
+(see :ref:`after you install.unittests`).
+
+
+pytest
+------
+
+Instead of the standard module unittest you can also use pytest to run
+all available unittests (including scripts)::
+
+  env python3 setup.py run_pytest
+
+But the scripts are not tested before installing.
+After installation you can run these tests on the scripts as well
+(see :ref:`after you install.pytest`).
+
+
 install
 =======
 
@@ -123,3 +149,27 @@ straight forward:
 
 after install
 =============
+
+.. _after you install.unittests:
+
+unittests (after installation)
+------------------------------
+
+Now you can run all available unittests (including scripts)::
+
+  env python3 setup.py run_unittest
+
+
+.. _after you install.pytest:
+
+pytest (after installation)
+---------------------------
+
+Instead of the standard module unittest you can also use pytest to run
+all available unittests (including scripts)::
+
+  env python3 setup.py run_pytest
+
+This command has a few interesting parameters, e. g.::
+
+  env python3 setup.py run_pytest --coverage --parallel
