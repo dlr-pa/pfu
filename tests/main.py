@@ -72,7 +72,7 @@ def scripts(suite):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-05-14
+    :Date: 2021-05-16
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     add tests for the scripts
@@ -86,6 +86,9 @@ def scripts(suite):
     # pfu.py create_checksum
     suite.addTest(loader.loadTestsFromName(
         'tests.script_pfu_create_checksum'))
+    # pfu.py check_checksum
+    suite.addTest(loader.loadTestsFromName(
+        'tests.script_pfu_check_checksum'))
 
 
 if __name__ == '__main__':

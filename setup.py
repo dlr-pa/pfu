@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2021-05-14
+:Date: 2021-05-17
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -57,7 +57,7 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-16
         """
         # env python3 setup.py run_pytest
         import sys
@@ -109,6 +109,7 @@ class TestWithPytest(Command):
             pyargs += ['--verbose']
         pyargs += ['tests/script_pfu_simscrub.py']
         pyargs += ['tests/script_pfu_create_checksum.py']
+        pyargs += ['tests/script_pfu_check_checksum.py']
         if self.src == 'installed':
             pyargs += ['tests/main.py']
         pyplugins = []
@@ -256,7 +257,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pfu',
-    version='2021-05-14',
+    version='2021-05-17',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
