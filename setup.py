@@ -111,6 +111,7 @@ class TestWithPytest(Command):
         pyargs += ['tests/script_pfu_create_checksum.py']
         pyargs += ['tests/script_pfu_check_checksum.py']
         pyargs += ['tests/script_pfu_replicate.py']
+        pyargs += ['tests/script_pfu_speed_test.py']
         if self.src == 'installed':
             pyargs += ['tests/main.py']
         pyplugins = []

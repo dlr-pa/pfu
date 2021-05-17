@@ -92,6 +92,9 @@ def scripts(suite):
     # pfu.py replicate
     suite.addTest(loader.loadTestsFromName(
         'tests.script_pfu_replicate'))
+    # pfu.py speed_test
+    suite.addTest(loader.loadTestsFromName(
+        'tests.script_pfu_speed_test'))
 
 
 if __name__ == '__main__':
