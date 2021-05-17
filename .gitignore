@@ -7,3 +7,4 @@ dist
 installed_files.txt
 .coverage
 coverage_report/
+.cache/
