@@ -1,6 +1,6 @@
 """
 Author: Daniel Mohr.
-Date: 2017-02-14 (last change).
+Date: 2017-02-14, 2021-05-17 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -8,7 +8,7 @@ import argparse
 
 from .create_common_parameter import create_common_parameter
 
-__date__ = "2017-02-14"
+__date__ = "2021-05-17"
 
 def replicate(args):
     """
@@ -24,7 +24,7 @@ def create_subparser_replicate(subparsers):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-02-14 (last change).
+    :Date: 2017-02-14, 2021-05-17 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     This is the code for the script :program:`pfu.py`.
@@ -140,11 +140,11 @@ def create_subparser_replicate(subparsers):
                         metavar='prg')
     parser.add_argument('-checksum_create_parameter',
                         nargs=1,
-                        default="--tag",
+                        default="--tag --",
                         type=str,
                         required=False,
                         dest='checksum_create_parameter',
-                        help='Parameter uses for the program (e. g. sha256sum) to create checksums. default: "--tag"',
+                        help='Parameter uses for the program (e. g. sha256sum) to create checksums. default: "--tag --"',
                         metavar='param')
     parser.add_argument('-checksum_check_parameter',
                         nargs=1,
