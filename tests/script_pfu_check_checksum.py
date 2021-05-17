@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-16
+:Date: 2021-05-17
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu.py check_checksum'
@@ -104,32 +104,42 @@ def checkoutput(out):
 class script_pfu_check_checksum(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-16
+    :Date: 2021-05-17
     """
 
     def test_script_pfu_check_checksum_1(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-16
+        :Date: 2021-05-17
         """
         # run test
-        with tempfile.TemporaryDirectory() as tmpdir:
-            # create random data
-            create_random_directory_tree(tmpdir, levels=3)
-            # create checksums
-            param = '-dir ' + tmpdir
-            cp = subprocess.run(
-                ['pfu.py create_checksum ' + param],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                shell=True,
-                timeout=3, check=True)
-            # check checksums
-            cp = subprocess.run(
-                ['pfu.py check_checksum ' + param],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                shell=True,
-                timeout=3, check=True)
-            self.assertTrue(checkoutput(cp.stderr))
+        for alg in ['md5', 'sha256', 'sha512']:
+            with tempfile.TemporaryDirectory() as tmpdir:
+                # create random data
+                create_random_directory_tree(tmpdir, levels=3)
+                # check error
+                param = '-loglevel 20 -dir ' + tmpdir
+                cp = subprocess.run(
+                    ['pfu.py check_checksum ' + param],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    shell=True,
+                    timeout=3, check=True)
+                self.assertFalse(checkoutput(cp.stderr))
+                # create checksums
+                param = '-algorithm ' + alg + ' -dir ' + tmpdir
+                cp = subprocess.run(
+                    ['pfu.py create_checksum ' + param],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    shell=True,
+                    timeout=3, check=True)
+                # check checksums
+                param = '-loglevel 20 -dir ' + tmpdir
+                cp = subprocess.run(
+                    ['pfu.py check_checksum ' + param],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    shell=True,
+                    timeout=3, check=True)
+                self.assertTrue(checkoutput(cp.stderr))
 
     def test_script_pfu_check_checksum_2(self):
         """
@@ -156,13 +166,21 @@ class script_pfu_check_checksum(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
                 timeout=3, check=True)
-            with open('.checksum', 'w') as fd:
+            with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
                 fd.write(cp.stdout.decode())
             # check checksums
+            param = '-loglevel 20 -dir .'
             cp = subprocess.run(
-                ['pfu.py check_checksum -dir .'],
+                ['pfu.py check_checksum ' + param],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
+                timeout=3, check=True)
+            self.assertTrue(checkoutput(cp.stderr))
+            param = '-loglevel 20 -dir ' + tmpdir
+            cp = subprocess.run(
+                ['pfu.py check_checksum ' + param],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True,
                 timeout=3, check=True)
             self.assertTrue(checkoutput(cp.stderr))
 
