@@ -99,7 +99,6 @@ class script_pfu_simscrub(unittest.TestCase):
             start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
                 data = pickle.load(fd)
-            print('data', type(data), data)
             self.assertEqual(data, 0)
             param = '-config_data_directory ' + conf_dir
             param += ' -fileloglevel 1'
