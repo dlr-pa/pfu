@@ -1,12 +1,10 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2021-05-17
+:Date: 2021-05-23
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-from __future__ import print_function
-import __future__
 
 from distutils.core import setup, Command
 
@@ -259,7 +257,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pfu',
-    version='2021-05-17',
+    version='2021-05-23',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,

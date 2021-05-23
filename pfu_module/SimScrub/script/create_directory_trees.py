@@ -5,8 +5,6 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import __future__
-
 import base64
 import hashlib
 import os
@@ -14,6 +12,7 @@ import os.path
 import pickle
 
 import pfu_module.SimScrub
+
 
 def create_directory_trees(args, log):
     """

@@ -29,8 +29,8 @@ try:
     from .create_random_directory_tree import create_random_directory_tree
     from .checkoutput_check_checksum import checkoutput
 except ModuleNotFoundError:
-    from create_random_directory_tree import create_random_directory_tree
-    from checkoutput_check_checksum import checkoutput
+    from .create_random_directory_tree import create_random_directory_tree
+    from .checkoutput_check_checksum import checkoutput
 
 
 class script_pfu_replicate(unittest.TestCase):

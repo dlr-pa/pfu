@@ -6,7 +6,6 @@ Date: 2016-12-03 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import __future__
 
 def read_data_from_file(buf_size, data_file, size, hash_objects):
     """

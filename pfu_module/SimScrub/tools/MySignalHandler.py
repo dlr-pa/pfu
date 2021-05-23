@@ -5,11 +5,10 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import __future__
-
 import signal
 import time
 import sys
+
 
 class MySignalHandler(object):
     """
@@ -18,6 +17,7 @@ class MySignalHandler(object):
     :Date: 2017-01-06 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
+
     def __init__(self, fcts_to_call):
         """
         :Author: Daniel Mohr
@@ -27,6 +27,7 @@ class MySignalHandler(object):
         """
         self._fcts_to_call = fcts_to_call
         self._orig_alarm_hndlr = None
+
     def init(self):
         """
         :Author: Daniel Mohr
@@ -36,6 +37,7 @@ class MySignalHandler(object):
         """
         signal.signal(signal.SIGINT, self.handler)
         signal.signal(signal.SIGTERM, self.handler)
+
     def handler(self, signum, _):
         """
         :Author: Daniel Mohr
@@ -48,6 +50,7 @@ class MySignalHandler(object):
         time.sleep(0.1)
         sys.stderr.write('got signal: %i\n' % signum)
         sys.exit(0)
+
     def set_alarm(self, count_down_time):
         """
         :Author: Daniel Mohr
@@ -56,8 +59,10 @@ class MySignalHandler(object):
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
         """
         if count_down_time > 0:
-            self._orig_alarm_hndlr = signal.signal(signal.SIGALRM, self.handler)
+            self._orig_alarm_hndlr = signal.signal(
+                signal.SIGALRM, self.handler)
             signal.alarm(count_down_time)
+
     def stop_alarm(self):
         """
         :Author: Daniel Mohr

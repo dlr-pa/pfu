@@ -5,8 +5,6 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import __future__
-
 import os
 import os.path
 import random
@@ -15,6 +13,7 @@ import time
 
 import pfu_module.SimScrub.scrubbing
 import pfu_module.SimScrub.tools
+
 
 def do_scrubbing(args, log):
     """

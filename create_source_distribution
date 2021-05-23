@@ -1,2 +1,2 @@
 #!/bin/bash
-python setup.py sdist --owner nobody --group nobody
+python3 setup.py sdist --owner nobody --group nobody

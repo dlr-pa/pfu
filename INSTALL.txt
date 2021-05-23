@@ -44,13 +44,13 @@ and the own modules which comes with this package.
 
 You can also asked the installation routine/script for the python modules::
 
-  python setup.py --help
-  python setup.py --requires
+  python3 setup.py --help
+  python3 setup.py --requires
 
 There is also a small extra command to check for availability of
 necessary python modules::
 
-  python setup.py check_modules
+  python3 setup.py check_modules
 
 If you want to use this complete software you should have no modules
 which are not available.
@@ -58,7 +58,7 @@ which are not available.
 Much more information you get from the following small extra command
 by using the modulefinder::
 
-  python setup.py check_modules_modulefinder
+  python3 setup.py check_modules_modulefinder
 
 It is normal that there are many missing modules reported. Please look
 at the details.
@@ -99,7 +99,7 @@ To install this software global to / the following steps are to perform::
 
   tar xzf pfu-*.tar.*
   cd pfu-*/
-  python setup.py install
+  python3 setup.py install
 
 
 home-install
@@ -108,7 +108,7 @@ To install this software to your $HOME the following steps are to perform::
 
   tar xzf pfu-*.tar.*
   cd pfu-*/
-  python setup.py install --home=~
+  python3 setup.py install --home=~
 
 
 hints

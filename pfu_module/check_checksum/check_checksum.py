@@ -6,8 +6,6 @@ Date: 2017-03-07 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import __future__
-
 import base64
 import copy
 import hashlib
@@ -15,10 +13,11 @@ import logging
 import os
 import re
 
- # own_logger:
-import pfu_module.checksum_tools # pylint: disable=unused-import
+# own_logger:
+import pfu_module.checksum_tools  # pylint: disable=unused-import
 
 from pfu_module.checksum_tools import read_data_from_file
+
 
 class CheckChecksumsClass(object):
     """
@@ -52,14 +51,16 @@ class CheckChecksumsClass(object):
                 32: ('md5', 'base16 or base32'),
                 24: ('md5', 'base64')}
     regexps = [
-        re.compile(r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$"),
+        re.compile(
+            r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$"),
         re.compile(r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$"),
         re.compile(r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$")]
+
     def __init__(self,
                  directories=(),
                  hash_extension=[".md5", ".sha256", ".sha512"],
                  ignore_extension=["~", ".tmp", ".bak"],
-                 buf_size=524288, # 1024*512 Bytes = 512 kB
+                 buf_size=524288,  # 1024*512 Bytes = 512 kB
                  level=20):
         """
         :Author: Daniel Mohr
@@ -341,17 +342,17 @@ class CheckChecksumsClass(object):
             with open(hashfilename, 'rU') as hash_file:
                 for line in hash_file:
                     sres = self.regexps[0].search(line)
-                    if sres: # hash of a chunk
+                    if sres:  # hash of a chunk
                         self._analyse_hashline_of_chunk(
                             sres, hashfilename)
                     else:
                         sres = self.regexps[1].search(line)
-                        if sres: # hash of a complete file
+                        if sres:  # hash of a complete file
                             self._analyse_hashline_of_file(
                                 sres, hashfilename)
                         else:
                             sres = self.regexps[2].search(line)
-                            if sres: # hash of a complete file (BSD-style)
+                            if sres:  # hash of a complete file (BSD-style)
                                 self._analyse_hashline_of_file_bsd(
                                     sres, hashfilename)
                             else:
@@ -398,7 +399,7 @@ class CheckChecksumsClass(object):
         number_hashes = 0
         if filename in self.hash_dicts[1]:
             number_hashes = len(self.hash_dicts[1][filename])
-        hash_objects = [None] * number_hashes # global hash objects
+        hash_objects = [None] * number_hashes  # global hash objects
         for i in range(number_hashes):
             hash_objects[i] = self.hashfcts[
                 self.hash_dicts[1][filename][i][1][0]]()
@@ -438,7 +439,7 @@ class CheckChecksumsClass(object):
                     next_pos + 1 - act_pos,
                     hash_objects + chunk_objects)
                 next_pos = None
-                act_pos = data_file.tell()-1 # we need one before up to end of while
+                act_pos = data_file.tell()-1  # we need one before up to end of while
                 i = 0
                 while i < len(chunk_objects):
                     if act_pos == chunks[chunk_objects_index[i]][4]:
@@ -461,10 +462,11 @@ class CheckChecksumsClass(object):
                         if next_pos is None:
                             next_pos = chunks[chunk_objects_index[i]][4]
                         else:
-                            next_pos = min(next_pos, chunks[chunk_objects_index[i]][4])
+                            next_pos = min(
+                                next_pos, chunks[chunk_objects_index[i]][4])
                         i += 1
                 if next_pos is not None:
-                    act_pos += 1 # it was wrong before
+                    act_pos += 1  # it was wrong before
                     for chunk in chunks:
                         if act_pos < chunk[3]:
                             next_pos = min(next_pos, chunk[3])
@@ -514,7 +516,7 @@ class CheckChecksumsClass(object):
                      filesize) = self.compare_hashes_for_file(filename)
                     if match:
                         self.result_number['data file with matching hash(es)'] += 1
-                        self.log.verboseinfo( # pylint: disable=no-member
+                        self.log.verboseinfo(  # pylint: disable=no-member
                             'file \"%s\" %i: OK (#hash= %i #chunk_hash= %i)',
                             filename,
                             filesize,
@@ -522,7 +524,7 @@ class CheckChecksumsClass(object):
                             number_chunk_hashes)
                     else:
                         self.result_number['data file with not matching hash(es)'] += 1
-                        self.log.verboseinfo( # pylint: disable=no-member
+                        self.log.verboseinfo(  # pylint: disable=no-member
                             'file \"%s\" %i: bad, hash mismatch (some of: #hash= %i #chunk_hash= %i)',
                             filename,
                             filesize,
@@ -531,7 +533,7 @@ class CheckChecksumsClass(object):
                 elif not ((filename in self.hash_dicts[0]) or
                           (filename in self.hash_dicts[1])):
                     self.result_number['data file without hash'] += 1
-                    self.log.verboseinfo( # pylint: disable=no-member
+                    self.log.verboseinfo(  # pylint: disable=no-member
                         'file \"%s\": no corresponding hash(es) found',
                         filename)
                 else:
@@ -547,13 +549,13 @@ class CheckChecksumsClass(object):
                 if os.path.isfile(filename) is True:
                     filesize = os.path.getsize(filename)
                     self.result_number['hash for ignored file'] += 1
-                    self.log.verboseinfo( # pylint: disable=no-member
+                    self.log.verboseinfo(  # pylint: disable=no-member
                         'file \"%s\" % i: ignored, but hash(es) available',
                         filename,
                         filesize)
                 else:
                     self.result_number['hash without data file'] += 1
-                    self.log.verboseinfo( # pylint: disable=no-member
+                    self.log.verboseinfo(  # pylint: disable=no-member
                         'file \"%s\": not found, but hash(es) available',
                         filename)
 
@@ -593,5 +595,6 @@ class CheckChecksumsClass(object):
                     self.result_number['data file not handled'])
                 #raise NotImplementedError("not finished")
             else:
-                self.log.warning("cannot handle '%s' (e. g. not a directory)", name)
-        return 0 # success
+                self.log.warning(
+                    "cannot handle '%s' (e. g. not a directory)", name)
+        return 0  # success
