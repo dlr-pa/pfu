@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-14
+:Date: 2021-05-23
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu.py simscrub'
@@ -78,8 +78,9 @@ class script_pfu_simscrub(unittest.TestCase):
     def test_script_pfu_simscrub_1(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-23
         """
+        import pickle
         with tempfile.TemporaryDirectory() as tmpdir:
             conf_dir = os.path.join(tmpdir, 'conf')
             data_dir = os.path.join(tmpdir, 'data')
@@ -95,10 +96,11 @@ class script_pfu_simscrub(unittest.TestCase):
                 shell=True,
                 timeout=3, check=True)
             self.assertEqual(cp.stdout, b'create_directory_trees\n')
-            start_point = os.listdir(conf_dir)[0]
-            with open(os.path.join(conf_dir, start_point, 'status')) as fd:
-                data = fd.readlines()
-            self.assertEqual(data[0], 'I0\n')
+            start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
+            with open(os.path.join(start_point, 'status'), 'rb') as fd:
+                data = pickle.load(fd)
+            print('data', type(data), data)
+            self.assertEqual(data, 0)
             param = '-config_data_directory ' + conf_dir
             param += ' -fileloglevel 1'
             cp = subprocess.run(
@@ -107,13 +109,13 @@ class script_pfu_simscrub(unittest.TestCase):
                 shell=True,
                 timeout=3, check=True)
             self.assertEqual(cp.stdout, b'do_scrubbing\n')
-            with open(os.path.join(conf_dir, start_point, 'log')) as fd:
+            with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
             self.assertTrue(data[-1].endswith(
                 'INFO finished scrubbing at 0/10\n'))
-            with open(os.path.join(conf_dir, start_point, 'status')) as fd:
-                data = fd.readlines()
-            self.assertEqual(data[-1], '.')
+            with open(os.path.join(start_point, 'status'), 'rb') as fd:
+                data = pickle.load(fd)
+            self.assertEqual(data, 0)
 
 
 if __name__ == '__main__':
