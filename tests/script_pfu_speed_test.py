@@ -40,7 +40,21 @@ class script_pfu_speed_test(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             param = '-f a -bytes 42 -count 6 '
             cp = subprocess.run(
-                ['pfu.py speed_test ' + param],
+                'pfu.py speed_test ' + param,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True, cwd=tmpdir,
+                timeout=3, check=True)
+            self.assertTrue(cp.stderr.endswith(b'finished.\n'))
+
+    def test_script_pfu_speed_test_2(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-05-25
+        """
+        with tempfile.TemporaryDirectory() as tmpdir:
+            param = '-f a -bytes 42 -count 6 -output_format maschine_readable'
+            cp = subprocess.run(
+                'pfu.py speed_test ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
                 timeout=3, check=True)

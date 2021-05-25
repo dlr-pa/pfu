@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-14
+:Date: 2021-05-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu.py create_checksum'
@@ -34,16 +34,16 @@ def create_random_file(filename):
 class script_pfu_create_checksum(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-14
+    :Date: 2021-05-25
     """
 
     def test_script_pfu_create_checksum_help(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         cp = subprocess.run(
-            ['pfu.py create_checksum -h'],
+            'pfu.py create_checksum -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
             timeout=3, check=True)
@@ -54,7 +54,7 @@ class script_pfu_create_checksum(unittest.TestCase):
     def test_script_pfu_create_checksum_0(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             data_dir = os.path.join(tmpdir, 'data')
@@ -63,7 +63,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 fd.write('bar')
             param = '-dir ' + data_dir
             cp = subprocess.run(
-                ['pfu.py create_checksum ' + param],
+                'pfu.py create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=3, check=True)
@@ -76,7 +76,7 @@ class script_pfu_create_checksum(unittest.TestCase):
     def test_script_pfu_create_checksum_1(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             data_dir = os.path.join(tmpdir, 'data')
@@ -86,7 +86,7 @@ class script_pfu_create_checksum(unittest.TestCase):
             param = '-dir ' + data_dir
             param += ' -store many'
             cp = subprocess.run(
-                ['pfu.py create_checksum ' + param],
+                'pfu.py create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=3, check=True)
@@ -99,7 +99,7 @@ class script_pfu_create_checksum(unittest.TestCase):
     def test_script_pfu_create_checksum_2(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         for alg, coding, hashstr in [
                 ('md5', 'hex', '37B51D194A7513E45B56F6524F2D51F2  foo\n'),
@@ -117,7 +117,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 param += ' -algorithm ' + alg
                 param += ' -coding ' + coding
                 cp = subprocess.run(
-                    ['pfu.py create_checksum ' + param],
+                    'pfu.py create_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
                     timeout=3, check=True)
@@ -130,7 +130,7 @@ class script_pfu_create_checksum(unittest.TestCase):
     def test_script_pfu_create_checksum_3(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             data_dir = os.path.join(tmpdir, 'data')
@@ -140,7 +140,7 @@ class script_pfu_create_checksum(unittest.TestCase):
             param = '-dir ' + data_dir
             param += ' -chunk_size 1'
             cp = subprocess.run(
-                ['pfu.py create_checksum ' + param],
+                'pfu.py create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=3, check=True)

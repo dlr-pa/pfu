@@ -36,13 +36,13 @@ except ModuleNotFoundError:
 class script_pfu_replicate(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-17
+    :Date: 2021-05-25
     """
 
     def test_script_pfu_replicate_1(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-17
+        :Date: 2021-05-25
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             src_dir = os.path.join(tmpdir, 'src')
@@ -56,7 +56,7 @@ class script_pfu_replicate(unittest.TestCase):
             param = '-source ' + src_dir
             param += ' -destination ' + ' '.join(dest_dirs)
             cp = subprocess.run(
-                ['pfu.py replicate ' + param],
+                'pfu.py replicate ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=28, check=True)
@@ -65,7 +65,7 @@ class script_pfu_replicate(unittest.TestCase):
                 param = '-loglevel 20 -ignore_extension log status'
                 param += ' -dir ' + dest_dir
                 cp = subprocess.run(
-                    ['pfu.py check_checksum ' + param],
+                    'pfu.py check_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
                     timeout=3, check=False)

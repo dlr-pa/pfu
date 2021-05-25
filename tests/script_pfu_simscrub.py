@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-23
+:Date: 2021-05-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu.py simscrub'
@@ -14,7 +14,7 @@ You can run this file directly::
 
 Or you can run only one test, e. g.::
 
-  env python3 script_pfu_simscrub.py script_pfu_simscrub.test_script_pfu_simscrub_help
+  env python3 script_pfu_simscrub.py script_pfu_simscrub.test_script_pfu_simscrub_0
 
   pytest-3 -k test_script_pfu_simscrub_help script_pfu_simscrub.py
 """
@@ -25,25 +25,27 @@ import subprocess
 import tempfile
 import unittest
 
-
-def create_random_file(filename):
-    with open(filename, 'wb') as fd:
-        fd.write(os.urandom(random.randint(23, 42)))
+try:
+    from .create_random_directory_tree import create_random_file
+    from .create_random_directory_tree import create_random_directory_tree
+except ModuleNotFoundError:
+    from create_random_directory_tree import create_random_file
+    from create_random_directory_tree import create_random_directory_tree
 
 
 class script_pfu_simscrub(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-14
+    :Date: 2021-05-25
     """
 
-    def test_script_pfu_simscrub_help(self):
+    def test_script_pfu_simscrub_0(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         cp = subprocess.run(
-            ['pfu.py simscrub -h'],
+            'pfu.py simscrub -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
             timeout=3, check=True)
@@ -51,17 +53,17 @@ class script_pfu_simscrub(unittest.TestCase):
         self.assertTrue(cp.stdout.startswith(
             b'usage: pfu.py simscrub '))
 
-    def test_script_pfu_simscrub_0(self):
+    def test_script_pfu_simscrub_1(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             # init scrubbing
             param = '-dir .'
             param += ' -config_data_directory ' + tmpdir
             cp = subprocess.run(
-                ['pfu.py simscrub ' + param],
+                'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=3, check=True)
@@ -69,18 +71,21 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-config_data_directory ' + tmpdir
             #param += ' -fileloglevel 1'
             cp = subprocess.run(
-                ['pfu.py simscrub ' + param],
+                'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=3, check=True)
             self.assertEqual(cp.stdout, b'do_scrubbing\n')
 
-    def test_script_pfu_simscrub_1(self):
+    def test_script_pfu_simscrub_2(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-23
+        :Date: 2021-05-25
+
+        env python3 script_pfu_simscrub.py script_pfu_simscrub.test_script_pfu_simscrub_2
         """
         import pickle
+        import stat
         with tempfile.TemporaryDirectory() as tmpdir:
             conf_dir = os.path.join(tmpdir, 'conf')
             data_dir = os.path.join(tmpdir, 'data')
@@ -91,7 +96,7 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-dir ' + data_dir
             param += ' -config_data_directory ' + conf_dir
             cp = subprocess.run(
-                ['pfu.py simscrub ' + param],
+                'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=3, check=True)
@@ -103,7 +108,7 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-config_data_directory ' + conf_dir
             param += ' -fileloglevel 1'
             cp = subprocess.run(
-                ['pfu.py simscrub ' + param],
+                'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=3, check=True)
@@ -112,6 +117,56 @@ class script_pfu_simscrub(unittest.TestCase):
                 data = fd.readlines()
             self.assertTrue(data[-1].endswith(
                 'INFO finished scrubbing at 0/10\n'))
+            with open(os.path.join(start_point, 'status'), 'rb') as fd:
+                data = pickle.load(fd)
+            self.assertEqual(data, 0)
+            # change data
+            os.chmod(os.path.join(data_dir, '0'), stat.S_IWRITE)
+            create_random_file(os.path.join(data_dir, '1'))
+            os.remove(os.path.join(data_dir, '2'))
+            create_random_file(os.path.join(data_dir, '10'))
+            param += ' -time_delta 0'
+            cp = subprocess.run(
+                'pfu.py simscrub ' + param,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True,
+                timeout=3, check=True)
+            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+
+    def test_script_pfu_simscrub_3(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-05-25
+        """
+        import pickle
+        with tempfile.TemporaryDirectory() as tmpdir:
+            conf_dir = os.path.join(tmpdir, 'conf')
+            data_dir = os.path.join(tmpdir, 'data')
+            os.mkdir(data_dir)
+            create_random_directory_tree(data_dir, levels=3)
+            # init scrubbing
+            param = '-dir ' + data_dir
+            param += ' -config_data_directory ' + conf_dir
+            cp = subprocess.run(
+                'pfu.py simscrub ' + param,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True,
+                timeout=3, check=True)
+            self.assertEqual(cp.stdout, b'create_directory_trees\n')
+            start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
+            with open(os.path.join(start_point, 'status'), 'rb') as fd:
+                data = pickle.load(fd)
+            self.assertEqual(data, 0)
+            param = '-config_data_directory ' + conf_dir
+            param += ' -fileloglevel 1'
+            cp = subprocess.run(
+                'pfu.py simscrub ' + param,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True,
+                timeout=3, check=True)
+            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+            with open(os.path.join(start_point, 'log')) as fd:
+                data = fd.readlines()
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
                 data = pickle.load(fd)
             self.assertEqual(data, 0)

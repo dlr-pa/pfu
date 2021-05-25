@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-17
+:Date: 2021-05-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 aggregation of tests
@@ -48,18 +48,18 @@ class test_module_import(unittest.TestCase):
 class test_script_executable(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-14
+    :Date: 2021-05-25
     """
 
     def test_script_fuse_git_bare_fs_executable(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         import subprocess
         for cmd in ['pfu.py -h', 'pfu.py simscrub -h']:
             out = subprocess.check_output(
-                [cmd],
+                cmd,
                 shell=True)
             # check at least minimal help output
             self.assertTrue(len(out) >= 775)
