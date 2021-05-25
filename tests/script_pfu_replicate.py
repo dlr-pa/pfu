@@ -41,6 +41,8 @@ class script_pfu_replicate(unittest.TestCase):
 
     def test_script_pfu_replicate_1(self):
         """
+        tests the script 'pfu.py replicate'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """

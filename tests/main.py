@@ -34,15 +34,30 @@ import unittest
 class test_module_import(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-14
+    :Date: 2021-05-25
     """
 
     def test_module_import(self):
         """
+        tests the import of the module and the submodules
+
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-05-25
         """
         import pfu_module
+        import pfu_module.check_checksum
+        import pfu_module.checksum_tools
+        import pfu_module.create_checksum
+        import pfu_module.replicate
+        import pfu_module.replicate.script
+        import pfu_module.replicate.tools
+        import pfu_module.scripts
+        import pfu_module.SimScrub
+        import pfu_module.SimScrub.script
+        import pfu_module.SimScrub.scrubbing
+        import pfu_module.SimScrub.tools
+        import pfu_module.speed_test
+        import pfu_module.speed_test.script
 
 
 class test_script_executable(unittest.TestCase):
@@ -53,11 +68,15 @@ class test_script_executable(unittest.TestCase):
 
     def test_script_fuse_git_bare_fs_executable(self):
         """
+        test if all scripts (with all commands) are executable
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
         import subprocess
-        for cmd in ['pfu.py -h', 'pfu.py simscrub -h']:
+        for cmd in ['pfu.py -h', 'pfu.py simscrub -h',
+                    'pfu.py create_checksum -h', 'pfu.py check_checksum -h',
+                    'pfu.py replicate -h', 'pfu.py speed_test -h']:
             out = subprocess.check_output(
                 cmd,
                 shell=True)

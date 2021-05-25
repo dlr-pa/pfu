@@ -41,6 +41,8 @@ class script_pfu_simscrub(unittest.TestCase):
 
     def test_script_pfu_simscrub_0(self):
         """
+        tests 'pfu.py simscrub'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -55,6 +57,8 @@ class script_pfu_simscrub(unittest.TestCase):
 
     def test_script_pfu_simscrub_1(self):
         """
+        tests 'pfu.py simscrub'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -79,6 +83,8 @@ class script_pfu_simscrub(unittest.TestCase):
 
     def test_script_pfu_simscrub_2(self):
         """
+        tests 'pfu.py simscrub'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
 
@@ -135,6 +141,8 @@ class script_pfu_simscrub(unittest.TestCase):
 
     def test_script_pfu_simscrub_3(self):
         """
+        tests 'pfu.py simscrub'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """

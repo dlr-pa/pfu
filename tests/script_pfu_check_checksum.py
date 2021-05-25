@@ -42,6 +42,8 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_0(self):
         """
+        tests 'pfu.py check_checksum'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -75,6 +77,8 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_1(self):
         """
+        tests 'pfu.py check_checksum'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -105,6 +109,8 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_2(self):
         """
+        tests 'pfu.py check_checksum'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -148,6 +154,8 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_3(self):
         """
+        tests 'pfu.py check_checksum'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -183,6 +191,8 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_4(self):
         """
+        tests 'pfu.py check_checksum'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -218,6 +228,8 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_5(self):
         """
+        tests 'pfu.py check_checksum'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -252,6 +264,8 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_6(self):
         """
+        tests 'pfu.py check_checksum'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -291,6 +305,8 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_7(self):
         """
+        tests 'pfu.py check_checksum'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """

@@ -34,6 +34,8 @@ class script_pfu_speed_test(unittest.TestCase):
 
     def test_script_pfu_speed_test_1(self):
         """
+        tests 'pfu.py speed_test'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
@@ -48,6 +50,8 @@ class script_pfu_speed_test(unittest.TestCase):
 
     def test_script_pfu_speed_test_2(self):
         """
+        tests 'pfu.py speed_test'
+
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
