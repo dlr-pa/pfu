@@ -1,6 +1,6 @@
 """
 Author: Daniel Mohr.
-Date: 2019-01-09 (last change).
+Date: 2019-01-09, 2021-05-25 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -37,7 +37,7 @@ def speed_test(args):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2019-01-09 (last change).
+    :Date: 2019-01-09, 2021-05-25 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     This function tries to measure the read and write speed of a storage.
@@ -61,10 +61,7 @@ def speed_test(args):
     log.info(" count: %i" % args.count[0])
     log.info(" output_format: '%s'" % args.output_format[0])
     log.info(" delete: %s" % args.delete)
-    allchars = [chr(i) for i in range(256)]
-    blocktext = [random.choice(allchars) for dummy in range(args.bytes[0])]
-    block = ''.join(blocktext)
-    del allchars, blocktext
+    block = bytes(random.choices(list(range(256)), k=args.bytes[0]))
     if args.output_format[0] == 'human_readable':
         log.info("write %s to '%s'" % (
             bytes_to_human_readable(args.count[0]*args.bytes[0]),
@@ -73,14 +70,13 @@ def speed_test(args):
         log.info("write %i Bytes to '%s'" % (
             args.count[0]*args.bytes[0],
             args.file[0]))
-    fd = open(args.file[0], "wb", 0)
-    t0 = time.time()
-    for i in range(args.count[0]):
-        fd.write(block)
-        #fd.flush()
-        #os.fsync(fd)
-    t1 = time.time()
-    fd.close()
+    with open(args.file[0], "wb", 0)as fd:
+        t0 = time.time()
+        for i in range(args.count[0]):
+            fd.write(block)
+        fd.flush()
+        os.fsync(fd)
+        t1 = time.time()
     duration = t1-t0
     if args.output_format[0] == 'human_readable':
         log.info(
@@ -96,12 +92,11 @@ def speed_test(args):
         log.info("read %i Bytes from '%s'" % (
             args.count[0]*args.bytes[0],
             args.file[0]))
-    fd = open(args.file[0], "rb")
-    t2 = time.time()
-    for i in range(args.count[0]):
-        data = fd.read(args.bytes[0])
-    t3 = time.time()
-    fd.close()
+    with open(args.file[0], "rb") as fd:
+        t2 = time.time()
+        for i in range(args.count[0]):
+            data = fd.read(args.bytes[0])
+        t3 = time.time()
     duration = t3-t2
     if args.output_format[0] == 'human_readable':
         log.info(
