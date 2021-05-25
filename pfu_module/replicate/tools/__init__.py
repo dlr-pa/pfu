@@ -10,11 +10,11 @@ copyright + license
 ===================
 Author: Daniel Mohr.
 
-Date: 2017-02-14 (last change).
+Date: 2017-02-14, 2021-05-25 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-Copyright (C) 2015, 2016, 2017 Daniel Mohr
+Copyright (C) 2015, 2016, 2017, 2018, 2019, 2020, 2021 Daniel Mohr
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License as
  published by the Free Software Foundation; either version 3 of
@@ -40,10 +40,4 @@ __all__ = ['wait_for_free_slot',
            'check_for_none',
            'create_change_dir_command',
            'create_file_list',
-           'run_check_checksums',
-           '',
-           '',
-           '',
-           '',
-           '',
-           '']
+           'run_check_checksums']
