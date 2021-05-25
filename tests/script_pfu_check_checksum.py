@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-17
+:Date: 2021-05-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu.py check_checksum'
@@ -29,9 +29,9 @@ try:
     from .create_random_directory_tree import create_random_directory_tree
     from .checkoutput_check_checksum import checkoutput
 except ModuleNotFoundError:
-    from .create_random_directory_tree import create_random_file
-    from .create_random_directory_tree import create_random_directory_tree
-    from .checkoutput_check_checksum import checkoutput
+    from create_random_directory_tree import create_random_file
+    from create_random_directory_tree import create_random_directory_tree
+    from checkoutput_check_checksum import checkoutput
 
 
 class script_pfu_check_checksum(unittest.TestCase):
