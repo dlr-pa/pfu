@@ -5,10 +5,15 @@
 
 'pfu' is an acronym for Python File Utilities.
 
-At the moment it combines a few tools described quickly in the next subsection.
-'pfu' is designed to work on each platform supported by Python.
+At the moment it combines a few tools described quickly in the next subsections.
+'pfu' is designed to work on each platform supported by
+[Python](https://www.python.org/) (python3).
 
-Using checksums for data exchange helps to verify the data integrity.
+Using [checksums](https://en.wikipedia.org/wiki/Checksum)
+for data exchange helps to verify the
+[data integrity](https://en.wikipedia.org/wiki/Data_integrity).
+
+The command line program(s) provide help output by using the common flag '-h'.
 
 
 ### pfu.py create_checksum
@@ -27,7 +32,7 @@ and was/is used in this project.
 [^b]: https://doi.org/10.1063/1.4962696
 
 In the projects PlasmaLab/Ekoplasma [^c] [^d] and COMPACT [^e]
-it was used and developed.
+it was used and developed in python2.
 
 [^c]: https://complex-plasmas.dlr.de/index.php/plasmalab.html
 [^d]: https://dx.doi.org/10.1063/1.5020392
@@ -68,11 +73,12 @@ than the system could buffer in the main memory.
 ### pfu.py replicate
 
 This is the command to copy/replicate data/files from one directory to other
-directories (one or more). It uses the command line programs e. g. "rsync" and
-"sha256sum". Although we use by default rsync, the source and destination
-paths have to be local. If copy is done by "rsync" and this script is run
-on a windows system, the drive letters will be replaced by
-"/cygdrive/[drive letter]/".
+directories (one or more). In parallel to copying it creates checksums and
+checks the checksums in the target directories after copying. It uses the
+command line programs e. g. "rsync" and "sha256sum". Although we use by
+default rsync, the source and destination paths have to be local. If copy is
+done by "rsync" and this script is run on a windows system, the drive letters
+will be replaced by "/cygdrive/[drive letter]/".
 
 It was used and developed in the project PlasmaLab/Ekoplasma [^f] [^g].
 
@@ -102,6 +108,8 @@ The project pk4_checksums.py is also licensed by Daniel Mohr under the GPL.
 has the only author Daniel Mohr.
 (This is partly already integrated. The other part is not necessary.)
 
+'pfu' was used and developed in python2. But 2021 it was ported to python3.
+
 
 ## install
 
@@ -112,7 +120,7 @@ see [INSTALL](INSTALL.txt)
 
 Author: Daniel Mohr.
 
-Date: 2021-05-03 (last change).
+Date: 2021-05-25 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
