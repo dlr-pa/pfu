@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-03-07 (last change).
+Date: 2017-03-07, 2021-05-25 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -11,28 +11,30 @@ import hashlib
 import logging
 import os
 
-import pfu_module.checksum_tools # own_logger
+import pfu_module.checksum_tools  # own_logger
 from pfu_module.checksum_tools import read_data_from_file
+
 
 class CreateChecksumsClass(object):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-03-07 (last change).
+    :Date: 2017-03-07, 2021-05-25 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to create checksums in directory or directories
     """
     # pylint: disable=too-many-instance-attributes
     # pylint: disable=too-many-arguments
+
     def __init__(self,
                  directories=(),
                  algorithm='sha512',
                  coding='base64',
                  store='dir',
                  ignore=[".md5", ".sha256", ".sha512"],
-                 buf_size=524288, # 1024*512 Bytes = 512 kB
-                 chunk_size=12582912, # 12 MB
+                 buf_size=524288,  # 1024*512 Bytes = 512 kB
+                 chunk_size=12582912,  # 12 MB
                  create_only_missing=1,
                  level=20,
                  hash_file_prefix='.checksum'):
@@ -81,25 +83,25 @@ class CreateChecksumsClass(object):
         self.create_only_missing = create_only_missing
         self.ignore = ignore
         self.buf_size = buf_size
-        self.created_hash_files = [] # list of already created hash files
+        self.created_hash_files = []  # list of already created hash files
         self.log = logging.getLogger("pfu.create")
         self.log.setLevel(1)
         self.hashfkt = {'sha512': hashlib.sha512,
                         'sha256': hashlib.sha256,
                         'md5': hashlib.md5}[self.algorithm]
         #self.hashfkt = None
-        #if self.algorithm == 'sha512':
+        # if self.algorithm == 'sha512':
         #    self.hashfkt = hashlib.sha512
-        #elif self.algorithm == 'sha256':
+        # elif self.algorithm == 'sha256':
         #    self.hashfkt = hashlib.sha256
-        #elif self.algorithm == 'md5':
+        # elif self.algorithm == 'md5':
         #    self.hashfkt = hashlib.md5
         #self.encode = None
-        #if self.coding in ['hex', 'Base16']:
+        # if self.coding in ['hex', 'Base16']:
         #    self.encode = base64.b16encode
-        #elif self.coding in ['base32', 'Base32']:
+        # elif self.coding in ['base32', 'Base32']:
         #    self.encode = base64.b32encode
-        #elif self.coding in ['base64', 'Base64']:
+        # elif self.coding in ['base64', 'Base64']:
         #    self.encode = base64.b64encode
         self.encode = {'hex': base64.b16encode,
                        'base16': base64.b16encode,
@@ -113,7 +115,7 @@ class CreateChecksumsClass(object):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2016-12-08 (last change).
+        :Date: 2016-12-08, 2021-05-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         Calculate hash(es) for data_file_name
@@ -135,16 +137,17 @@ class CreateChecksumsClass(object):
                 if create_chunk_hashes:
                     cal_chunk_hash = self.hashfkt()
                     hash_objects += [cal_chunk_hash]
-                read_data_from_file(self.buf_size, data_file, self.chunk_size, hash_objects)
+                read_data_from_file(self.buf_size, data_file,
+                                    self.chunk_size, hash_objects)
                 if create_chunk_hashes:
-                    out += [(self.encode(cal_chunk_hash.digest()),
+                    out += [(self.encode(cal_chunk_hash.digest()).decode(),
                              '  ',
                              filename,
                              ' (bytes ', '%i' % last_position,
                              ' - ',
                              '%i' % (data_file.tell()-1), ')')]
                 last_position = data_file.tell()
-            out[0] = (self.encode(cal_hash.digest()),
+            out[0] = (self.encode(cal_hash.digest()).decode(),
                       '  ',
                       filename)
         return out
@@ -164,13 +167,14 @@ class CreateChecksumsClass(object):
         :param data_file_name: file name of the file to analyse
         :param hash_file_name: file name of the file to store hash
         """
-        err = 0 # no error
+        err = 0  # no error
         # calculate hash for data_file_name
         try:
             out = self.calculate_hash(data_file_name)
         except IOError:
-            err = 1 # IOError
-            self.log.warning('IOError during hashing file "%s"', data_file_name)
+            err = 1  # IOError
+            self.log.warning(
+                'IOError during hashing file "%s"', data_file_name)
         if err == 0:
             # store hash in hash_file_name
             with open(hash_file_name, 'a') as hash_file:
@@ -195,7 +199,7 @@ class CreateChecksumsClass(object):
         :param data_file_name: file name of the file to analyse
         """
         if (os.path.isfile(data_file_name) and
-            os.access(data_file_name, os.R_OK)):
+                os.access(data_file_name, os.R_OK)):
             hash_file_name = ""
             if self.store == 'dir':
                 hash_file_name = os.path.join(
@@ -257,11 +261,12 @@ class CreateChecksumsClass(object):
         :param name: name of the top directory to handle
         """
         self.log.debug("analyse directory \"%s\"", name)
-        self.created_hash_files = [] # list of already created hash files
+        self.created_hash_files = []  # list of already created hash files
         for (dirpath, _, filenames) in os.walk(name):
             for filename in filenames:
                 if not self.is_hash_file(os.path.join(dirpath, filename)):
-                    self.log.debug("create hash for file \"%s\"", os.path.join(dirpath, filename))
+                    self.log.debug("create hash for file \"%s\"",
+                                   os.path.join(dirpath, filename))
                     self.create_checksum(
                         dirpath,
                         os.path.join(dirpath, filename))
@@ -279,5 +284,6 @@ class CreateChecksumsClass(object):
             if os.path.isdir(name):
                 self.create_hashes_in_directory(name)
             else:
-                self.log.warning("cannot handle '%s' (e. g. not a directory)", name)
-        return 0 # success
+                self.log.warning(
+                    "cannot handle '%s' (e. g. not a directory)", name)
+        return 0  # success
