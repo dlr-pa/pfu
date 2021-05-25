@@ -264,7 +264,7 @@ class script_pfu_check_checksum(unittest.TestCase):
 
     def test_script_pfu_check_checksum_6(self):
         """
-        tests 'pfu.py check_checksum'
+        tests 'pfu.py check_checksum' by comparing with sha1sum and sha384sum
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -304,6 +304,47 @@ class script_pfu_check_checksum(unittest.TestCase):
                 self.assertTrue(checkoutput(cp.stderr))
 
     def test_script_pfu_check_checksum_7(self):
+        """
+        tests 'pfu.py check_checksum' by comparing with sha1 and sha384
+
+        :Author: Daniel Mohr
+        :Date: 2021-05-25
+        """
+        for alg in ['sha1', 'sha384']:
+            cmd = alg
+            # check if cmd is available
+            cp = subprocess.run(
+                cmd + ' -s foo',
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True,
+                timeout=3, check=False)
+            if cp.returncode != 0:
+                self.skipTest(cmd + ' not available, skipping test')
+                return
+            # run test
+            with tempfile.TemporaryDirectory() as tmpdir:
+                # create random data
+                create_random_directory_tree(tmpdir, levels=0)
+                # create checksums
+                param = '"' + '" "'.join(os.listdir(tmpdir)) + '"'
+                cp = subprocess.run(
+                    cmd + ' -- ' + param,
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    shell=True, cwd=tmpdir,
+                    timeout=3, check=True)
+                with open(os.path.join(tmpdir, '.checksum.' + alg), 'w') as fd:
+                    fd.write(cp.stdout.decode())
+                # check checksums
+                param = '-loglevel 20 -dir .'
+                param += ' -hash_extension .' + alg
+                cp = subprocess.run(
+                    'pfu.py check_checksum ' + param,
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    shell=True, cwd=tmpdir,
+                    timeout=3, check=True)
+                self.assertTrue(checkoutput(cp.stderr))
+
+    def test_script_pfu_check_checksum_8(self):
         """
         tests 'pfu.py check_checksum'
 
