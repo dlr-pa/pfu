@@ -109,6 +109,13 @@ For example:
     export PATH=$PATH:~/bin
     export PYTHONPATH=~/lib/python
 
+If you have installed [argcomplete](https://kislyuk.github.io/argcomplete/)
+it is used by pfu and you can use it, e. g. to get bash completion:
+
+    eval "$(register-python-argcomplete3 pfu.py)"
+
+Similar for other shells, see
+[argcomplete](https://kislyuk.github.io/argcomplete/).
 
 ## after install
 
