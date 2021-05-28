@@ -113,7 +113,7 @@ has the only author Daniel Mohr.
 
 ## install
 
-see [INSTALL](INSTALL.txt)
+see [INSTALL](INSTALL.md)
 
 
 ## copyright + license
