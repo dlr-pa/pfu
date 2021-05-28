@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 """
 Author: Daniel Mohr.
-Date: 2019-01-09 (last change).
+Date: 2019-01-09, 2021-05-28 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,13 +13,13 @@ import sys
 
 import pfu_module.scripts
 
-__pfu_date__ = "2019-01-09"
+__pfu_date__ = "2021-05-28"
 
 def main():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2019-01-09 (last change).
+    :Date: 2019-01-09, 2021-05-28 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     myhelp = ""
@@ -56,6 +56,9 @@ def main():
     pfu_module.scripts.create_subparser_speed_test(subparsers)
     # parse arguments
     args = parser.parse_args()
+    if not hasattr(args, 'func'):
+        parser.print_help()
+        sys.exit(1)
     # create log
     log = logging.getLogger("pfu")
     log_console_handler = logging.StreamHandler()
