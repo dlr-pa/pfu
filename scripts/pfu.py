@@ -5,6 +5,10 @@ Date: 2019-01-09, 2021-05-28 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+try:
+    import argcomplete
+except (ModuleNotFoundError, ImportError):
+    pass
 import argparse
 import logging
 import logging.handlers
@@ -55,6 +59,10 @@ def main():
     # subparser replicate
     pfu_module.scripts.create_subparser_speed_test(subparsers)
     # parse arguments
+    try:
+        argcomplete.autocomplete(parser)
+    except NameError:
+        pass
     args = parser.parse_args()
     if not hasattr(args, 'func'):
         parser.print_help()
