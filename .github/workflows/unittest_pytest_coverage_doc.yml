@@ -13,14 +13,16 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
+    - name: install dependencies (ubuntu packages)
+      run: sudo apt install python3-setuptools
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu
       run: sudo python3 setup.py install
     - name: run pfu
       run: |
-        which pfu.py
-        pfu.py -h
+        which pfu
+        pfu -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies for pytest (ubuntu packages)
@@ -34,14 +36,16 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
+    - name: install dependencies (ubuntu packages)
+      run: sudo apt install python3-setuptools
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu
       run: sudo python3 setup.py install
     - name: run pfu
       run: |
-        which pfu.py
-        pfu.py -h
+        which pfu
+        pfu -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies for pytest (ubuntu packages)
@@ -60,15 +64,15 @@ jobs:
       run: sudo python3 setup.py install
     - name: run pfu
       run: |
-        which pfu.py
-        pfu.py -h
+        which pfu
+        pfu -h
     - name: foo bar
       run: |
         mkdir foo
-        pfu.py simscrub -config_data_directory foo
-        pfu.py simscrub
-        pfu.py simscrub -dir .
-        pfu.py simscrub
+        pfu simscrub -config_data_directory foo
+        pfu simscrub
+        pfu simscrub -dir .
+        pfu simscrub
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies via pip3
