@@ -49,7 +49,7 @@ def create_subparser_simscrub(subparsers):
     parser = subparsers.add_parser(
         'simscrub',
         description='This script read every file in the given directory tree.',
-        help='This command read every file in the given directory tree.'+' For more help: pfu.py simscrub -h',
+        help='This command read every file in the given directory tree.'+' For more help: pfu simscrub -h',
         epilog="%s" % epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=simscrub)

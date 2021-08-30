@@ -112,7 +112,7 @@ For example:
 If you have installed [argcomplete](https://kislyuk.github.io/argcomplete/)
 it is used by pfu and you can use it, e. g. to get bash completion:
 
-    eval "$(register-python-argcomplete3 pfu.py)"
+    eval "$(register-python-argcomplete3 pfu)"
 
 Similar for other shells, see
 [argcomplete](https://kislyuk.github.io/argcomplete/).

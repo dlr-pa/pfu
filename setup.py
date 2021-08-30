@@ -5,8 +5,11 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import distutils  # we need distutils for distutils.errors.DistutilsArgError
+import os
+import sys
 
-from distutils.core import setup, Command
+from setuptools import Command, setup
 
 
 class TestWithPytest(Command):
@@ -55,11 +58,9 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-17
+        :Date: 2021-08-30
         """
         # env python3 setup.py run_pytest
-        import sys
-        import os.path
         if self.src == 'installed':
             pass
         elif self.src == 'local':
@@ -71,13 +72,14 @@ class TestWithPytest(Command):
         sys.path.append(os.path.abspath('.'))
         # https://docs.pytest.org/en/stable/contents.html
         # https://pytest-cov.readthedocs.io/en/latest/
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import pytest
         pyargs = []
         if self.parallel:
             try:
                 # if available, using parallel test run
+                # pylint: disable=unused-variable
                 import xdist
-                import sys
                 if os.name == 'posix':
                     # since we are only running seconds,
                     # we use the load of the last minute:
@@ -88,7 +90,7 @@ class TestWithPytest(Command):
                 else:
                     nthreads = max(1, int(0.5 * os.cpu_count()))
                 pyargs += ['-n %i' % nthreads]
-            except:
+            except (ModuleNotFoundError, ImportError):
                 pass
         if self.coverage:
             # env python3 setup.py run_pytest --coverage
@@ -114,7 +116,7 @@ class TestWithPytest(Command):
             pyargs += ['tests/main.py']
         pyplugins = []
         print('call: pytest', ' '.join(pyargs))
-        pytest.main(pyargs, pyplugins)
+        sys.exit(pytest.main(pyargs, pyplugins))
 
 
 class TestWithUnittest(Command):
@@ -155,11 +157,9 @@ class TestWithUnittest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-05-14
+        :Date: 2021-08-30
         """
         # env python3 setup.py run_unittest
-        import sys
-        import os.path
         if self.src == 'installed':
             pass
         elif self.src == 'local':
@@ -169,12 +169,15 @@ class TestWithUnittest(Command):
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import unittest
         suite = unittest.TestSuite()
         import tests
         setup_self = self
 
         class test_required_module_import(unittest.TestCase):
+            # pylint: disable=missing-docstring
+            # pylint: disable=no-self-use
             def test_required_module_import(self):
                 import importlib
                 for module in setup_self.distribution.metadata.get_requires():
@@ -184,7 +187,11 @@ class TestWithUnittest(Command):
             test_required_module_import))
         if self.src == 'installed':
             tests.scripts(suite)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        res = unittest.TextTestRunner(verbosity=2).run(suite)
+        if res.wasSuccessful():
+            sys.exit(0)
+        else:
+            sys.exit(1)
 
 
 class CheckModules(Command):
@@ -272,6 +279,7 @@ setup(
     maintainer_email='daniel.mohr@dlr.de',
     url='',
     download_url='',
+    package_dir={'': 'src'},
     packages=[
         'pfu_module',
         'pfu_module.check_checksum',
@@ -287,8 +295,10 @@ setup(
         'pfu_module.SimScrub.tools',
         'pfu_module.speed_test',
         'pfu_module.speed_test.script'],
-    scripts=[
-        'scripts/pfu.py'],
+    entry_points={
+        'console_scripts':
+            ['pfu=pfu_module.scripts.pfu:main'],
+    },
     license='GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007',
     classifiers=[
         'Development Status :: 3 - Alpha',

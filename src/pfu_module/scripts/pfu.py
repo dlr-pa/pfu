@@ -28,15 +28,15 @@ def main():
     """
     myhelp = ""
     myhelp += "Examples:\n\n"
-    myhelp += " pfu.py -h\n"
-    myhelp += " pfu.py simscrub -h\n"
-    myhelp += " pfu.py create_checksum -h\n"
-    myhelp += " pfu.py check_checksum -h\n"
-    myhelp += " pfu.py replicate -h\n"
-    myhelp += " pfu.py speed_test -h\n"
-    myhelp += " pfu.py -h\n"
+    myhelp += " pfu -h\n"
+    myhelp += " pfu simscrub -h\n"
+    myhelp += " pfu create_checksum -h\n"
+    myhelp += " pfu check_checksum -h\n"
+    myhelp += " pfu replicate -h\n"
+    myhelp += " pfu speed_test -h\n"
+    myhelp += " pfu -h\n"
     parser = argparse.ArgumentParser(
-        description='pfu.py is a python script for'+
+        description='pfu is a python script for'+
         ' simple file handling. Command line parameters can be shorten,'+
         ' as far as they are unique.',
         epilog=("Author: Daniel Mohr\n"+

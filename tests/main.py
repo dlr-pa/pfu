@@ -74,9 +74,9 @@ class test_script_executable(unittest.TestCase):
         :Date: 2021-05-25
         """
         import subprocess
-        for cmd in ['pfu.py -h', 'pfu.py simscrub -h',
-                    'pfu.py create_checksum -h', 'pfu.py check_checksum -h',
-                    'pfu.py replicate -h', 'pfu.py speed_test -h']:
+        for cmd in ['pfu -h', 'pfu simscrub -h',
+                    'pfu create_checksum -h', 'pfu check_checksum -h',
+                    'pfu replicate -h', 'pfu speed_test -h']:
             out = subprocess.check_output(
                 cmd,
                 shell=True)
@@ -84,7 +84,7 @@ class test_script_executable(unittest.TestCase):
             self.assertTrue(len(out) >= 775)
             # check begin of help output
             self.assertTrue(out.startswith(
-                b'usage: pfu.py '))
+                b'usage: pfu '))
 
 
 def scripts(suite):
@@ -99,19 +99,19 @@ def scripts(suite):
     print('add tests for the scripts')
     loader = unittest.defaultTestLoader
     suite.addTest(loader.loadTestsFromTestCase(test_script_executable))
-    # pfu.py simscrub
+    # pfu simscrub
     suite.addTest(loader.loadTestsFromName(
         'tests.script_pfu_simscrub'))
-    # pfu.py create_checksum
+    # pfu create_checksum
     suite.addTest(loader.loadTestsFromName(
         'tests.script_pfu_create_checksum'))
-    # pfu.py check_checksum
+    # pfu check_checksum
     suite.addTest(loader.loadTestsFromName(
         'tests.script_pfu_check_checksum'))
-    # pfu.py replicate
+    # pfu replicate
     suite.addTest(loader.loadTestsFromName(
         'tests.script_pfu_replicate'))
-    # pfu.py speed_test
+    # pfu speed_test
     suite.addTest(loader.loadTestsFromName(
         'tests.script_pfu_speed_test'))
 

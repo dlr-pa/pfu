@@ -27,16 +27,16 @@ def create_subparser_replicate(subparsers):
     :Date: 2017-02-14, 2021-05-17 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-    This is the code for the script :program:`pfu.py`.
+    This is the code for the script :program:`pfu`.
     In this function only the command line parameters for 'replicate'
     are defined.
     """
     myhelp = "Examples:\n\n"
-    myhelp += "  time pfu.py replicate -source sd -destination $(pwd)/t1 t2/\n\n"
-    myhelp += "  time pfu.py replicate -so ./sd -de t1 t2/ -l 0\n\n"
-    myhelp += "  time pfu.py replicate -checksum_check_parameter '--quiet --check' \\\n   -source sd/ -destination t1/ t2/\n\n"
-    myhelp += "  time pfu.py replicate -checksum_program md5sum -source sd -destination t1 t2\n\n"
-    myhelp += "  time pfu.py replicate -copy_program1 cp \\\n   -copy_parameter1 '--recursive --archive --update --one-file-system --no-dereference' \\\n   -source sd -destination t1 t2\n\n"
+    myhelp += "  time pfu replicate -source sd -destination $(pwd)/t1 t2/\n\n"
+    myhelp += "  time pfu replicate -so ./sd -de t1 t2/ -l 0\n\n"
+    myhelp += "  time pfu replicate -checksum_check_parameter '--quiet --check' \\\n   -source sd/ -destination t1/ t2/\n\n"
+    myhelp += "  time pfu replicate -checksum_program md5sum -source sd -destination t1 t2\n\n"
+    myhelp += "  time pfu replicate -copy_program1 cp \\\n   -copy_parameter1 '--recursive --archive --update --one-file-system --no-dereference' \\\n   -source sd -destination t1 t2\n\n"
     myhelp += "It takes a long time, e. g.:\n"
     myhelp += "  >>> data = 1.0 * 1024*1024*1024*1024 # 1.0 [TB]\n"
     myhelp += "  >>> copytime = data / (100*1024*1024) / 60.0 / 60.0 # [h] (at 100 MB/sec)\n"
@@ -78,7 +78,7 @@ def create_subparser_replicate(subparsers):
     parser = subparsers.add_parser(
         'replicate',
         description=description,
-        help='This is the command to copy/replicate data/files from one directory to other directories (one or more). '+'For more help: pfu.py replicate -h',
+        help='This is the command to copy/replicate data/files from one directory to other directories (one or more). '+'For more help: pfu replicate -h',
         epilog="%s" % epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=replicate)

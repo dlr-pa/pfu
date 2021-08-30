@@ -4,7 +4,7 @@
 :Date: 2021-05-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-tests the script 'pfu.py replicate'
+tests the script 'pfu replicate'
 
 You can run this file directly::
 
@@ -41,7 +41,7 @@ class script_pfu_replicate(unittest.TestCase):
 
     def test_script_pfu_replicate_1(self):
         """
-        tests the script 'pfu.py replicate'
+        tests the script 'pfu replicate'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -70,7 +70,7 @@ class script_pfu_replicate(unittest.TestCase):
                 extraparam += ' -checksum_create_parameter \\\"\\\"'
                 extraparam += ' -checksum_check_parameter \\\"-c\\\"'
                 # check parameter will not work, but produces no error
-        else:  # sha256sum is available and default for pfu.py replicate
+        else:  # sha256sum is available and default for pfu replicate
             extraparam = ''
         with tempfile.TemporaryDirectory() as tmpdir:
             src_dir = os.path.join(tmpdir, 'src')
@@ -85,7 +85,7 @@ class script_pfu_replicate(unittest.TestCase):
             param += ' -destination ' + ' '.join(dest_dirs)
             param += ' ' + extraparam
             cp = subprocess.run(
-                'pfu.py replicate ' + param,
+                'pfu replicate ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=28, check=True)
@@ -94,7 +94,7 @@ class script_pfu_replicate(unittest.TestCase):
                 param = '-loglevel 20 -ignore_extension log status'
                 param += ' -dir ' + dest_dir
                 cp = subprocess.run(
-                    'pfu.py check_checksum ' + param,
+                    'pfu check_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
                     timeout=6, check=False)

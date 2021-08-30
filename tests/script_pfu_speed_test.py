@@ -4,7 +4,7 @@
 :Date: 2021-05-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-tests the script 'pfu.py speed_test'
+tests the script 'pfu speed_test'
 
 You can run this file directly::
 
@@ -34,7 +34,7 @@ class script_pfu_speed_test(unittest.TestCase):
 
     def test_script_pfu_speed_test_1(self):
         """
-        tests 'pfu.py speed_test'
+        tests 'pfu speed_test'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -42,7 +42,7 @@ class script_pfu_speed_test(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             param = '-f a -bytes 42 -count 6 '
             cp = subprocess.run(
-                'pfu.py speed_test ' + param,
+                'pfu speed_test ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
                 timeout=6, check=True)
@@ -50,7 +50,7 @@ class script_pfu_speed_test(unittest.TestCase):
 
     def test_script_pfu_speed_test_2(self):
         """
-        tests 'pfu.py speed_test'
+        tests 'pfu speed_test'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -58,7 +58,7 @@ class script_pfu_speed_test(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             param = '-f a -bytes 42 -count 6 -output_format maschine_readable'
             cp = subprocess.run(
-                'pfu.py speed_test ' + param,
+                'pfu speed_test ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
                 timeout=6, check=True)

@@ -16,7 +16,7 @@ for data exchange helps to verify the
 The command line program(s) provide help output by using the common flag '-h'.
 
 
-### pfu.py create_checksum
+### pfu create_checksum
 
 This command will create (missing) checksums in a directory tree.
 The checksums can be stored for each file, in each directory or in one file.
@@ -39,7 +39,7 @@ it was used and developed in python2.
 [^e]: https://sciences.ucf.edu/physics/microgravity/iss-compact/
 
 
-### pfu.py check_checksum
+### pfu check_checksum
 
 This command will check checksums. We assume relative paths in each hash file.
 
@@ -52,7 +52,7 @@ formats (and more):
 	* format used in PlasmaLab/Ekoplasma and COMPACT
 
 
-### pfu.py simscrub
+### pfu simscrub
 
 This script read every file in the given directory tree.
 
@@ -61,7 +61,7 @@ simulate a scrubbing and give the file system or storage device
 (e. g. firmware of SSD) the chance to detect error and to fix them.
 
 
-### pfu.py speed_test
+### pfu speed_test
 
 This script tries to measure the read and write speed of a storage.
 
@@ -70,7 +70,7 @@ system. To get a significant measure you should read and write more data
 than the system could buffer in the main memory.
 
 
-### pfu.py replicate
+### pfu replicate
 
 This is the command to copy/replicate data/files from one directory to other
 directories (one or more). In parallel to copying it creates checksums and

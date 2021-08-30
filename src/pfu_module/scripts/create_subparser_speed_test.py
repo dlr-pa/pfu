@@ -41,7 +41,7 @@ def create_subparser_speed_test(subparsers):
     myhelp += " fio - flexible I/O tester\n"
     myhelp += "  https://github.com/axboe/fio\n"
     myhelp += "\nExample:\n"
-    myhelp += " pfu.py speed_test -f b -c 2560 -b 4194304"
+    myhelp += " pfu speed_test -f b -c 2560 -b 4194304"
     epilog = "Author: Daniel Mohr\n"
     epilog += "Date: %s\n" % __date__
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n"
@@ -49,7 +49,7 @@ def create_subparser_speed_test(subparsers):
     parser = subparsers.add_parser(
         'speed_test',
         description='This script tries to measure the read and write speed of a storage.',
-        help='This script tries to measure the read and write speed of a storage.'+' For more help: pfu.py speed_test -h',
+        help='This script tries to measure the read and write speed of a storage.'+' For more help: pfu speed_test -h',
         epilog="%s" % epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=speed_test)

@@ -54,7 +54,7 @@ def speed_test(args):
     # add the handlers to log
     log.addHandler(console_handler)
     # print settings and informations
-    log.info("pfu.py speed_test from %s\n" % __date__)
+    log.info("pfu speed_test from %s\n" % __date__)
     log.info("setting:")
     log.info(" f: '%s'" % args.file[0])
     log.info(" bytes: %i" % args.bytes[0])
