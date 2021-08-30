@@ -25,7 +25,7 @@ pfu-2017-02-14.tar.gz
 
   * first version with the most useful subcommands
 
-  * simscrub.py integrated now as a subcommand of pfu.py
+  * simscrub.py integrated now as a subcommand of pfu
 
   * integrated subcommand "create_checksum" alias
     "create" from project pk4_checksums.py

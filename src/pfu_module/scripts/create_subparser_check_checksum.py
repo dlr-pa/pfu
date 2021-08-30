@@ -41,9 +41,9 @@ def create_subparser_check_checksum(subparsers):
     # pylint: disable=line-too-long
     myprehelp = "This command will check checksums. We assume relative paths in each hash file. Command line parameters can be shortened, as far as they are unique."
     myposthelp = "Example:\n\n"
-    myposthelp += " pfu.py check_checksum -d . -loglevel 15 -logfile output.log\n"
-    myposthelp += " pfu.py check_checksum -d . -loglevel 15 -i \"~\" .tmp .bak .md5\n"
-    myposthelp += " pfu.py check_checksum -directory . -loglevel 20"
+    myposthelp += " pfu check_checksum -d . -loglevel 15 -logfile output.log\n"
+    myposthelp += " pfu check_checksum -d . -loglevel 15 -i \"~\" .tmp .bak .md5\n"
+    myposthelp += " pfu check_checksum -directory . -loglevel 20"
     parser = subparsers.add_parser(
         'check_checksum',
         description=myprehelp,

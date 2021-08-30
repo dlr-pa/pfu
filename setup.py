@@ -297,10 +297,8 @@ setup(
         'pfu_module.speed_test.script'],
     entry_points={
         'console_scripts':
-            ['pfu.py=pfu_module.scripts.pfu:main'],
+            ['pfu=pfu_module.scripts.pfu:main'],
     },
-    #scripts=[
-    #    'src/scripts/pfu.py'],
     license='GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007',
     classifiers=[
         'Development Status :: 3 - Alpha',

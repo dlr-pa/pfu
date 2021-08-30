@@ -97,7 +97,7 @@ def replicate(args):
     # add the handlers to log
     log.addHandler(console_handler)
     # print settings and informations
-    log.info("pfu.py from %s\n" % __date__)
+    log.info("pfu from %s\n" % __date__)
     log.info("setting:")
     log.info(" source: '%s'" % args.source)
     log.info(" source (absolut path): '%s'" % os.path.abspath(args.source))

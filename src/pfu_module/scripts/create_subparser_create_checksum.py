@@ -66,12 +66,12 @@ def create_subparser_create_checksum(subparsers):
     help_create = ""
     help_create += "This command will create (missing) checksums. Command line parameters can be shortened, as far as they are unique."
     myposthelp = "Example:\n\n"
-    myposthelp += " pfu.py create_checksum -d .\n"
-    myposthelp += " pfu.py create_checksum -d . -logfile l -fileloglevel 15"
+    myposthelp += " pfu create_checksum -d .\n"
+    myposthelp += " pfu create_checksum -d . -logfile l -fileloglevel 15"
     parser_create = subparsers.add_parser(
         'create_checksum',
         description=help_create,
-        help=help_create+' For more help: pfu.py create_checksum -h',
+        help=help_create+' For more help: pfu create_checksum -h',
         epilog="Author: Daniel Mohr.\nDate: %s.\nLicense: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n\n%s" % (__date__, myposthelp),
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser_create.add_argument(

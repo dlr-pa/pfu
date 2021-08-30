@@ -4,7 +4,7 @@
 :Date: 2021-05-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-tests the script 'pfu.py simscrub'
+tests the script 'pfu simscrub'
 
 You can run this file directly::
 
@@ -41,23 +41,23 @@ class script_pfu_simscrub(unittest.TestCase):
 
     def test_script_pfu_simscrub_0(self):
         """
-        tests 'pfu.py simscrub'
+        tests 'pfu simscrub'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
         cp = subprocess.run(
-            'pfu.py simscrub -h',
+            'pfu simscrub -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
             timeout=6, check=True)
         # check begin of help output
         self.assertTrue(cp.stdout.startswith(
-            b'usage: pfu.py simscrub '))
+            b'usage: pfu simscrub '))
 
     def test_script_pfu_simscrub_1(self):
         """
-        tests 'pfu.py simscrub'
+        tests 'pfu simscrub'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -67,7 +67,7 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-dir .'
             param += ' -config_data_directory ' + tmpdir
             cp = subprocess.run(
-                'pfu.py simscrub ' + param,
+                'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
@@ -75,7 +75,7 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-config_data_directory ' + tmpdir
             #param += ' -fileloglevel 1'
             cp = subprocess.run(
-                'pfu.py simscrub ' + param,
+                'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
@@ -83,7 +83,7 @@ class script_pfu_simscrub(unittest.TestCase):
 
     def test_script_pfu_simscrub_2(self):
         """
-        tests 'pfu.py simscrub'
+        tests 'pfu simscrub'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -102,7 +102,7 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-dir ' + data_dir
             param += ' -config_data_directory ' + conf_dir
             cp = subprocess.run(
-                'pfu.py simscrub ' + param,
+                'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
@@ -114,7 +114,7 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-config_data_directory ' + conf_dir
             param += ' -fileloglevel 1'
             cp = subprocess.run(
-                'pfu.py simscrub ' + param,
+                'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
@@ -133,7 +133,7 @@ class script_pfu_simscrub(unittest.TestCase):
             create_random_file(os.path.join(data_dir, '10'))
             param += ' -time_delta 0'
             cp = subprocess.run(
-                'pfu.py simscrub ' + param,
+                'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
@@ -141,7 +141,7 @@ class script_pfu_simscrub(unittest.TestCase):
 
     def test_script_pfu_simscrub_3(self):
         """
-        tests 'pfu.py simscrub'
+        tests 'pfu simscrub'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -156,7 +156,7 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-dir ' + data_dir
             param += ' -config_data_directory ' + conf_dir
             cp = subprocess.run(
-                'pfu.py simscrub ' + param,
+                'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
@@ -168,7 +168,7 @@ class script_pfu_simscrub(unittest.TestCase):
             param = '-config_data_directory ' + conf_dir
             param += ' -fileloglevel 1'
             cp = subprocess.run(
-                'pfu.py simscrub ' + param,
+                'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)

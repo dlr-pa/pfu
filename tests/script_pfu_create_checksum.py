@@ -4,7 +4,7 @@
 :Date: 2021-05-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-tests the script 'pfu.py create_checksum'
+tests the script 'pfu create_checksum'
 
 You can run this file directly::
 
@@ -39,23 +39,23 @@ class script_pfu_create_checksum(unittest.TestCase):
 
     def test_script_pfu_create_checksum_help(self):
         """
-        tests 'pfu.py create_checksum'
+        tests 'pfu create_checksum'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
         cp = subprocess.run(
-            'pfu.py create_checksum -h',
+            'pfu create_checksum -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
             timeout=6, check=True)
         # check begin of help output
         self.assertTrue(cp.stdout.startswith(
-            b'usage: pfu.py create_checksum '))
+            b'usage: pfu create_checksum '))
 
     def test_script_pfu_create_checksum_0(self):
         """
-        tests 'pfu.py create_checksum'
+        tests 'pfu create_checksum'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -67,7 +67,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 fd.write('bar')
             param = '-dir ' + data_dir
             cp = subprocess.run(
-                'pfu.py create_checksum ' + param,
+                'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
@@ -79,7 +79,7 @@ class script_pfu_create_checksum(unittest.TestCase):
 
     def test_script_pfu_create_checksum_1(self):
         """
-        tests 'pfu.py create_checksum'
+        tests 'pfu create_checksum'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -92,7 +92,7 @@ class script_pfu_create_checksum(unittest.TestCase):
             param = '-dir ' + data_dir
             param += ' -store many'
             cp = subprocess.run(
-                'pfu.py create_checksum ' + param,
+                'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
@@ -104,7 +104,7 @@ class script_pfu_create_checksum(unittest.TestCase):
 
     def test_script_pfu_create_checksum_2(self):
         """
-        tests 'pfu.py create_checksum'
+        tests 'pfu create_checksum'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -125,7 +125,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 param += ' -algorithm ' + alg
                 param += ' -coding ' + coding
                 cp = subprocess.run(
-                    'pfu.py create_checksum ' + param,
+                    'pfu create_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
                     timeout=6, check=True)
@@ -137,7 +137,7 @@ class script_pfu_create_checksum(unittest.TestCase):
 
     def test_script_pfu_create_checksum_3(self):
         """
-        tests 'pfu.py create_checksum'
+        tests 'pfu create_checksum'
 
         :Author: Daniel Mohr
         :Date: 2021-05-25
@@ -150,7 +150,7 @@ class script_pfu_create_checksum(unittest.TestCase):
             param = '-dir ' + data_dir
             param += ' -chunk_size 1'
             cp = subprocess.run(
-                'pfu.py create_checksum ' + param,
+                'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
