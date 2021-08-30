@@ -50,7 +50,7 @@ class script_pfu_simscrub(unittest.TestCase):
             'pfu.py simscrub -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=3, check=True)
+            timeout=6, check=True)
         # check begin of help output
         self.assertTrue(cp.stdout.startswith(
             b'usage: pfu.py simscrub '))
@@ -70,7 +70,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=3, check=True)
+                timeout=6, check=True)
             self.assertEqual(cp.stdout, b'create_directory_trees\n')
             param = '-config_data_directory ' + tmpdir
             #param += ' -fileloglevel 1'
@@ -78,7 +78,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=3, check=True)
+                timeout=6, check=True)
             self.assertEqual(cp.stdout, b'do_scrubbing\n')
 
     def test_script_pfu_simscrub_2(self):
@@ -105,7 +105,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=3, check=True)
+                timeout=6, check=True)
             self.assertEqual(cp.stdout, b'create_directory_trees\n')
             start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
@@ -117,7 +117,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=3, check=True)
+                timeout=6, check=True)
             self.assertEqual(cp.stdout, b'do_scrubbing\n')
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
@@ -136,7 +136,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=3, check=True)
+                timeout=6, check=True)
             self.assertEqual(cp.stdout, b'do_scrubbing\n')
 
     def test_script_pfu_simscrub_3(self):
@@ -159,7 +159,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=3, check=True)
+                timeout=6, check=True)
             self.assertEqual(cp.stdout, b'create_directory_trees\n')
             start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
@@ -171,7 +171,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu.py simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=3, check=True)
+                timeout=6, check=True)
             self.assertEqual(cp.stdout, b'do_scrubbing\n')
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()

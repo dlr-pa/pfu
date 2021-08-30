@@ -51,7 +51,7 @@ class script_pfu_replicate(unittest.TestCase):
             'sha256sum --version',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=3, check=False)
+            timeout=6, check=False)
         extraparam = ''
         if cp.returncode != 0:
             #self.skipTest('sha256sum not available, skipping test')
@@ -60,7 +60,7 @@ class script_pfu_replicate(unittest.TestCase):
                 'sha256 -s foo',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=3, check=False)
+                timeout=6, check=False)
             if cp.returncode != 0:
                 self.skipTest(
                     'sha256sum and sha256 not available, skipping test')
@@ -97,7 +97,7 @@ class script_pfu_replicate(unittest.TestCase):
                     'pfu.py check_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
-                    timeout=3, check=False)
+                    timeout=6, check=False)
                 self.assertTrue(checkoutput(cp.stderr))
 
 
