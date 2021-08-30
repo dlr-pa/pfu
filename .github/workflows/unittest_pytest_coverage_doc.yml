@@ -1,0 +1,77 @@
+name: unittest_pytest_coverage_doc
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  ubuntu-1804_test_doc:
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: check all modules available
+      run: env python3 setup.py check_modules
+    - name: install pfu
+      run: sudo python3 setup.py install
+    - name: run pfu
+      run: |
+        which pfu.py
+        pfu.py -h
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: install dependencies for pytest (ubuntu packages)
+      run: sudo apt install python3-pytest python3-pytest-cov python3-pytest-xdist
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
+
+  ubuntu-2004_test_doc:
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
+#    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: check all modules available
+      run: env python3 setup.py check_modules
+    - name: install pfu
+      run: sudo python3 setup.py install
+    - name: run pfu
+      run: |
+        which pfu.py
+        pfu.py -h
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: install dependencies for pytest (ubuntu packages)
+      run: sudo apt install python3-pytest python3-pytest-cov python3-pytest-xdist
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
+
+  macos-1015_test:
+    # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md
+    runs-on: macos-10.15
+    steps:
+    - uses: actions/checkout@v2
+    - name: check all modules available
+      run: env python3 setup.py check_modules
+    - name: install pfu
+      run: sudo python3 setup.py install
+    - name: run pfu
+      run: |
+        which pfu.py
+        pfu.py -h
+    - name: foo bar
+      run: |
+        mkdir foo
+        pfu.py simscrub -config_data_directory foo
+        pfu.py simscrub
+        pfu.py simscrub -dir .
+        pfu.py simscrub
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: install dependencies via pip3
+      run: pip3 install wheel pytest pytest-cov pytest-xdist
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
