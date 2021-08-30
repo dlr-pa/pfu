@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2017-01-29 (last change).
+:Date: 2017-01-29, 2021-08-31 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -19,7 +19,7 @@ def do_scrubbing(args, log):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-29 (last change).
+    :Date: 2017-01-29, 2021-08-31 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     if os.path.exists(args.config_data_directory[0]):
@@ -62,5 +62,6 @@ def do_scrubbing(args, log):
                 pass
         # verify all threads are finished
         for mythread in mythreads:
-            while mythread.isAlive():
+            #while mythread.isAlive():
+            while mythread.is_alive():
                 time.sleep(0.1)
