@@ -195,17 +195,17 @@ class Scrubbing(object):
             log.info("start scrubbing at %i/%i",
                      self._status,
                      len(list_of_files))
-            time_offset = time.time()
+            time_offset = time.perf_counter()
             for i in range(self._status, len(list_of_files)):
                 self._read_file(list_of_files[i], log)
                 if (self._scrubbing and
-                        (time.time()-time_offset > self._time_delta)):
+                        (time.perf_counter()-time_offset > self._time_delta)):
                     self._write_status(i)
                     log.debug("status: %i/%i", i, len(list_of_files))
                     self._semaphore_lock.release() # give another one the chance
                     time.sleep(0.1)
                     self._semaphore_lock.acquire()
-                    time_offset = time.time()
+                    time_offset = time.perf_counter()
                 if not self._scrubbing:
                     log.debug("break")
                     self._status = max(0, i-1)
