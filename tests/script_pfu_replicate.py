@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-25
+:Date: 2021-05-25, 2021-08-31
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu replicate'
@@ -36,7 +36,7 @@ except (ModuleNotFoundError, ImportError):
 class script_pfu_replicate(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-25
+    :Date: 2021-05-25, 2021-08-31
     """
 
     def test_script_pfu_replicate_1(self):
@@ -44,8 +44,11 @@ class script_pfu_replicate(unittest.TestCase):
         tests the script 'pfu replicate'
 
         :Author: Daniel Mohr
-        :Date: 2021-05-25
+        :Date: 2021-05-25, 2021-08-31
         """
+        if not os.name == 'posix':
+            self.skipTest('"pfu replicate" is only working on posix systems')
+            return
         # check if sha256sum is available
         cp = subprocess.run(
             'sha256sum --version',
