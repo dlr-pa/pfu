@@ -32,7 +32,7 @@ jobs:
 
   ubuntu-2004_test_doc:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
-#    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -79,3 +79,50 @@ jobs:
       run: pip3 install wheel pytest pytest-cov pytest-xdist
     - name: pytest
       run: env python3 setup.py run_pytest --parallel --coverage
+
+  windows-2016_test:
+    # we need setuputils to create binaries for windows
+    # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2016-Readme.md
+    runs-on: windows-2016
+    steps:
+    - uses: actions/checkout@v2
+    - name: conda init powershell
+      run: |
+        &($env:CONDA + "\Scripts\conda") init powershell
+    - name: install dependencies via conda
+      run: conda install -c conda-forge python pytest pytest-cov pytest-xdist
+    - name: check all modules available
+      run: python setup.py check_modules
+    - name: install pfu
+      run: python setup.py install
+    - name: run pfu
+      run: |
+        Get-Command pfu
+        pfu -h
+    - name: unittest
+      run: python setup.py run_unittest
+    - name: pytest
+      run: python setup.py run_pytest --parallel --coverage
+
+  windows-2019_test:
+    # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v2
+    - name: conda init powershell
+      run: |
+        &($env:CONDA + "\Scripts\conda") init powershell
+    - name: install dependencies via conda
+      run: conda install -c conda-forge python pytest pytest-cov pytest-xdist
+    - name: check all modules available
+      run: python setup.py check_modules
+    - name: install pfu
+      run: python setup.py install
+    - name: run pfu
+      run: |
+        Get-Command pfu
+        pfu -h
+    - name: unittest
+      run: python setup.py run_unittest
+    - name: pytest
+      run: python setup.py run_pytest --parallel --coverage
