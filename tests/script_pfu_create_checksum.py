@@ -48,7 +48,7 @@ class script_pfu_create_checksum(unittest.TestCase):
             'pfu create_checksum -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=6, check=True)
+            timeout=23, check=True)
         # check begin of help output
         self.assertTrue(cp.stdout.startswith(
             b'usage: pfu create_checksum '))
@@ -70,7 +70,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
+                timeout=23, check=True)
             with open(os.path.join(data_dir, '.checksum.sha512')) as fd:
                 data = fd.readlines()
             self.assertEqual(
@@ -95,7 +95,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
+                timeout=23, check=True)
             with open(os.path.join(data_dir, 'foo.sha512')) as fd:
                 data = fd.readlines()
             self.assertEqual(
@@ -128,7 +128,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                     'pfu create_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
-                    timeout=6, check=True)
+                    timeout=23, check=True)
                 with open(os.path.join(data_dir, '.checksum.' + alg)) as fd:
                     data = fd.readlines()
                 self.assertEqual(
@@ -153,7 +153,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
+                timeout=23, check=True)
             with open(os.path.join(data_dir, '.checksum.sha512')) as fd:
                 data = fd.readlines()
             self.assertEqual(
