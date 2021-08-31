@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-17
+:Date: 2021-05-17, 2021-08-31
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 import os
@@ -17,7 +17,13 @@ def create_random_directory_tree(
         tmpdir, subdirs=True, number_dirs=None, number_files=None, levels=0):
     # https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_276
     population = bytes(list(range(65, 91))).decode() + bytes(list(range(97, 123))).decode()
-    population += bytes(list(range(48, 58))).decode() + b'._-'.decode()
+    population += bytes(list(range(48, 58))).decode()
+    #population += b'._-'.decode()
+    population += b'_-'.decode()
+    if os.name == 'posix':
+        # windows is not able to handle '.' or ' ' at the end of a file name
+        # https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+        population += b'.'.decode()
     my_number_dirs = number_dirs
     if my_number_dirs is None:
         my_number_dirs = random.randint(1, 6)

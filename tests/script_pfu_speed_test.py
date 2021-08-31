@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-25
+:Date: 2021-05-25, 2021-08-31
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu speed_test'
@@ -29,7 +29,7 @@ import unittest
 class script_pfu_speed_test(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-25
+    :Date: 2021-05-25, 2021-08-31
     """
 
     def test_script_pfu_speed_test_1(self):
@@ -37,7 +37,7 @@ class script_pfu_speed_test(unittest.TestCase):
         tests 'pfu speed_test'
 
         :Author: Daniel Mohr
-        :Date: 2021-05-25
+        :Date: 2021-05-25, 2021-08-31
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             param = '-f a -bytes 42 -count 6 '
@@ -45,15 +45,16 @@ class script_pfu_speed_test(unittest.TestCase):
                 'pfu speed_test ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=6, check=True)
-            self.assertTrue(cp.stderr.endswith(b'finished.\n'))
+                timeout=23, check=True)
+            self.assertTrue(
+                cp.stderr.endswith(b'finished.' + os.linesep.encode()))
 
     def test_script_pfu_speed_test_2(self):
         """
         tests 'pfu speed_test'
 
         :Author: Daniel Mohr
-        :Date: 2021-05-25
+        :Date: 2021-05-25, 2021-08-31
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             param = '-f a -bytes 42 -count 6 -output_format maschine_readable'
@@ -61,8 +62,9 @@ class script_pfu_speed_test(unittest.TestCase):
                 'pfu speed_test ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=6, check=True)
-            self.assertTrue(cp.stderr.endswith(b'finished.\n'))
+                timeout=23, check=True)
+            self.assertTrue(
+                cp.stderr.endswith(b'finished.' + os.linesep.encode()))
 
 
 if __name__ == '__main__':

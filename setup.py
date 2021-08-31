@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2021-08-30
+:Date: 2021-08-31
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -58,7 +58,7 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-08-30
+        :Date: 2021-08-31
         """
         # env python3 setup.py run_pytest
         if self.src == 'installed':
@@ -86,9 +86,9 @@ class TestWithPytest(Command):
                     nthreads = int(os.cpu_count() - os.getloadavg()[0])
                     # since we have only a few tests, limit overhead:
                     nthreads = min(4, nthreads)
-                    nthreads = max(1, nthreads)  # at least one thread
+                    nthreads = max(2, nthreads)  # at least two thread
                 else:
-                    nthreads = max(1, int(0.5 * os.cpu_count()))
+                    nthreads = max(2, int(0.5 * os.cpu_count()))
                 pyargs += ['-n %i' % nthreads]
             except (ModuleNotFoundError, ImportError):
                 pass
@@ -264,7 +264,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pfu',
-    version='2021.08.30',
+    version='2021.08.31',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,

@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-25
+:Date: 2021-05-25, 2021-08-31
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu simscrub'
@@ -19,7 +19,7 @@ Or you can run only one test, e. g.::
   pytest-3 -k test_script_pfu_simscrub_help script_pfu_simscrub.py
 """
 
-import os.path
+import os
 import random
 import subprocess
 import tempfile
@@ -36,7 +36,7 @@ except (ModuleNotFoundError, ImportError):
 class script_pfu_simscrub(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-25
+    :Date: 2021-05-25, 2021-08-31
     """
 
     def test_script_pfu_simscrub_0(self):
@@ -50,7 +50,7 @@ class script_pfu_simscrub(unittest.TestCase):
             'pfu simscrub -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=6, check=True)
+            timeout=23, check=True)
         # check begin of help output
         self.assertTrue(cp.stdout.startswith(
             b'usage: pfu simscrub '))
@@ -60,7 +60,7 @@ class script_pfu_simscrub(unittest.TestCase):
         tests 'pfu simscrub'
 
         :Author: Daniel Mohr
-        :Date: 2021-05-25
+        :Date: 2021-05-25, 2021-08-31
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             # init scrubbing
@@ -70,23 +70,26 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'create_directory_trees\n')
+                timeout=23, check=True)
+            # e. g. on windows we can expect '\r\n' as line ending,
+            # on posix systems we can expect '\n' as line ending
+            self.assertEqual(cp.stdout,
+                             b'create_directory_trees' + os.linesep.encode())
             param = '-config_data_directory ' + tmpdir
-            #param += ' -fileloglevel 1'
+            # param += ' -fileloglevel 1'
             cp = subprocess.run(
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+                timeout=23, check=True)
+            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
 
     def test_script_pfu_simscrub_2(self):
         """
         tests 'pfu simscrub'
 
         :Author: Daniel Mohr
-        :Date: 2021-05-25
+        :Date: 2021-05-25, 2021-08-31
 
         env python3 script_pfu_simscrub.py script_pfu_simscrub.test_script_pfu_simscrub_2
         """
@@ -105,8 +108,11 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'create_directory_trees\n')
+                timeout=23, check=True)
+            # e. g. on windows we can expect '\r\n' as line ending,
+            # on posix systems we can expect '\n' as line ending
+            self.assertEqual(cp.stdout,
+                             b'create_directory_trees' + os.linesep.encode())
             start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
                 data = pickle.load(fd)
@@ -117,8 +123,8 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+                timeout=23, check=True)
+            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
             self.assertTrue(data[-1].endswith(
@@ -136,15 +142,15 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+                timeout=23, check=True)
+            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
 
     def test_script_pfu_simscrub_3(self):
         """
         tests 'pfu simscrub'
 
         :Author: Daniel Mohr
-        :Date: 2021-05-25
+        :Date: 2021-05-25, 2021-08-31
         """
         import pickle
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -159,8 +165,11 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'create_directory_trees\n')
+                timeout=23, check=True)
+            # e. g. on windows we can expect '\r\n' as line ending,
+            # on posix systems we can expect '\n' as line ending
+            self.assertEqual(cp.stdout,
+                             b'create_directory_trees' + os.linesep.encode())
             start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
                 data = pickle.load(fd)
@@ -171,8 +180,8 @@ class script_pfu_simscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+                timeout=23, check=True)
+            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
             with open(os.path.join(start_point, 'status'), 'rb') as fd:

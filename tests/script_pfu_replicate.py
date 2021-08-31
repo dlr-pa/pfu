@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-25
+:Date: 2021-05-25, 2021-08-31
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script 'pfu replicate'
@@ -36,7 +36,7 @@ except (ModuleNotFoundError, ImportError):
 class script_pfu_replicate(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-05-25
+    :Date: 2021-05-25, 2021-08-31
     """
 
     def test_script_pfu_replicate_1(self):
@@ -44,14 +44,17 @@ class script_pfu_replicate(unittest.TestCase):
         tests the script 'pfu replicate'
 
         :Author: Daniel Mohr
-        :Date: 2021-05-25
+        :Date: 2021-05-25, 2021-08-31
         """
+        if not os.name == 'posix':
+            self.skipTest('"pfu replicate" is only working on posix systems')
+            return
         # check if sha256sum is available
         cp = subprocess.run(
             'sha256sum --version',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=6, check=False)
+            timeout=23, check=False)
         extraparam = ''
         if cp.returncode != 0:
             #self.skipTest('sha256sum not available, skipping test')
@@ -60,7 +63,7 @@ class script_pfu_replicate(unittest.TestCase):
                 'sha256 -s foo',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=6, check=False)
+                timeout=23, check=False)
             if cp.returncode != 0:
                 self.skipTest(
                     'sha256sum and sha256 not available, skipping test')
@@ -97,7 +100,7 @@ class script_pfu_replicate(unittest.TestCase):
                     'pfu check_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
-                    timeout=6, check=False)
+                    timeout=23, check=False)
                 self.assertTrue(checkoutput(cp.stderr))
 
 

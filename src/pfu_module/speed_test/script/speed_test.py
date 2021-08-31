@@ -71,12 +71,12 @@ def speed_test(args):
             args.count[0]*args.bytes[0],
             args.file[0]))
     with open(args.file[0], "wb", 0)as fd:
-        t0 = time.time()
+        t0 = time.perf_counter()
         for i in range(args.count[0]):
             fd.write(block)
         fd.flush()
         os.fsync(fd)
-        t1 = time.time()
+        t1 = time.perf_counter()
     duration = t1-t0
     if args.output_format[0] == 'human_readable':
         log.info(
@@ -93,10 +93,10 @@ def speed_test(args):
             args.count[0]*args.bytes[0],
             args.file[0]))
     with open(args.file[0], "rb") as fd:
-        t2 = time.time()
+        t2 = time.perf_counter()
         for i in range(args.count[0]):
             data = fd.read(args.bytes[0])
-        t3 = time.time()
+        t3 = time.perf_counter()
     duration = t3-t2
     if args.output_format[0] == 'human_readable':
         log.info(
