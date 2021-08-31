@@ -12,6 +12,7 @@ import time
 
 __date__ = "2019-01-09"
 
+
 def bytes_to_human_readable(bytes):
     """
     :Author: Daniel Mohr
@@ -33,6 +34,7 @@ def bytes_to_human_readable(bytes):
                 unit = 'GB'
     return '%f %s' % (bytes, unit)
 
+
 def speed_test(args):
     """
     :Author: Daniel Mohr
@@ -45,10 +47,10 @@ def speed_test(args):
     args.file[0]
     # logging
     log = logging.getLogger('pfu.speed_test')
-    log.setLevel(logging.DEBUG) # logging.DEBUG = 10
+    log.setLevel(logging.DEBUG)  # logging.DEBUG = 10
     # create console handler
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.DEBUG) # logging.DEBUG = 10
+    console_handler.setLevel(logging.DEBUG)  # logging.DEBUG = 10
     console_handler.setFormatter(
         logging.Formatter('%(asctime)s %(message)s', datefmt='%H:%M:%S'))
     # add the handlers to log
@@ -83,7 +85,8 @@ def speed_test(args):
             'write speed: %s/sec' % bytes_to_human_readable(
                 (args.count[0]*args.bytes[0])/duration))
     else:
-        log.info('write speed: %f Bytes/sec' % ((args.count[0]*args.bytes[0])/duration))
+        log.info('write speed: %f Bytes/sec' %
+                 ((args.count[0]*args.bytes[0])/duration))
     if args.output_format[0] == 'human_readable':
         log.info("read %s from '%s'" % (
             bytes_to_human_readable(args.count[0]*args.bytes[0]),
@@ -103,7 +106,8 @@ def speed_test(args):
             'read speed: %s/sec' % bytes_to_human_readable(
                 (args.count[0]*args.bytes[0])/duration))
     else:
-        log.info('read speed: %f Bytes/sec' % ((args.count[0]*args.bytes[0])/duration))
+        log.info('read speed: %f Bytes/sec' %
+                 ((args.count[0]*args.bytes[0])/duration))
     if args.delete:
         os.remove(args.file[0])
         log.info("removed file")

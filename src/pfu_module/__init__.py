@@ -29,4 +29,3 @@ Copyright (C) 2016, 2017 Daniel Mohr
  along with this program; if not, see
  http://www.gnu.org/licenses/
 """
-

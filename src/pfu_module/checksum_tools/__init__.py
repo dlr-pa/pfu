@@ -8,7 +8,10 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 import logging
 
-def addLoggingLevelName(lvl, levelName):
+from .read_data_from_file import read_data_from_file
+
+
+def add_logging_level_name(lvl, levelName):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
@@ -22,9 +25,11 @@ def addLoggingLevelName(lvl, levelName):
         print("debug: methodName already exists in logging")
     if hasattr(logging.getLoggerClass(), methodName):
         print("debug: methodName already exists in logging.getLoggerClass")
+
     def logForLevel(self, message, *args, **kwargs):
         if self.isEnabledFor(lvl):
             self._log(lvl, message, args, **kwargs)
+
     def logToRoot(message, *args, **kwargs):
         logging.log(lvl, message, *args, **kwargs)
     logging.addLevelName(lvl, levelName)
@@ -32,8 +37,7 @@ def addLoggingLevelName(lvl, levelName):
     setattr(logging.getLoggerClass(), methodName, logForLevel)
     setattr(logging, methodName, logToRoot)
 
-addLoggingLevelName(15, "VERBOSEINFO")
 
-from .read_data_from_file import read_data_from_file
+add_logging_level_name(15, "VERBOSEINFO")
 
 __all__ = ['read_data_from_file']

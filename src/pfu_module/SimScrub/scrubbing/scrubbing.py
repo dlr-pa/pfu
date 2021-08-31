@@ -15,6 +15,7 @@ import time
 
 import pfu_module.SimScrub
 
+
 class Scrubbing(object):
     """
     :Author: Daniel Mohr
@@ -23,6 +24,7 @@ class Scrubbing(object):
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     # pylint: disable=too-many-instance-attributes
+
     def __init__(self,
                  config_dir,
                  semaphore_lock,
@@ -44,7 +46,7 @@ class Scrubbing(object):
         # store parameter
         self._config_dir = config_dir
         self._semaphore_lock = semaphore_lock
-        self._event_lock = event_lock # is set on finishing
+        self._event_lock = event_lock  # is set on finishing
         self._loglevel = loglevel
         self._time_delta = time_delta
         self._chunk_size = chunk_size
@@ -79,7 +81,8 @@ class Scrubbing(object):
                         if retry <= 0:
                             retry = self._max_retry
                             log.warning(
-                                'IOError: cannot read file "%s" at %i-%i/%i' % (
+                                'IOError: cannot read file '
+                                '"%s" at %i-%i/%i' % (
                                     file_name,
                                     data_file.tell(),
                                     data_file.tell()+chunk_size-1,
@@ -138,7 +141,8 @@ class Scrubbing(object):
 
         old_list_of_files will be changed to be the new list
         """
-        with open(os.path.join(self._config_dir, 'dir'), 'rb') as file_desriptor:
+        with open(os.path.join(self._config_dir, 'dir'), 'rb') as \
+                file_desriptor:
             reldir = pickle.load(file_desriptor)
         new_list_of_files = pfu_module.SimScrub.create_file_list(reldir, log)
         new_set_of_files = set(new_list_of_files)
@@ -175,9 +179,10 @@ class Scrubbing(object):
         self._scrubbing = True
         self._semaphore_lock.acquire()
         if self._scrubbing:
-            log = logging.getLogger("pfu.simscrub."+threading.currentThread().name)
+            log = logging.getLogger(
+                "pfu.simscrub."+threading.currentThread().name)
             file_handler = logging.handlers.WatchedFileHandler(
-                os.path.join(self._config_dir, 'log')) # not thread safe
+                os.path.join(self._config_dir, 'log'))  # not thread safe
             file_handler.setFormatter(
                 logging.Formatter(
                     '%(asctime)s %(threadName)s %(levelname)s %(message)s',
@@ -202,7 +207,8 @@ class Scrubbing(object):
                         (time.perf_counter()-time_offset > self._time_delta)):
                     self._write_status(i)
                     log.debug("status: %i/%i", i, len(list_of_files))
-                    self._semaphore_lock.release() # give another one the chance
+                    # give another one the chance:
+                    self._semaphore_lock.release()
                     time.sleep(0.1)
                     self._semaphore_lock.acquire()
                     time_offset = time.perf_counter()

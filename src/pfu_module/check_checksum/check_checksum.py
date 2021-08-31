@@ -52,9 +52,12 @@ class CheckChecksumsClass(object):
                 24: ('md5', 'base64')}
     regexps = [
         re.compile(
-            r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$"),
+            r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) "
+            r"\(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$"),
         re.compile(r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$"),
-        re.compile(r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$")]
+        re.compile(r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}"
+                   r"\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$")
+    ]
 
     def __init__(self,
                  directories=(),
@@ -72,8 +75,8 @@ class CheckChecksumsClass(object):
 
         :param directories: Create hashes for this list of directories.
                             Symbolic links in given directories are ignored.
-        :param hash_extension: Files with the given extension(s) are interpreted
-                               as hash files.
+        :param hash_extension: Files with the given extension(s) are
+                               interpreted as hash files.
         :param ignore_extension: Files with the given extension(s) are ignored
         :param buf_size: Files will be read in chunks of the given amount of
                          Bytes. This should be a factor of the data handled by
@@ -134,7 +137,8 @@ class CheckChecksumsClass(object):
                 # assume file extension gives the hash type
                 # the coding is really hard to detect, therefore assume base16
                 # RFC 3548 defines the following alphabets:
-                # base64: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_
+                # base64: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                #         abcdefghijklmnopqrstuvwxyz0123456789-_
                 # base32: abcdefghijklmnopqrstuvwxyz234567
                 # base16: 0123456789ABCDEF
                 # Unfortunately typical used tools like *sum (e. g. md5sum)
@@ -357,8 +361,8 @@ class CheckChecksumsClass(object):
                                     sres, hashfilename)
                             else:
                                 self.log.warning(
-                                    "do not understand line in hash file \"%s\": %s",
-                                    hashfilename, line)
+                                    "do not understand line in hash file "
+                                    "\"%s\": %s", hashfilename, line)
         elif not os.access(hashfilename, os.R_OK):
             self.log.warning('hash file "%s" is not readable', hashfilename)
         else:
@@ -439,17 +443,20 @@ class CheckChecksumsClass(object):
                     next_pos + 1 - act_pos,
                     hash_objects + chunk_objects)
                 next_pos = None
-                act_pos = data_file.tell()-1  # we need one before up to end of while
+                # we need one before up to end of while:
+                act_pos = data_file.tell()-1
                 i = 0
                 while i < len(chunk_objects):
                     if act_pos == chunks[chunk_objects_index[i]][4]:
                         # compare hash
-                        encode = self.encodes[chunks[chunk_objects_index[i]][1][1]]
+                        encode = self.encodes[
+                            chunks[chunk_objects_index[i]][1][1]]
                         cal_hash = encode(
                             chunk_objects[chunk_objects_index[i]].digest())
                         if chunks[chunk_objects_index[i]][1][1] != 'base64':
                             cal_hash = cal_hash.lower()
-                        if cal_hash.decode() != chunks[chunk_objects_index[i]][0]:
+                        if (cal_hash.decode() !=
+                                chunks[chunk_objects_index[i]][0]):
                             match = False
                             break
                         del chunks[chunk_objects_index[i]]
@@ -515,7 +522,8 @@ class CheckChecksumsClass(object):
                      number_chunk_hashes,
                      filesize) = self.compare_hashes_for_file(filename)
                     if match:
-                        self.result_number['data file with matching hash(es)'] += 1
+                        self.result_number[
+                            'data file with matching hash(es)'] += 1
                         self.log.verboseinfo(  # pylint: disable=no-member
                             'file \"%s\" %i: OK (#hash= %i #chunk_hash= %i)',
                             filename,
@@ -523,9 +531,11 @@ class CheckChecksumsClass(object):
                             number_hashes,
                             number_chunk_hashes)
                     else:
-                        self.result_number['data file with not matching hash(es)'] += 1
+                        self.result_number[
+                            'data file with not matching hash(es)'] += 1
                         self.log.verboseinfo(  # pylint: disable=no-member
-                            'file \"%s\" %i: bad, hash mismatch (some of: #hash= %i #chunk_hash= %i)',
+                            'file \"%s\" %i: bad, hash mismatch '
+                            '(some of: #hash= %i #chunk_hash= %i)',
                             filename,
                             filesize,
                             number_hashes,
@@ -593,7 +603,7 @@ class CheckChecksumsClass(object):
                 self.log.info(
                     'data file not handled (not ignored): %i',
                     self.result_number['data file not handled'])
-                #raise NotImplementedError("not finished")
+                # raise NotImplementedError("not finished")
             else:
                 self.log.warning(
                     "cannot handle '%s' (e. g. not a directory)", name)
