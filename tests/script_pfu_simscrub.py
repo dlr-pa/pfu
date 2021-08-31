@@ -82,7 +82,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
 
     def test_script_pfu_simscrub_2(self):
         """
@@ -124,7 +124,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
             self.assertTrue(data[-1].endswith(
@@ -143,7 +143,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
 
     def test_script_pfu_simscrub_3(self):
         """
@@ -181,7 +181,7 @@ class script_pfu_simscrub(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=6, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing\n')
+            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
