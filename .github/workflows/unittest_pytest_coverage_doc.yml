@@ -95,3 +95,31 @@ jobs:
       run: python setup.py run_unittest
     - name: pytest
       run: python setup.py run_pytest --parallel --coverage
+
+  freebsd_test:
+    needs: pep8_check
+    runs-on: macos-latest
+    name: run tests on FreeBSD
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test in FreeBSD
+      id: test
+      uses: vmactions/freebsd-vm@v0.1.5
+      with:
+        usesh: true
+        prepare: pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pytest-xdist
+        run: |
+          set -e -x
+          pwd
+          ls -lah
+          whoami
+          freebsd-version
+          which python3.6
+          which python3.7
+          which python3.8
+          python3.8 setup.py install --record installed_files.txt
+          which pfu
+          pfu -h
+          python3.8 setup.py run_unittest
+          python3.8 setup.py run_pytest --parallel --coverage
+          cat installed_files.txt | xargs rm -rf && echo "uninstalled/removed: "$(cat installed_files.txt)
