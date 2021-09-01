@@ -8,7 +8,18 @@ on:
 
 jobs:
 
+  pep8_check:
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: install dependencies for PEP 8 code style check (ubuntu packages)
+      run: sudo apt install pep8
+    - name: check PEP 8 code style
+      run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
+
   ubuntu_test_doc:
+    needs: pep8_check
     strategy:
       matrix:
         # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
@@ -19,7 +30,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies (ubuntu packages)
-      run: sudo apt install python3-setuptools
+      run: sudo apt install python3-setuptools hashdeep
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu
@@ -36,6 +47,7 @@ jobs:
       run: env python3 setup.py run_pytest --parallel --coverage
 
   macos-1015_test:
+    needs: pep8_check
     # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md
     runs-on: macos-10.15
     steps:
@@ -56,6 +68,7 @@ jobs:
       run: env python3 setup.py run_pytest --parallel --coverage
 
   windows_test:
+    needs: pep8_check
     strategy:
       matrix:
         # we need setuputils to create binaries for windows
@@ -82,3 +95,32 @@ jobs:
       run: python setup.py run_unittest
     - name: pytest
       run: python setup.py run_pytest --parallel --coverage
+
+  freebsd_test:
+    needs: pep8_check
+    # https://github.com/marketplace/actions/freebsd-vm
+    runs-on: macos-latest
+    name: run tests on FreeBSD
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test in FreeBSD
+      id: test
+      uses: vmactions/freebsd-vm@v0.1.5
+      with:
+        usesh: true
+        prepare: pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pytest-xdist
+        run: |
+          set -e -x
+          pwd
+          ls -lah
+          whoami
+          freebsd-version
+          which python3.6
+          which python3.7
+          which python3.8
+          python3.8 setup.py install --record installed_files.txt
+          which pfu
+          pfu -h
+          python3.8 setup.py run_unittest
+          python3.8 setup.py run_pytest --parallel --coverage
+          cat installed_files.txt | xargs rm -rf && echo "uninstalled/removed: "$(cat installed_files.txt)
