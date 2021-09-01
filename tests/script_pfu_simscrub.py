@@ -14,7 +14,8 @@ You can run this file directly::
 
 Or you can run only one test, e. g.::
 
-  env python3 script_pfu_simscrub.py script_pfu_simscrub.test_script_pfu_simscrub_0
+  env python3 script_pfu_simscrub.py \
+    script_pfu_simscrub.test_script_pfu_simscrub_0
 
   pytest-3 -k test_script_pfu_simscrub_help script_pfu_simscrub.py
 """
@@ -91,7 +92,8 @@ class script_pfu_simscrub(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-05-25, 2021-08-31
 
-        env python3 script_pfu_simscrub.py script_pfu_simscrub.test_script_pfu_simscrub_2
+        env python3 script_pfu_simscrub.py \
+          script_pfu_simscrub.test_script_pfu_simscrub_2
         """
         import pickle
         import stat

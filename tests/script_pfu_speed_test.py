@@ -14,7 +14,8 @@ You can run this file directly::
 
 Or you can run only one test, e. g.::
 
-  env python3 script_pfu_speed_test.py script_pfu_speed_test.test_script_pfu_speed_test_1
+  env python3 script_pfu_speed_test.py \
+    script_pfu_speed_test.test_script_pfu_speed_test_1
 
   pytest-3 -k test_script_pfu_speed_test_1 script_pfu_speed_test.py
 """

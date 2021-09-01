@@ -14,7 +14,8 @@ You can run this file directly::
 
 Or you can run only one test, e. g.::
 
-  env python3 script_pfu_replicate.py script_pfu_replicate.test_script_pfu_replicate_1
+  env python3 script_pfu_replicate.py \
+    script_pfu_replicate.test_script_pfu_replicate_1
 
   pytest-3 -k test_script_pfu_replicate_1 script_pfu_replicate.py
 """
@@ -57,7 +58,7 @@ class script_pfu_replicate(unittest.TestCase):
             timeout=23, check=False)
         extraparam = ''
         if cp.returncode != 0:
-            #self.skipTest('sha256sum not available, skipping test')
+            # self.skipTest('sha256sum not available, skipping test')
             # check if sha256 is available
             cp = subprocess.run(
                 'sha256 -s foo',
