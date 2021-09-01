@@ -78,11 +78,11 @@ def create_subparser_check_checksum(subparsers):
         dest='hash_extension',
         help='Files with the given extension(s) are interpreted as ' +
         'hash files. The files have to be of the format ' +
-        'r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) ' +
-        '\(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$", ' +
-        'r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$" or ' +
-        'r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}' +
-        '\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$". ' +
+        'r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) ' +  # noqa
+        '\(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$", ' +  # noqa
+        'r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$" or ' +  # noqa
+        'r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}' +  # noqa
+        '\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$". ' +  # noqa
         'In the latter case base16 encoding is assumed. ' +
         'The hash types sha1, sha224 and sha384 are only interpreted/used ' +
         'for the BSD-style. default: .md5 .sha256 .sha512 .checksum .sha1',

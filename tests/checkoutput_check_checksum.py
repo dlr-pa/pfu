@@ -14,9 +14,9 @@ def checkoutput(out):
     regexp_without_hash = re.compile(r'data file without hash: ([0-9]+)')
     regexp_without_data = re.compile(r'hash without data file: ([0-9]+)')
     regexp_matching_hash = re.compile(
-        'data file with matching hash\(es\): ([0-9]+)')
+        r'data file with matching hash\(es\): ([0-9]+)')
     regexp_not_matching_hash = re.compile(
-        'data file with not matching hash\(es\): ([0-9]+)')
+        r'data file with not matching hash\(es\): ([0-9]+)')
     for line in out.split('\n'):
         without_hash = regexp_without_hash.findall(line)
         if without_hash and (int(without_hash[0]) != 0):
