@@ -313,7 +313,6 @@ setup(
         'Operating System :: MacOS',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7'],
-    # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | egrep -i --only-matching "import .*$" | sort -u
     requires=[
         'argparse',
         'base64',
