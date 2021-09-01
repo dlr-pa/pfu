@@ -4,6 +4,7 @@ Date: 2017-02-14 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+
 def check_for_none(s):
     """
     :Author: Daniel Mohr
