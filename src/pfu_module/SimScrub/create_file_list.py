@@ -8,6 +8,7 @@
 import os
 import os.path
 
+
 def create_file_list(directory, log):
     """
     :Author: Daniel Mohr

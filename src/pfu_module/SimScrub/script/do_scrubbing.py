@@ -62,6 +62,6 @@ def do_scrubbing(args, log):
                 pass
         # verify all threads are finished
         for mythread in mythreads:
-            #while mythread.isAlive():
+            # while mythread.isAlive():
             while mythread.is_alive():
                 time.sleep(0.1)

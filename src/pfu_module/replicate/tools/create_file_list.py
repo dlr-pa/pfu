@@ -6,7 +6,8 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 import os
 
-def create_file_list(dirpath,filenames):
+
+def create_file_list(dirpath, filenames):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de

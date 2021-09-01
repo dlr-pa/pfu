@@ -16,9 +16,10 @@ def create_random_file(filename):
 def create_random_directory_tree(
         tmpdir, subdirs=True, number_dirs=None, number_files=None, levels=0):
     # https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_276
-    population = bytes(list(range(65, 91))).decode() + bytes(list(range(97, 123))).decode()
+    population = bytes(list(range(65, 91))).decode() + \
+        bytes(list(range(97, 123))).decode()
     population += bytes(list(range(48, 58))).decode()
-    #population += b'._-'.decode()
+    # population += b'._-'.decode()
     population += b'_-'.decode()
     if os.name == 'posix':
         # windows is not able to handle '.' or ' ' at the end of a file name

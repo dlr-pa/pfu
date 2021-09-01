@@ -89,20 +89,6 @@ class CreateChecksumsClass(object):
         self.hashfkt = {'sha512': hashlib.sha512,
                         'sha256': hashlib.sha256,
                         'md5': hashlib.md5}[self.algorithm]
-        #self.hashfkt = None
-        # if self.algorithm == 'sha512':
-        #    self.hashfkt = hashlib.sha512
-        # elif self.algorithm == 'sha256':
-        #    self.hashfkt = hashlib.sha256
-        # elif self.algorithm == 'md5':
-        #    self.hashfkt = hashlib.md5
-        #self.encode = None
-        # if self.coding in ['hex', 'Base16']:
-        #    self.encode = base64.b16encode
-        # elif self.coding in ['base32', 'Base32']:
-        #    self.encode = base64.b32encode
-        # elif self.coding in ['base64', 'Base64']:
-        #    self.encode = base64.b64encode
         self.encode = {'hex': base64.b16encode,
                        'base16': base64.b16encode,
                        'Base16': base64.b16encode,

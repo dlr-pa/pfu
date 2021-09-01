@@ -10,6 +10,7 @@ import time
 from .check_for_none import check_for_none
 from .wait_for_free_slot import wait_for_free_slot
 
+
 def run_check_checksums(args, log, commands_check_checksums,
                         text="", summary=""):
     """
@@ -31,9 +32,11 @@ def run_check_checksums(args, log, commands_check_checksums,
         for i1 in range(len(commands_check_checksums[i0])):
             commands_check_checksums_is_running[i0] += [False]
     while check_for_none(commands_check_checksums) > 0:
-        i = wait_for_free_slot(runs['processes'], args.number_of_processes, args.sleeptime)
+        i = wait_for_free_slot(
+            runs['processes'], args.number_of_processes, args.sleeptime)
         if not (runs['processes'][i] is None):
-            stat = "process '%s' terminated with %d" % (runs['cmd'][i],runs['processes'][i].returncode)
+            stat = "process '%s' terminated with %d" % (
+                runs['cmd'][i], runs['processes'][i].returncode)
             log.info(stat)
             summary += stat + "\n"
             if runs['processes'][i].returncode != 0:
@@ -49,10 +52,10 @@ def run_check_checksums(args, log, commands_check_checksums,
         id1 = -1
         for i0 in range(len(commands_check_checksums)):
             if ((commands_check_checksums_run[i0] is False) or
-                (args.limit_number_of_processes_to_distinations == 0)):
+                    (args.limit_number_of_processes_to_distinations == 0)):
                 for i1 in range(len(commands_check_checksums[i0])):
                     if ((not (commands_check_checksums[i0][i1] is None)) and
-                        (not commands_check_checksums_is_running[i0][i1])):
+                            (not commands_check_checksums_is_running[i0][i1])):
                         id0 = i0
                         id1 = i1
                         break
@@ -60,7 +63,8 @@ def run_check_checksums(args, log, commands_check_checksums,
                     break
         if (id0 >= 0) and (id1 >= 0):
             # start subprocess
-            runs['processes'][i] = subprocess.Popen(commands_check_checksums[id0][id1],bufsize=-1,shell=True)
+            runs['processes'][i] = subprocess.Popen(
+                commands_check_checksums[id0][id1], bufsize=-1, shell=True)
             runs['cmd'][i] = commands_check_checksums[id0][id1]
             runs['id0'][i] = id0
             runs['id1'][i] = id1
@@ -71,7 +75,8 @@ def run_check_checksums(args, log, commands_check_checksums,
             for i in range(args.number_of_processes):
                 if not (runs['processes'][i] is None):
                     if not (runs['processes'][i].poll() is None):
-                        stat = "process '%s' terminated with %d" % (runs['cmd'][i],runs['processes'][i].returncode)
+                        stat = "process '%s' terminated with %d" % (
+                            runs['cmd'][i], runs['processes'][i].returncode)
                         log.info(stat)
                         summary += stat + "\n"
                         if runs['processes'][i].returncode != 0:
@@ -88,7 +93,8 @@ def run_check_checksums(args, log, commands_check_checksums,
     for i in range(args.number_of_processes):
         if not (runs['processes'][i] is None):
             runs['processes'][i].wait()
-            stat = "process '%s' terminated with %d" % (runs['cmd'][i],runs['processes'][i].returncode)
+            stat = "process '%s' terminated with %d" % (
+                runs['cmd'][i], runs['processes'][i].returncode)
             log.info(stat)
             summary += stat + "\n"
             if runs['processes'][i].returncode != 0:

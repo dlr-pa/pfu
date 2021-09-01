@@ -47,7 +47,8 @@ def replicate(args):
     if not isinstance(args.checksum_file_name, str):
         args.checksum_file_name = args.checksum_file_name[0]
     if not isinstance(args.checksum_file_name_destination, str):
-        args.checksum_file_name_destination = args.checksum_file_name_destination[0]
+        args.checksum_file_name_destination = \
+            args.checksum_file_name_destination[0]
     if not isinstance(args.overwrite_checksum_file, int):
         args.overwrite_checksum_file = args.overwrite_checksum_file[0]
     if not isinstance(args.checksum_log_file_name, str):
@@ -63,8 +64,9 @@ def replicate(args):
     if not isinstance(args.number_of_processes, int):
         args.number_of_processes = args.number_of_processes[0]
     if not isinstance(args.limit_number_of_processes_to_distinations, int):
-        args.limit_number_of_processes_to_distinations = args.limit_number_of_processes_to_distinations[
-            0]
+        args.limit_number_of_processes_to_distinations = \
+            args.limit_number_of_processes_to_distinations[
+                0]
     if not isinstance(args.sleeptime, float):
         args.sleeptime = args.sleeptime[0]
     if not isinstance(args.extrasleeptime, float):
@@ -141,7 +143,8 @@ def replicate(args):
     for dest in args.destination:
         source = os.path.abspath(args.source)
         destination = os.path.abspath(dest)
-        if (platform.system() == "Windows") and (args.copy_program1 == "rsync"):
+        if ((platform.system() == "Windows") and
+                (args.copy_program1 == "rsync")):
             # e. g. "C:" have to be transformed to "/cygdrive/c/"
             drive_letter = re.findall(r'([a-zA-Z]{1}):[\\\/]{1}', source)
             if len(drive_letter) == 1:
@@ -153,7 +156,8 @@ def replicate(args):
                 destination = re.sub(r"[a-zA-Z]{1}:[\\\/]{1}",
                                      ("/cygdrive/%s/" % drive_letter[0]),
                                      destination)
-        if (platform.system() == "Windows") and (args.copy_program1 == "xcopy"):
+        if ((platform.system() == "Windows") and
+                (args.copy_program1 == "xcopy")):
             commands_copy1 += [args.copy_program1 + " " +
                                args.copy_parameter1 + " " +
                                source + " " +
@@ -167,7 +171,8 @@ def replicate(args):
     for dest in args.destination:
         source = os.path.abspath(args.source)
         destination = os.path.abspath(dest)
-        if (platform.system() == "Windows") and (args.copy_program2 == "rsync"):
+        if ((platform.system() == "Windows") and
+                (args.copy_program2 == "rsync")):
             # e. g. "C:" have to be transformed to "/cygdrive/c/"
             drive_letter = re.findall(r'([a-zA-Z]{1}):[\\\/]{1}', source)
             if len(drive_letter) == 1:
@@ -186,11 +191,13 @@ def replicate(args):
     commands_create_checksums = []
     if (not args.dryrun) and (args.overwrite_checksum_file == 1):
         for (dirpath, dirnames, filenames) in os.walk(args.source):
-            if ((os.path.exists(os.path.join(dirpath, args.checksum_file_name))) and
+            if ((os.path.exists(
+                os.path.join(dirpath, args.checksum_file_name))) and
                     (args.overwrite_checksum_file == 1)):
                 os.remove(os.path.join(dirpath, args.checksum_file_name))
     for (dirpath, dirnames, filenames) in os.walk(args.source):
-        if ((not os.path.exists(os.path.join(dirpath, args.checksum_file_name))) or
+        if ((not os.path.exists(
+            os.path.join(dirpath, args.checksum_file_name))) or
                 (args.overwrite_checksum_file == 1)):
             # create commands to create checksums
             file_list = create_file_list(dirpath, filenames)
@@ -203,11 +210,13 @@ def replicate(args):
                     args.checksum_create_parameter + " " +
                     file_list + " > " +
                     args.checksum_file_name]
-        elif ((os.path.exists(os.path.join(dirpath, args.checksum_file_name))) and
-              (args.overwrite_checksum_file == 2)):
+        elif ((os.path.exists(
+                os.path.join(dirpath, args.checksum_file_name))) and
+                (args.overwrite_checksum_file == 2)):
             # create commands to create checksums for missing ones
-            stat = "WARNING: '%s' already exists in '%s', but missing checksums will be created" % (
-                args.checksum_file_name, dirpath)
+            stat = "WARNING: '%s' " % args.checksum_file_name
+            stat += "already exists in '%s', " % dirpath
+            stat += "but missing checksums will be created"
             log.info(stat)
             warning_creating_checksums += stat + "\n"
             # read checksums to find missing checksums
@@ -225,11 +234,12 @@ def replicate(args):
             file_list = create_file_list('', list(filenames))
             if len(file_list) > 0:  # create command
                 change_dir = create_change_dir_command(dirpath)
-                commands_create_checksums += [change_dir + dirpath + " && " +
-                                              args.checksum_program + " " +
-                                              args.checksum_create_parameter + " " +
-                                              file_list + " >> " +
-                                              args.checksum_file_name]
+                commands_create_checksums += [
+                    change_dir + dirpath + " && " +
+                    args.checksum_program + " " +
+                    args.checksum_create_parameter + " " +
+                    file_list + " >> " +
+                    args.checksum_file_name]
         else:
             # do not create commands to create checksums
             stat = "WARNING: '%s' already exists in '%s'" % (
@@ -290,8 +300,9 @@ def replicate(args):
     log.info("### run ###")
     log.info("###########\n")
     # step 1/3 (copy + create checksum)
-    log.info("### run step 1/3 (copy with %s + create checksum with %s) ###\n" %
-             (args.copy_program1, args.checksum_program))
+    log.info(
+        "### run step 1/3 (copy with %s + create checksum with %s) ###\n" %
+        (args.copy_program1, args.checksum_program))
     summary = ""
     # run copy program1 and create checksums
     create_checksums_errors = ""
@@ -326,8 +337,10 @@ def replicate(args):
             log.info("started '%s'" % commands_create_checksums[ccc])
             ccc += 1
     # wait until all processes are ready
-    log.info("all processes started for step 1/3 (copy with %s + create checksum with %s)" %
-             (args.copy_program1, args.checksum_program))
+    log.info(
+        "all processes started for step 1/3 " +
+        "(copy with %s + create checksum with %s)" %
+        (args.copy_program1, args.checksum_program))
     for i in range(args.number_of_processes):
         if not (runs['processes'][i] is None):
             runs['processes'][i].wait()
@@ -382,7 +395,8 @@ def replicate(args):
              args.checksum_program)
     summary, check_checksums_errors = run_check_checksums(
         args, log, commands_check_checksums,
-        text="all processes started for step 3/3 (check checksums with %s)" % args.checksum_program,
+        text="all processes started for step 3/3 (check checksums with %s)" %
+        args.checksum_program,
         summary=summary)
     # print/log summary
     log.info("")
