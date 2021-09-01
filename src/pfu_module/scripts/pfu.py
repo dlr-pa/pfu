@@ -19,6 +19,7 @@ import pfu_module.scripts
 
 __pfu_date__ = "2021-05-28"
 
+
 def main():
     """
     :Author: Daniel Mohr
@@ -36,12 +37,12 @@ def main():
     myhelp += " pfu speed_test -h\n"
     myhelp += " pfu -h\n"
     parser = argparse.ArgumentParser(
-        description='pfu is a python script for'+
-        ' simple file handling. Command line parameters can be shorten,'+
+        description='pfu is a python script for' +
+        ' simple file handling. Command line parameters can be shorten,' +
         ' as far as they are unique.',
-        epilog=("Author: Daniel Mohr\n"+
-                "Date: %s\n"+
-                "License: GNU GENERAL PUBLIC LICENSE, "+
+        epilog=("Author: Daniel Mohr\n" +
+                "Date: %s\n" +
+                "License: GNU GENERAL PUBLIC LICENSE, " +
                 "Version 3, 29 June 2007.\n\n%s") % (
                     __pfu_date__, myhelp),
         formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -71,12 +72,14 @@ def main():
     log = logging.getLogger("pfu")
     log_console_handler = logging.StreamHandler()
     log_console_handler.setFormatter(
-        logging.Formatter('%(asctime)s %(threadName)s %(levelname)s %(message)s',
-                          datefmt='%Y-%m-%d %H:%M:%S'))
+        logging.Formatter(
+            '%(asctime)s %(threadName)s %(levelname)s %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'))
     log_console_handler.setLevel(args.loglevel[0])
     log.addHandler(log_console_handler)
     if args.logfile is not None:
-        file_handler = logging.handlers.WatchedFileHandler(args.logfile[0]) # not thread safe
+        file_handler = logging.handlers.WatchedFileHandler(
+            args.logfile[0])  # not thread safe
         file_handler.setFormatter(
             logging.Formatter('%(asctime)s %(levelname)s %(message)s',
                               datefmt='%Y-%m-%d %H:%M:%S'))
@@ -96,6 +99,7 @@ def main():
     if args.logfile is not None:
         file_handler.flush()
     sys.exit(exit_status)
+
 
 if __name__ == "__main__":
     main()

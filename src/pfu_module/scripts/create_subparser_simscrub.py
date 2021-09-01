@@ -12,6 +12,7 @@ from .create_common_parameter import create_common_parameter
 
 __date__ = "2017-01-29"
 
+
 def simscrub(args):
     """
     :Author: Daniel Mohr
@@ -21,13 +22,14 @@ def simscrub(args):
     """
     log = logging.getLogger("pfu.simscrub")
     import pfu_module.SimScrub.script
-    if args.dir is not None: # create file list
+    if args.dir is not None:  # create file list
         print("create_directory_trees")
         pfu_module.SimScrub.script.create_directory_trees(args, log)
-    else: # search for configs and data
+    else:  # search for configs and data
         print("do_scrubbing")
         pfu_module.SimScrub.script.do_scrubbing(args, log)
     return 0
+
 
 def create_subparser_simscrub(subparsers):
     """
@@ -36,9 +38,12 @@ def create_subparser_simscrub(subparsers):
     :Date: 2017-02-13 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
-    myhelp = "You can scrub your data regularly by calling this script via cron or anacron."
-    myhelp += "\n\ne. g. in anacron config file (after manually 'simscrub.py -dir bla'):\n"
-    myhelp += "  10 15 simscrub_update simscrub.py -time_delta 1 -scrub_time 100 -update\n"
+    myhelp = "You can scrub your data regularly by calling this script " + \
+        "via cron or anacron."
+    myhelp += "\n\ne. g. in anacron config file " + \
+        "(after manually 'simscrub.py -dir bla'):\n"
+    myhelp += "  10 15 simscrub_update simscrub.py -time_delta 1 " + \
+        "-scrub_time 100 -update\n"
     myhelp += "  1 20 simscrub_scrub simscrub.py -scrub_time 720 -noupdate\n"
     myhelp += ""
     myhelp += ""
@@ -49,7 +54,8 @@ def create_subparser_simscrub(subparsers):
     parser = subparsers.add_parser(
         'simscrub',
         description='This script read every file in the given directory tree.',
-        help='This command read every file in the given directory tree.'+' For more help: pfu simscrub -h',
+        help='This command read every file in the given directory tree.' +
+        ' For more help: pfu simscrub -h',
         epilog="%s" % epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=simscrub)
@@ -69,7 +75,8 @@ def create_subparser_simscrub(subparsers):
         type=str,
         required=False,
         dest='config_data_directory',
-        help='Set the directory to store configs and data. default: %s' % cfg_dir,
+        help='Set the directory to store configs and data. ' +
+        'default: %s' % cfg_dir,
         metavar='n')
     del cfg_dir
     parser.add_argument(
@@ -79,7 +86,8 @@ def create_subparser_simscrub(subparsers):
         type=int,
         required=False,
         dest='chunk_size',
-        help='Set the number of bytes to read at once (reading/scrubbing files). default: 524288',
+        help='Set the number of bytes to read at once ' +
+        '(reading/scrubbing files). default: 524288',
         metavar='n')
     parser.add_argument(
         '-reduced_chunk_size',
@@ -88,7 +96,8 @@ def create_subparser_simscrub(subparsers):
         type=int,
         required=False,
         dest='reduced_chunk_size',
-        help='Set the number of bytes to try to read on error (IOError) at once. default: 1024',
+        help='Set the number of bytes to try to read on error ' +
+        '(IOError) at once. default: 1024',
         metavar='n')
     parser.add_argument(
         '-max_retry',
@@ -106,7 +115,8 @@ def create_subparser_simscrub(subparsers):
         type=int,
         required=False,
         dest='omit_chunk_size',
-        help='Set the number of bytes to omit if an IOERRO occurs. Should be greater or equal reduced_chunk_size. default: 1024',
+        help='Set the number of bytes to omit if an IOERRO occurs. ' +
+        'Should be greater or equal reduced_chunk_size. default: 1024',
         metavar='n')
     parser.add_argument(
         '-time_delta',
@@ -124,7 +134,8 @@ def create_subparser_simscrub(subparsers):
         type=int,
         required=False,
         dest='number_of_threads',
-        help='Set the number of threads to use (only one thread per directory tree). default: 1',
+        help='Set the number of threads to use (only one thread per ' +
+        'directory tree). default: 1',
         metavar='n')
     parser.add_argument(
         '-scrub_time',
@@ -133,7 +144,9 @@ def create_subparser_simscrub(subparsers):
         type=int,
         required=False,
         dest='scrub_time',
-        help='Set the seconds for scrubbing. If set to 0, scrubbing is done until all files are read. Only working on Unix systems. default: 0',
+        help='Set the seconds for scrubbing. If set to 0, scrubbing is ' +
+        'done until all files are read. Only working on Unix systems. ' +
+        'default: 0',
         metavar='n')
     parser.add_argument(
         '-update',

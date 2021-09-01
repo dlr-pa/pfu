@@ -12,6 +12,7 @@ from .create_common_parameter import create_common_parameter
 
 __date__ = "2019-01-09"
 
+
 def speed_test(args):
     """
     :Author: Daniel Mohr
@@ -24,6 +25,7 @@ def speed_test(args):
     pfu_module.speed_test.script.speed_test(args)
     return 0
 
+
 def create_subparser_speed_test(subparsers):
     """
     :Author: Daniel Mohr
@@ -32,12 +34,13 @@ def create_subparser_speed_test(subparsers):
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     myhelp = "You can test the storage read and write speed with this tool.\n"
-    #myhelp += "You should write and read more Bytes you have as main memory to get plausible results.\n"
-    myhelp += "To get plausible results, you should write and read more Bytes\n"
+    myhelp += "To get plausible results, " + \
+        "you should write and read more Bytes\n"
     myhelp += "you have as main memory.\n"
     myhelp += "\nBut there are better and faster tools available:\n\n"
     myhelp += " testefestplattengeschwindigkeit.pl\n"
-    myhelp += "  https://cadae.de/kleinetools/testefestplattengeschwindigkeit/index.html\n\n"
+    myhelp += "  https://cadae.de/" + \
+        "kleinetools/testefestplattengeschwindigkeit/index.html\n\n"
     myhelp += " fio - flexible I/O tester\n"
     myhelp += "  https://github.com/axboe/fio\n"
     myhelp += "\nExample:\n"
@@ -48,8 +51,11 @@ def create_subparser_speed_test(subparsers):
     epilog += "\n%s" % myhelp
     parser = subparsers.add_parser(
         'speed_test',
-        description='This script tries to measure the read and write speed of a storage.',
-        help='This script tries to measure the read and write speed of a storage.'+' For more help: pfu speed_test -h',
+        description='This script tries to measure the read and write speed ' +
+        'of a storage.',
+        help='This script tries to measure the read and write speed of a ' +
+        'storage.' +
+        ' For more help: pfu speed_test -h',
         epilog="%s" % epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=speed_test)
@@ -84,7 +90,8 @@ def create_subparser_speed_test(subparsers):
         required=False,
         default=['human_readable'],
         dest='output_format',
-        help='Set the output format. default: human_readable (available: human_readable, maschine_readable)',
+        help='Set the output format. default: human_readable ' +
+        '(available: human_readable, maschine_readable)',
         metavar='fmt')
     parser.add_argument(
         '-undelete',
