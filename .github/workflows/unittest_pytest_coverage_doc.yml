@@ -8,7 +8,18 @@ on:
 
 jobs:
 
+  pep8_check:
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: install dependencies for PEP 8 code style check (ubuntu packages)
+      run: sudo apt install pep8
+    - name: check PEP 8 code style
+      run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
+
   ubuntu_test_doc:
+    needs: pep8_check
     strategy:
       matrix:
         # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
@@ -36,6 +47,7 @@ jobs:
       run: env python3 setup.py run_pytest --parallel --coverage
 
   macos-1015_test:
+    needs: pep8_check
     # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md
     runs-on: macos-10.15
     steps:
@@ -56,6 +68,7 @@ jobs:
       run: env python3 setup.py run_pytest --parallel --coverage
 
   windows_test:
+    needs: pep8_check
     strategy:
       matrix:
         # we need setuputils to create binaries for windows
