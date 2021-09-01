@@ -30,7 +30,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies (ubuntu packages)
-      run: sudo apt install python3-setuptools
+      run: sudo apt install python3-setuptools hashdeep
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu
