@@ -22,16 +22,16 @@ Or you can run this script directly (only the tests definded in this file)::
 
 Or you can run only one test, e. g.::
 
-  env python2 main.py test_module_import.test_module_import
+  env python3 main.py TestModuleImport.test_module_import
 
-  pytest-3 -k test_module_import main.py
+  pytest-3 -k TestModuleImport main.py
 """
 
 
 import unittest
 
 
-class test_module_import(unittest.TestCase):
+class TestModuleImport(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-05-25
@@ -44,6 +44,7 @@ class test_module_import(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
+        # pylint: disable=unused-variable,no-self-use
         import pfu_module
         import pfu_module.check_checksum
         import pfu_module.checksum_tools
@@ -60,7 +61,7 @@ class test_module_import(unittest.TestCase):
         import pfu_module.speed_test.script
 
 
-class test_script_executable(unittest.TestCase):
+class TestScriptExecutable(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-05-25
@@ -73,6 +74,7 @@ class test_script_executable(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
+        # pylint: disable=invalid-name
         import subprocess
         for cmd in ['pfu -h', 'pfu simscrub -h',
                     'pfu create_checksum -h', 'pfu check_checksum -h',
@@ -98,7 +100,7 @@ def scripts(suite):
     """
     print('add tests for the scripts')
     loader = unittest.defaultTestLoader
-    suite.addTest(loader.loadTestsFromTestCase(test_script_executable))
+    suite.addTest(loader.loadTestsFromTestCase(TestScriptExecutable))
     # pfu simscrub
     suite.addTest(loader.loadTestsFromName(
         'tests.script_pfu_simscrub'))
