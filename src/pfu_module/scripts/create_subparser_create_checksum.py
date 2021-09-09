@@ -45,7 +45,7 @@ def check_chunk_size(value):
     :Date: 2016-12-08 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
-    # pylint: disable=redefined-variable-type
+    # pylint: disable=bad-option-value,redefined-variable-type
     ivalue = 0
     if value.lower() == 'inf':
         ivalue = float('inf')

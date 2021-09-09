@@ -149,14 +149,14 @@ class Scrubbing(object):
         new_files = list(new_set_of_files.difference(old_list_of_files))
         old_files = list(set(old_list_of_files).difference(new_set_of_files))
         found_change = False
-        if len(old_files) > 0:
+        if bool(old_files):
             found_change = True
             for filename in old_files:
                 index = old_list_of_files.index(filename)
                 del old_list_of_files[index]
                 if index < self._status:
                     self._status -= 1
-        if len(new_files) > 0:
+        if bool(new_files):
             found_change = True
             old_list_of_files += new_files
         if found_change:

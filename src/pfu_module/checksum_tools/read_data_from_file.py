@@ -26,7 +26,7 @@ def read_data_from_file(buf_size, data_file, size, hash_objects):
     while data_read < size:
         number_of_bytes = min(buf_size, size-data_read)
         buf = data_file.read(number_of_bytes)
-        if len(buf) == 0:
+        if not bool(buf):
             break
         data_read += len(buf)
         for hash_object in hash_objects:

@@ -60,7 +60,7 @@ class CheckChecksumsClass(object):
     ]
 
     def __init__(self,
-                 directories=(),
+                 directories,
                  hash_extension=[".md5", ".sha256", ".sha512"],
                  ignore_extension=["~", ".tmp", ".bak"],
                  buf_size=524288,  # 1024*512 Bytes = 512 kB
@@ -397,8 +397,7 @@ class CheckChecksumsClass(object):
 
         :param filename: string of the filename
         """
-        # pylint: disable=too-many-locals
-        # pylint: disable=too-many-branches
+        # pylint: disable=too-many-locals,too-many-branches,too-many-statements
         match = True
         number_hashes = 0
         if filename in self.hash_dicts[1]:
