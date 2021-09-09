@@ -15,6 +15,10 @@ for data exchange helps to verify the
 
 The command line program(s) provide help output by using the common flag '-h'.
 
+You can find more information on the web:
+
+  * [source code of pfu](https://github.com/dlr-pa/pfu)
+
 
 ### pfu create_checksum
 
@@ -120,7 +124,7 @@ see [INSTALL](INSTALL.md)
 
 Author: Daniel Mohr.
 
-Date: 2021-05-25 (last change).
+Date: 2021-09-09 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
