@@ -21,7 +21,7 @@ def wait_for_free_slot(processes, number_of_processes, sleeptime):
             if processes[i] is None:
                 free_slot = i
                 break
-            elif not (processes[i].poll() is None):
+            elif processes[i].poll() is not None:
                 free_slot = i
                 break
         if free_slot < 0:

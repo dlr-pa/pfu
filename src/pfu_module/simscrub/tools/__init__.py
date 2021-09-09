@@ -30,6 +30,6 @@ Copyright (C) 2016, 2017 Daniel Mohr
  http://www.gnu.org/licenses/
 """
 
-from .MySignalHandler import MySignalHandler
+from .mysignalhandler import MySignalHandler
 
 __all__ = ['MySignalHandler']
