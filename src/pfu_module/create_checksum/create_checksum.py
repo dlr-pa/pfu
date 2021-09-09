@@ -11,7 +11,6 @@ import hashlib
 import logging
 import os
 
-import pfu_module.checksum_tools  # own_logger
 from pfu_module.checksum_tools import read_data_from_file
 
 
@@ -28,7 +27,7 @@ class CreateChecksumsClass(object):
     # pylint: disable=too-many-arguments
 
     def __init__(self,
-                 directories=(),
+                 directories,
                  algorithm='sha512',
                  coding='base64',
                  store='dir',

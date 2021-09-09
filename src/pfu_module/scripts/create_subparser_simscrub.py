@@ -21,13 +21,13 @@ def simscrub(args):
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     log = logging.getLogger("pfu.simscrub")
-    import pfu_module.SimScrub.script
+    import pfu_module.simscrub.script
     if args.dir is not None:  # create file list
         print("create_directory_trees")
-        pfu_module.SimScrub.script.create_directory_trees(args, log)
+        pfu_module.simscrub.script.create_directory_trees(args, log)
     else:  # search for configs and data
         print("do_scrubbing")
-        pfu_module.SimScrub.script.do_scrubbing(args, log)
+        pfu_module.simscrub.script.do_scrubbing(args, log)
     return 0
 
 

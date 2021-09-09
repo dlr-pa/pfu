@@ -11,8 +11,8 @@ import random
 import threading
 import time
 
-import pfu_module.SimScrub.scrubbing
-import pfu_module.SimScrub.tools
+import pfu_module.simscrub.scrubbing
+import pfu_module.simscrub.tools
 
 
 def do_scrubbing(args, log):
@@ -32,7 +32,7 @@ def do_scrubbing(args, log):
         list_of_thread_stop_fct = []
         for directory in start_points:
             event_locks += [threading.Event()]
-            list_of_scrub_inst += [pfu_module.SimScrub.scrubbing.Scrubbing(
+            list_of_scrub_inst += [pfu_module.simscrub.scrubbing.Scrubbing(
                 os.path.join(args.config_data_directory[0],
                              directory),
                 semaphore_lock,
@@ -48,7 +48,7 @@ def do_scrubbing(args, log):
                 list_of_scrub_inst[-1].stop_scrubbing]
         random.shuffle(list_of_scrub_inst)
         # create signal handling
-        my_signal_handling = pfu_module.SimScrub.tools.MySignalHandler(
+        my_signal_handling = pfu_module.simscrub.tools.MySignalHandler(
             list_of_thread_stop_fct)
         my_signal_handling.init()
         my_signal_handling.set_alarm(args.scrub_time[0])

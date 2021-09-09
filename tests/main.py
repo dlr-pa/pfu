@@ -53,10 +53,10 @@ class TestModuleImport(unittest.TestCase):
         import pfu_module.replicate.script
         import pfu_module.replicate.tools
         import pfu_module.scripts
-        import pfu_module.SimScrub
-        import pfu_module.SimScrub.script
-        import pfu_module.SimScrub.scrubbing
-        import pfu_module.SimScrub.tools
+        import pfu_module.simscrub
+        import pfu_module.simscrub.script
+        import pfu_module.simscrub.scrubbing
+        import pfu_module.simscrub.tools
         import pfu_module.speed_test
         import pfu_module.speed_test.script
 

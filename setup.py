@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2021-08-31
+:Date: 2021-09-09
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -264,7 +264,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pfu',
-    version='2021.08.31',
+    version='2021.09.09',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
@@ -289,10 +289,10 @@ setup(
         'pfu_module.replicate.script',
         'pfu_module.replicate.tools',
         'pfu_module.scripts',
-        'pfu_module.SimScrub',
-        'pfu_module.SimScrub.script',
-        'pfu_module.SimScrub.scrubbing',
-        'pfu_module.SimScrub.tools',
+        'pfu_module.simscrub',
+        'pfu_module.simscrub.script',
+        'pfu_module.simscrub.scrubbing',
+        'pfu_module.simscrub.tools',
         'pfu_module.speed_test',
         'pfu_module.speed_test.script'],
     entry_points={

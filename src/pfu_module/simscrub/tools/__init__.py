@@ -1,10 +1,10 @@
-"""simscrub.script
+"""pfu_module.simscrub.tools
 
 .. contents::
 
 description
 ===========
-This is the description for pfu_module.SimScrub.script.
+This is the description for pfu_module.simscrub.tools.
 
 copyright + license
 ===================
@@ -30,7 +30,6 @@ Copyright (C) 2016, 2017 Daniel Mohr
  http://www.gnu.org/licenses/
 """
 
-from .create_directory_trees import create_directory_trees
-from .do_scrubbing import do_scrubbing
+from .MySignalHandler import MySignalHandler
 
-__all__ = ['create_directory_trees', 'do_scrubbing']
+__all__ = ['MySignalHandler']

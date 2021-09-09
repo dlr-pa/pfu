@@ -13,7 +13,7 @@ import pickle
 import threading
 import time
 
-import pfu_module.SimScrub
+import pfu_module.simscrub
 
 
 class Scrubbing(object):
@@ -144,7 +144,7 @@ class Scrubbing(object):
         with open(os.path.join(self._config_dir, 'dir'), 'rb') as \
                 file_desriptor:
             reldir = pickle.load(file_desriptor)
-        new_list_of_files = pfu_module.SimScrub.create_file_list(reldir, log)
+        new_list_of_files = pfu_module.simscrub.create_file_list(reldir, log)
         new_set_of_files = set(new_list_of_files)
         new_files = list(new_set_of_files.difference(old_list_of_files))
         old_files = list(set(old_list_of_files).difference(new_set_of_files))
