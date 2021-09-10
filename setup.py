@@ -42,6 +42,7 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-18
         """
+        # pylint: disable=attribute-defined-outside-init
         self.src = 'installed'
         self.coverage = False
         self.pylint = False
@@ -60,6 +61,7 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-08-31
         """
+        # pylint: disable=too-many-branches
         # env python3 setup.py run_pytest
         if self.src == 'installed':
             pass
@@ -98,8 +100,8 @@ class TestWithPytest(Command):
             # first we need to clean the target directory
             if os.path.isdir(coverage_dir):
                 files = os.listdir(coverage_dir)
-                for f in files:
-                    os.remove(os.path.join(coverage_dir, f))
+                for filename in files:
+                    os.remove(os.path.join(coverage_dir, filename))
             pyargs += ['--cov=pfu_module', '--no-cov-on-fail',
                        '--cov-report=html:' + coverage_dir,
                        '--cov-report=term:skip-covered']
@@ -145,6 +147,7 @@ class TestWithUnittest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
+        # pylint: disable=attribute-defined-outside-init
         self.src = 'installed'
 
     def finalize_options(self):
@@ -175,7 +178,7 @@ class TestWithUnittest(Command):
         import tests
         setup_self = self
 
-        class test_required_module_import(unittest.TestCase):
+        class TestRequiredModuleImport(unittest.TestCase):
             # pylint: disable=missing-docstring
             # pylint: disable=no-self-use
             def test_required_module_import(self):
@@ -184,7 +187,7 @@ class TestWithUnittest(Command):
                     importlib.import_module(module)
         loader = unittest.defaultTestLoader
         suite.addTest(loader.loadTestsFromTestCase(
-            test_required_module_import))
+            TestRequiredModuleImport))
         if self.src == 'installed':
             tests.scripts(suite)
         res = unittest.TextTestRunner(verbosity=2).run(suite)
@@ -207,12 +210,23 @@ class CheckModules(Command):
     user_options = []
 
     def initialize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
 
     def finalize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
 
     def run(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import importlib
         summary = ""
         i = 0
@@ -248,12 +262,23 @@ class CheckModulesModulefinder(Command):
     user_options = []
 
     def initialize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
 
     def finalize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
 
     def run(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import modulefinder
         for script in self.distribution.scripts:
             print("\nchecking for modules used in '%s':" % script)

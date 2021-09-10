@@ -10,6 +10,7 @@ import logging
 
 from .read_data_from_file import read_data_from_file
 
+
 def add_logging_level_name(lvl, levelname):
     """
     :Author: Daniel Mohr
