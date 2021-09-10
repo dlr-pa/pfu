@@ -6,6 +6,8 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 import argparse
 
+import pfu_module.create_checksum
+
 from .create_common_parameter import create_common_parameter
 
 __date__ = "2017-02-13"
@@ -23,7 +25,6 @@ def create_checksum(args):
     :param args: command line arguments given in a structure from argparse
     """
     # pylint: disable=invalid-name
-    import pfu_module.create_checksum
     c = pfu_module.create_checksum.CreateChecksumsClass(
         directories=args.directories,
         algorithm=args.algorithm[0],
@@ -45,7 +46,7 @@ def check_chunk_size(value):
     :Date: 2016-12-08 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
-    # pylint: disable=redefined-variable-type
+    # pylint: disable=bad-option-value,redefined-variable-type
     ivalue = 0
     if value.lower() == 'inf':
         ivalue = float('inf')

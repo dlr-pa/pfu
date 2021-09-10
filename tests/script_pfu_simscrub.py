@@ -15,13 +15,14 @@ You can run this file directly::
 Or you can run only one test, e. g.::
 
   env python3 script_pfu_simscrub.py \
-    script_pfu_simscrub.test_script_pfu_simscrub_0
+    ScriptPfuSimscrub.test_script_pfu_simscrub_0
 
   pytest-3 -k test_script_pfu_simscrub_help script_pfu_simscrub.py
 """
 
 import os
-import random
+import pickle
+import stat
 import subprocess
 import tempfile
 import unittest
@@ -34,7 +35,7 @@ except (ModuleNotFoundError, ImportError):
     from create_random_directory_tree import create_random_directory_tree
 
 
-class script_pfu_simscrub(unittest.TestCase):
+class ScriptPfuSimscrub(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-05-25, 2021-08-31
@@ -47,13 +48,13 @@ class script_pfu_simscrub(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
-        cp = subprocess.run(
+        cpi = subprocess.run(
             'pfu simscrub -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
             timeout=23, check=True)
         # check begin of help output
-        self.assertTrue(cp.stdout.startswith(
+        self.assertTrue(cpi.stdout.startswith(
             b'usage: pfu simscrub '))
 
     def test_script_pfu_simscrub_1(self):
@@ -67,23 +68,23 @@ class script_pfu_simscrub(unittest.TestCase):
             # init scrubbing
             param = '-dir .'
             param += ' -config_data_directory ' + tmpdir
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=23, check=True)
             # e. g. on windows we can expect '\r\n' as line ending,
             # on posix systems we can expect '\n' as line ending
-            self.assertEqual(cp.stdout,
+            self.assertEqual(cpi.stdout,
                              b'create_directory_trees' + os.linesep.encode())
             param = '-config_data_directory ' + tmpdir
             # param += ' -fileloglevel 1'
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=23, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
+            self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
 
     def test_script_pfu_simscrub_2(self):
         """
@@ -93,10 +94,8 @@ class script_pfu_simscrub(unittest.TestCase):
         :Date: 2021-05-25, 2021-08-31
 
         env python3 script_pfu_simscrub.py \
-          script_pfu_simscrub.test_script_pfu_simscrub_2
+          ScriptPfuSimscrub.test_script_pfu_simscrub_2
         """
-        import pickle
-        import stat
         with tempfile.TemporaryDirectory() as tmpdir:
             conf_dir = os.path.join(tmpdir, 'conf')
             data_dir = os.path.join(tmpdir, 'data')
@@ -106,14 +105,14 @@ class script_pfu_simscrub(unittest.TestCase):
             # init scrubbing
             param = '-dir ' + data_dir
             param += ' -config_data_directory ' + conf_dir
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=23, check=True)
             # e. g. on windows we can expect '\r\n' as line ending,
             # on posix systems we can expect '\n' as line ending
-            self.assertEqual(cp.stdout,
+            self.assertEqual(cpi.stdout,
                              b'create_directory_trees' + os.linesep.encode())
             start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
@@ -121,12 +120,12 @@ class script_pfu_simscrub(unittest.TestCase):
             self.assertEqual(data, 0)
             param = '-config_data_directory ' + conf_dir
             param += ' -fileloglevel 1'
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=23, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
+            self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
             self.assertTrue(data[-1].endswith(
@@ -140,12 +139,12 @@ class script_pfu_simscrub(unittest.TestCase):
             os.remove(os.path.join(data_dir, '2'))
             create_random_file(os.path.join(data_dir, '10'))
             param += ' -time_delta 0'
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=23, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
+            self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
 
     def test_script_pfu_simscrub_3(self):
         """
@@ -154,7 +153,6 @@ class script_pfu_simscrub(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-05-25, 2021-08-31
         """
-        import pickle
         with tempfile.TemporaryDirectory() as tmpdir:
             conf_dir = os.path.join(tmpdir, 'conf')
             data_dir = os.path.join(tmpdir, 'data')
@@ -163,14 +161,14 @@ class script_pfu_simscrub(unittest.TestCase):
             # init scrubbing
             param = '-dir ' + data_dir
             param += ' -config_data_directory ' + conf_dir
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=23, check=True)
             # e. g. on windows we can expect '\r\n' as line ending,
             # on posix systems we can expect '\n' as line ending
-            self.assertEqual(cp.stdout,
+            self.assertEqual(cpi.stdout,
                              b'create_directory_trees' + os.linesep.encode())
             start_point = os.path.join(conf_dir, os.listdir(conf_dir)[0])
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
@@ -178,12 +176,12 @@ class script_pfu_simscrub(unittest.TestCase):
             self.assertEqual(data, 0)
             param = '-config_data_directory ' + conf_dir
             param += ' -fileloglevel 1'
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=23, check=True)
-            self.assertEqual(cp.stdout, b'do_scrubbing' + os.linesep.encode())
+            self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
             with open(os.path.join(start_point, 'status'), 'rb') as fd:

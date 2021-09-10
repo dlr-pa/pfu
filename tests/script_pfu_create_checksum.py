@@ -15,7 +15,7 @@ You can run this file directly::
 Or you can run only one test, e. g.::
 
   env python3 script_pfu_create_checksum.py \
-    script_pfu_create_checksum.test_script_pfu_create_checksum_help
+    ScriptPfuCreateChecksum.test_script_pfu_create_checksum_help
 
   pytest-3 -k test_script_pfu_create_checksum_help \
     script_pfu_create_checksum.py
@@ -29,15 +29,17 @@ import unittest
 
 
 def create_random_file(filename):
+    # pylint: disable=missing-docstring
     with open(filename, 'wb') as fd:
         fd.write(os.urandom(random.randint(23, 42)))
 
 
-class script_pfu_create_checksum(unittest.TestCase):
+class ScriptPfuCreateChecksum(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-05-25
     """
+    # pylint: disable=invalid-name
 
     def test_script_pfu_create_checksum_help(self):
         """
@@ -46,13 +48,13 @@ class script_pfu_create_checksum(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
-        cp = subprocess.run(
+        cpi = subprocess.run(
             'pfu create_checksum -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
             timeout=23, check=True)
         # check begin of help output
-        self.assertTrue(cp.stdout.startswith(
+        self.assertTrue(cpi.stdout.startswith(
             b'usage: pfu create_checksum '))
 
     def test_script_pfu_create_checksum_0(self):
@@ -68,7 +70,7 @@ class script_pfu_create_checksum(unittest.TestCase):
             with open(os.path.join(data_dir, 'foo'), 'w') as fd:
                 fd.write('bar')
             param = '-dir ' + data_dir
-            cp = subprocess.run(
+            subprocess.run(
                 'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
@@ -94,7 +96,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 fd.write('bar')
             param = '-dir ' + data_dir
             param += ' -store many'
-            cp = subprocess.run(
+            subprocess.run(
                 'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
@@ -133,7 +135,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 param = '-dir ' + data_dir
                 param += ' -algorithm ' + alg
                 param += ' -coding ' + coding
-                cp = subprocess.run(
+                subprocess.run(
                     'pfu create_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
@@ -158,7 +160,7 @@ class script_pfu_create_checksum(unittest.TestCase):
                 fd.write('bar')
             param = '-dir ' + data_dir
             param += ' -chunk_size 1'
-            cp = subprocess.run(
+            subprocess.run(
                 'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,

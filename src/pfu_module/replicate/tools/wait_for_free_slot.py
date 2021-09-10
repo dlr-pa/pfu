@@ -3,6 +3,7 @@ Author: Daniel Mohr.
 Date: 2017-02-14 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
+# pylint: skip-file
 
 import time
 
@@ -21,7 +22,7 @@ def wait_for_free_slot(processes, number_of_processes, sleeptime):
             if processes[i] is None:
                 free_slot = i
                 break
-            elif not (processes[i].poll() is None):
+            elif processes[i].poll() is not None:
                 free_slot = i
                 break
         if free_slot < 0:

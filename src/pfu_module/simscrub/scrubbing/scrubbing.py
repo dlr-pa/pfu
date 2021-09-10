@@ -13,10 +13,10 @@ import pickle
 import threading
 import time
 
-import pfu_module.SimScrub
+import pfu_module.simscrub
 
 
-class Scrubbing(object):
+class Scrubbing():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
@@ -144,19 +144,19 @@ class Scrubbing(object):
         with open(os.path.join(self._config_dir, 'dir'), 'rb') as \
                 file_desriptor:
             reldir = pickle.load(file_desriptor)
-        new_list_of_files = pfu_module.SimScrub.create_file_list(reldir, log)
+        new_list_of_files = pfu_module.simscrub.create_file_list(reldir, log)
         new_set_of_files = set(new_list_of_files)
         new_files = list(new_set_of_files.difference(old_list_of_files))
         old_files = list(set(old_list_of_files).difference(new_set_of_files))
         found_change = False
-        if len(old_files) > 0:
+        if bool(old_files):
             found_change = True
             for filename in old_files:
                 index = old_list_of_files.index(filename)
                 del old_list_of_files[index]
                 if index < self._status:
                     self._status -= 1
-        if len(new_files) > 0:
+        if bool(new_files):
             found_change = True
             old_list_of_files += new_files
         if found_change:

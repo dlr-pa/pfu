@@ -3,6 +3,7 @@ Author: Daniel Mohr.
 Date: 2017-02-14, 2021-05-25 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
+# pylint: skip-file
 
 import datetime
 import logging

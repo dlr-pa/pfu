@@ -11,7 +11,7 @@ import os
 import os.path
 import pickle
 
-import pfu_module.SimScrub
+import pfu_module.simscrub
 
 
 def create_directory_trees(args, log):
@@ -35,7 +35,7 @@ def create_directory_trees(args, log):
         log.info(" configs: %s" % config_dir)
         with open(os.path.join(config_dir, 'dir'), 'wb') as file_desriptor:
             pickle.dump(reldir, file_desriptor)
-        list_of_files = pfu_module.SimScrub.create_file_list(reldir, log)
+        list_of_files = pfu_module.simscrub.create_file_list(reldir, log)
         with open(os.path.join(config_dir, 'list'), 'wb') as file_desriptor:
             pickle.dump(list_of_files, file_desriptor)
         with open(os.path.join(config_dir, 'status'), 'wb') as file_desriptor:

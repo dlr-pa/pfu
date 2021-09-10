@@ -1,10 +1,10 @@
-"""pfu_module.SimScrub.tools
+"""pfu_module.simscrub.scrubbing
 
 .. contents::
 
 description
 ===========
-This is the description for pfu_module.SimScrub.tools.
+This is the description for pfu_module.simscrub.scrubbing.
 
 copyright + license
 ===================
@@ -30,6 +30,6 @@ Copyright (C) 2016, 2017 Daniel Mohr
  http://www.gnu.org/licenses/
 """
 
-from .MySignalHandler import MySignalHandler
+from .scrubbing import Scrubbing
 
-__all__ = ['MySignalHandler']
+__all__ = ['Scrubbing']

@@ -6,6 +6,8 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 import argparse
 
+import pfu_module.replicate.script
+
 from .create_common_parameter import create_common_parameter
 
 __date__ = "2021-05-17"
@@ -18,7 +20,6 @@ def replicate(args):
     :Date: 2017-02-14 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
-    import pfu_module.replicate.script
     pfu_module.replicate.script.replicate(args)
 
 
@@ -33,6 +34,7 @@ def create_subparser_replicate(subparsers):
     In this function only the command line parameters for 'replicate'
     are defined.
     """
+    # pylint: disable=too-many-statements
     myhelp = "Examples:\n\n"
     myhelp += "  time pfu replicate -source sd -destination $(pwd)/t1 t2/\n\n"
     myhelp += "  time pfu replicate -so ./sd -de t1 t2/ -l 0\n\n"

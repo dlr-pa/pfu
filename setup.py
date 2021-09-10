@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2021-08-31
+:Date: 2021-09-09
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -42,6 +42,7 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-18
         """
+        # pylint: disable=attribute-defined-outside-init
         self.src = 'installed'
         self.coverage = False
         self.pylint = False
@@ -53,13 +54,13 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        pass
 
     def run(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-08-31
         """
+        # pylint: disable=too-many-branches
         # env python3 setup.py run_pytest
         if self.src == 'installed':
             pass
@@ -78,7 +79,7 @@ class TestWithPytest(Command):
         if self.parallel:
             try:
                 # if available, using parallel test run
-                # pylint: disable=unused-variable
+                # pylint: disable=unused-variable,unused-import
                 import xdist
                 if os.name == 'posix':
                     # since we are only running seconds,
@@ -98,8 +99,8 @@ class TestWithPytest(Command):
             # first we need to clean the target directory
             if os.path.isdir(coverage_dir):
                 files = os.listdir(coverage_dir)
-                for f in files:
-                    os.remove(os.path.join(coverage_dir, f))
+                for filename in files:
+                    os.remove(os.path.join(coverage_dir, filename))
             pyargs += ['--cov=pfu_module', '--no-cov-on-fail',
                        '--cov-report=html:' + coverage_dir,
                        '--cov-report=term:skip-covered']
@@ -145,6 +146,7 @@ class TestWithUnittest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
+        # pylint: disable=attribute-defined-outside-init
         self.src = 'installed'
 
     def finalize_options(self):
@@ -152,7 +154,6 @@ class TestWithUnittest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        pass
 
     def run(self):
         """
@@ -175,7 +176,7 @@ class TestWithUnittest(Command):
         import tests
         setup_self = self
 
-        class test_required_module_import(unittest.TestCase):
+        class TestRequiredModuleImport(unittest.TestCase):
             # pylint: disable=missing-docstring
             # pylint: disable=no-self-use
             def test_required_module_import(self):
@@ -184,7 +185,7 @@ class TestWithUnittest(Command):
                     importlib.import_module(module)
         loader = unittest.defaultTestLoader
         suite.addTest(loader.loadTestsFromTestCase(
-            test_required_module_import))
+            TestRequiredModuleImport))
         if self.src == 'installed':
             tests.scripts(suite)
         res = unittest.TextTestRunner(verbosity=2).run(suite)
@@ -207,12 +208,23 @@ class CheckModules(Command):
     user_options = []
 
     def initialize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
 
     def finalize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
 
     def run(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import importlib
         summary = ""
         i = 0
@@ -248,12 +260,23 @@ class CheckModulesModulefinder(Command):
     user_options = []
 
     def initialize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
 
     def finalize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
 
     def run(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2017-01-08
+        """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import modulefinder
         for script in self.distribution.scripts:
             print("\nchecking for modules used in '%s':" % script)
@@ -264,7 +287,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pfu',
-    version='2021.08.31',
+    version='2021.09.09',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
@@ -289,10 +312,10 @@ setup(
         'pfu_module.replicate.script',
         'pfu_module.replicate.tools',
         'pfu_module.scripts',
-        'pfu_module.SimScrub',
-        'pfu_module.SimScrub.script',
-        'pfu_module.SimScrub.scrubbing',
-        'pfu_module.SimScrub.tools',
+        'pfu_module.simscrub',
+        'pfu_module.simscrub.script',
+        'pfu_module.simscrub.scrubbing',
+        'pfu_module.simscrub.tools',
         'pfu_module.speed_test',
         'pfu_module.speed_test.script'],
     entry_points={

@@ -4,7 +4,7 @@
 
 description
 ===========
-This is the description for pfu_module.SimScrub.script.
+This is the description for pfu_module.simscrub.script.
 
 copyright + license
 ===================

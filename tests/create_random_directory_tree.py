@@ -9,12 +9,19 @@ import random
 
 
 def create_random_file(filename):
+    """
+    creates a file with the name filename with random data
+    and a random length of 23 to 42 bytes
+    """
     with open(filename, 'wb') as fd:
         fd.write(os.urandom(random.randint(23, 42)))
 
 
 def create_random_directory_tree(
         tmpdir, subdirs=True, number_dirs=None, number_files=None, levels=0):
+    """
+    creates a random directory tree in the given path tmpdir
+    """
     # https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_276
     population = bytes(list(range(65, 91))).decode() + \
         bytes(list(range(97, 123))).decode()
@@ -46,6 +53,7 @@ def create_random_directory_tree(
                     number_files=number_files,
                     levels=levels - 1)
         for i in range(my_number_dirs):
+            # pylint: disable=unused-variable
             for j in range(my_number_files):
                 k = random.randint(6, 23)
                 filename = os.path.join(

@@ -19,7 +19,7 @@ import pfu_module.checksum_tools  # pylint: disable=unused-import
 from pfu_module.checksum_tools import read_data_from_file
 
 
-class CheckChecksumsClass(object):
+class CheckChecksumsClass():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
@@ -60,9 +60,9 @@ class CheckChecksumsClass(object):
     ]
 
     def __init__(self,
-                 directories=(),
-                 hash_extension=[".md5", ".sha256", ".sha512"],
-                 ignore_extension=["~", ".tmp", ".bak"],
+                 directories=None,
+                 hash_extension=None,
+                 ignore_extension=None,
                  buf_size=524288,  # 1024*512 Bytes = 512 kB
                  level=20):
         """
@@ -77,7 +77,9 @@ class CheckChecksumsClass(object):
                             Symbolic links in given directories are ignored.
         :param hash_extension: Files with the given extension(s) are
                                interpreted as hash files.
+                               default: [".md5", ".sha256", ".sha512"]
         :param ignore_extension: Files with the given extension(s) are ignored
+                                 default: ["~", ".tmp", ".bak"]
         :param buf_size: Files will be read in chunks of the given amount of
                          Bytes. This should be a factor of the data handled by
                          the hash function (e. g. 64 Bytes for md5, 64 Bytes
@@ -88,7 +90,13 @@ class CheckChecksumsClass(object):
         """
         # pylint: disable=too-many-arguments
         self.directories = directories
+        if directories is None:
+            self.directories = ()
+        if hash_extension is None:
+            hash_extension = [".md5", ".sha256", ".sha512"]
         hash_extension = set(hash_extension)
+        if ignore_extension is None:
+            ignore_extension = ["~", ".tmp", ".bak"]
         self.ignore_extension = set(ignore_extension)
         self.accept_hash_extension = hash_extension - self.ignore_extension
         self.not_file_extension = hash_extension & self.ignore_extension
@@ -397,8 +405,7 @@ class CheckChecksumsClass(object):
 
         :param filename: string of the filename
         """
-        # pylint: disable=too-many-locals
-        # pylint: disable=too-many-branches
+        # pylint: disable=too-many-locals,too-many-branches,too-many-statements
         match = True
         number_hashes = 0
         if filename in self.hash_dicts[1]:

@@ -5,8 +5,8 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import argparse
-import logging
-import os
+
+import pfu_module.speed_test.script
 
 from .create_common_parameter import create_common_parameter
 
@@ -20,8 +20,6 @@ def speed_test(args):
     :Date: 2017-01-29 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
-    log = logging.getLogger("pfu.speed_test")
-    import pfu_module.speed_test.script
     pfu_module.speed_test.script.speed_test(args)
     return 0
 

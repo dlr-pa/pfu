@@ -11,11 +11,10 @@ import hashlib
 import logging
 import os
 
-import pfu_module.checksum_tools  # own_logger
 from pfu_module.checksum_tools import read_data_from_file
 
 
-class CreateChecksumsClass(object):
+class CreateChecksumsClass():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
@@ -28,11 +27,11 @@ class CreateChecksumsClass(object):
     # pylint: disable=too-many-arguments
 
     def __init__(self,
-                 directories=(),
+                 directories=None,
                  algorithm='sha512',
                  coding='base64',
                  store='dir',
-                 ignore=[".md5", ".sha256", ".sha512"],
+                 ignore=None,
                  buf_size=524288,  # 1024*512 Bytes = 512 kB
                  chunk_size=12582912,  # 12 MB
                  create_only_missing=1,
@@ -57,6 +56,7 @@ class CreateChecksumsClass(object):
                       \"many\" means store the hashes in a file for every data
                       file.
         :param ignore: list of file extensions, which are ignored
+                       default: [".md5", ".sha256", ".sha512"]
         :param buf_size: Files will be read in chunks of the given amount of
                          Bytes. This should be a factor of the data handled by
                          the hash function (e. g. 64 Bytes for md5, 64 Bytes
@@ -77,11 +77,15 @@ class CreateChecksumsClass(object):
         self.algorithm = algorithm
         self.coding = coding
         self.directories = directories
+        if directories is None:
+            self.directories = ()
         self.chunk_size = chunk_size
         self.store = store
         self.hash_file_prefix = hash_file_prefix
         self.create_only_missing = create_only_missing
         self.ignore = ignore
+        if ignore is None:
+            self.ignore = [".md5", ".sha256", ".sha512"]
         self.buf_size = buf_size
         self.created_hash_files = []  # list of already created hash files
         self.log = logging.getLogger("pfu.create")
