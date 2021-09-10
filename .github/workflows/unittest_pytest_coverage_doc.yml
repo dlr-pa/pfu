@@ -14,9 +14,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies for PEP 8 code style check (ubuntu packages)
-      run: sudo apt install pep8
+      run: sudo apt install pep8 pylint3
     - name: check PEP 8 code style
       run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
+    - name: run pylint
+      run: |
+        pylint $(find -name "*.py")
+        echo -e "\nskipped files: \n$(grep -irl skip-file *)"
 
   ubuntu_test_doc:
     needs: pep8_check

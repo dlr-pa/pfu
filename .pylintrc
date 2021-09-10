@@ -1,0 +1,22 @@
+[MASTER]
+
+# Use multiple processes to speed up Pylint.
+jobs=3
+
+
+[REPORTS]
+
+# Tells whether to display a full report or only the messages
+reports=yes
+
+
+[BASIC]
+
+# Good variable names which should always be accepted, separated by a comma
+good-names=i,
+           j,
+           k,
+           fd
+
+# Include a hint for the correct naming format with invalid-name
+include-naming-hint=yes
