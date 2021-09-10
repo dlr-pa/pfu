@@ -21,6 +21,8 @@ Or you can run only one test, e. g.::
 """
 
 import os
+import pickle
+import stat
 import subprocess
 import tempfile
 import unittest
@@ -94,8 +96,6 @@ class ScriptPfuSimscrub(unittest.TestCase):
         env python3 script_pfu_simscrub.py \
           ScriptPfuSimscrub.test_script_pfu_simscrub_2
         """
-        import pickle
-        import stat
         with tempfile.TemporaryDirectory() as tmpdir:
             conf_dir = os.path.join(tmpdir, 'conf')
             data_dir = os.path.join(tmpdir, 'data')
@@ -153,7 +153,6 @@ class ScriptPfuSimscrub(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-05-25, 2021-08-31
         """
-        import pickle
         with tempfile.TemporaryDirectory() as tmpdir:
             conf_dir = os.path.join(tmpdir, 'conf')
             data_dir = os.path.join(tmpdir, 'data')

@@ -6,6 +6,8 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 import argparse
 
+import pfu_module.check_checksum
+
 from .create_common_parameter import create_common_parameter
 
 __date__ = "2017-03-01"
@@ -23,7 +25,6 @@ def check_checksum(args):
     :param args: command line arguments given in a structure from argparse
     """
     # pylint: disable=invalid-name
-    import pfu_module.check_checksum
     c = pfu_module.check_checksum.CheckChecksumsClass(
         directories=args.directories,
         hash_extension=args.hash_extension,

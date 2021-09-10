@@ -6,6 +6,8 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 import argparse
 
+import pfu_module.speed_test.script
+
 from .create_common_parameter import create_common_parameter
 
 __date__ = "2019-01-09"
@@ -18,7 +20,6 @@ def speed_test(args):
     :Date: 2017-01-29 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
-    import pfu_module.speed_test.script
     pfu_module.speed_test.script.speed_test(args)
     return 0
 

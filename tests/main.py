@@ -27,7 +27,7 @@ Or you can run only one test, e. g.::
   pytest-3 -k TestModuleImport main.py
 """
 
-
+import subprocess
 import unittest
 
 
@@ -45,6 +45,8 @@ class TestModuleImport(unittest.TestCase):
         :Date: 2021-05-25
         """
         # pylint: disable=unused-variable,no-self-use
+        # pylint: disable=bad-option-value,import-outside-toplevel
+        # pylint: disable=unused-import
         import pfu_module
         import pfu_module.check_checksum
         import pfu_module.checksum_tools
@@ -75,7 +77,6 @@ class TestScriptExecutable(unittest.TestCase):
         :Date: 2021-05-25
         """
         # pylint: disable=invalid-name
-        import subprocess
         for cmd in ['pfu -h', 'pfu simscrub -h',
                     'pfu create_checksum -h', 'pfu check_checksum -h',
                     'pfu replicate -h', 'pfu speed_test -h']:

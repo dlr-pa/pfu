@@ -14,7 +14,7 @@ import os
 from pfu_module.checksum_tools import read_data_from_file
 
 
-class CreateChecksumsClass(object):
+class CreateChecksumsClass():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de

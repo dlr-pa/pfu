@@ -19,7 +19,7 @@ import pfu_module.checksum_tools  # pylint: disable=unused-import
 from pfu_module.checksum_tools import read_data_from_file
 
 
-class CheckChecksumsClass(object):
+class CheckChecksumsClass():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de

@@ -16,7 +16,7 @@ import time
 import pfu_module.simscrub
 
 
-class Scrubbing(object):
+class Scrubbing():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de

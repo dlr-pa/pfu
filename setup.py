@@ -54,7 +54,6 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        pass
 
     def run(self):
         """
@@ -80,7 +79,7 @@ class TestWithPytest(Command):
         if self.parallel:
             try:
                 # if available, using parallel test run
-                # pylint: disable=unused-variable
+                # pylint: disable=unused-variable,unused-import
                 import xdist
                 if os.name == 'posix':
                     # since we are only running seconds,
@@ -155,7 +154,6 @@ class TestWithUnittest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        pass
 
     def run(self):
         """

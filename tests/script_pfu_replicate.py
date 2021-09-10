@@ -68,11 +68,11 @@ class ScriptPfuReplicate(unittest.TestCase):
                 self.skipTest(
                     'sha256sum and sha256 not available, skipping test')
                 return
-            else:
-                extraparam = '-checksum_program sha256'
-                extraparam += ' -checksum_create_parameter \\\"\\\"'
-                extraparam += ' -checksum_check_parameter \\\"-c\\\"'
-                # check parameter will not work, but produces no error
+            # else:
+            extraparam = '-checksum_program sha256'
+            extraparam += ' -checksum_create_parameter \\\"\\\"'
+            extraparam += ' -checksum_check_parameter \\\"-c\\\"'
+            # check parameter will not work, but produces no error
         else:  # sha256sum is available and default for pfu replicate
             extraparam = ''
         with tempfile.TemporaryDirectory() as tmpdir:

@@ -8,6 +8,8 @@ import argparse
 import logging
 import os
 
+import pfu_module.simscrub.script
+
 from .create_common_parameter import create_common_parameter
 
 __date__ = "2017-01-29"
@@ -21,7 +23,6 @@ def simscrub(args):
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     log = logging.getLogger("pfu.simscrub")
-    import pfu_module.simscrub.script
     if args.dir is not None:  # create file list
         print("create_directory_trees")
         pfu_module.simscrub.script.create_directory_trees(args, log)

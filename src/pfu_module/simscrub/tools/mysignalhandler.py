@@ -10,7 +10,7 @@ import time
 import sys
 
 
-class MySignalHandler(object):
+class MySignalHandler():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
