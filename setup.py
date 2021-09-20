@@ -326,7 +326,8 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
-        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'License :: OSI Approved :: '
+        'GNU General Public License v3 or later (GPLv3+)',
         'Natural Language :: English',
         'Operating System :: POSIX',
         'Operating System :: POSIX :: BSD :: FreeBSD',
@@ -334,8 +335,10 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Operating System :: Unix',
         'Operating System :: MacOS',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7'],
+        'Programming Language :: Python :: 3'],
     requires=[
         'argparse',
         'base64',
