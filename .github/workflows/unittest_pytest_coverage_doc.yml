@@ -13,8 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: apt-get update
+      run: sudo apt-get update
     - name: install dependencies for PEP 8 code style check (ubuntu packages)
-      run: sudo apt install pep8 pylint python3-pytest
+      run: sudo apt-get install pep8 pylint python3-pytest
     - name: check PEP 8 code style
       run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
     - name: run pylint
@@ -34,12 +36,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
+    - name: apt-get update
+      run: sudo apt-get update
     - name: install dependencies (ubuntu packages)
       if: matrix.install_method == 'basic'
-      run: sudo apt install python3-setuptools hashdeep
+      run: sudo apt-get install python3-setuptools hashdeep
     - name: install dependencies (ubuntu packages)
       if: matrix.install_method == 'pip'
-      run: sudo apt install python3-setuptools python3-pip hashdeep
+      run: sudo apt-get install python3-setuptools python3-pip hashdeep
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu with python
@@ -55,7 +59,7 @@ jobs:
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies for pytest (ubuntu packages)
-      run: sudo apt install python3-pytest python3-pytest-cov python3-pytest-xdist
+      run: sudo apt-get install python3-pytest python3-pytest-cov python3-pytest-xdist
     - name: pytest
       run: env python3 setup.py run_pytest --parallel --coverage
 
