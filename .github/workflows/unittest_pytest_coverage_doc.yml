@@ -142,14 +142,11 @@ jobs:
           python3.8 setup.py run_pytest --parallel --coverage
           cat installed_files.txt | xargs rm -rf && echo "uninstalled/removed: "$(cat installed_files.txt)
 
-  amd64_opensuse_leap_test:
+  amd64_opensuse_leap_152_test:
     needs: pep8_check
     # https://github.com/daniel-mohr/amd64_opensuse_leap_15.2
-    # https://github.com/daniel-mohr/amd64_opensuse_leap_15.3
-    strategy:
-      matrix:
-        docker_github_action: [daniel-mohr/amd64_opensuse_leap_15.2@v0, daniel-mohr/amd64_opensuse_leap_15.3@v0]
     runs-on: ubuntu-latest
+    name: opensuse leap 15.2
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -169,7 +166,35 @@ jobs:
       - name: cat test script
         run: cat do_test
       - name: run my script in docker image
-        uses:  ${{ matrix.docker_github_action }}
+        uses:  daniel-mohr/amd64_opensuse_leap_15.2@v0
+        with:
+          cmdfile: ./do_test
+
+  amd64_opensuse_leap_153_test:
+    needs: pep8_check
+    # https://github.com/daniel-mohr/amd64_opensuse_leap_15.3
+    runs-on: ubuntu-latest
+    name: opensuse leap 15.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: create test script for docker
+        run: |
+          echo "#!/bin/sh -l" > do_test
+          echo "set -e -x" >> do_test
+          echo "zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep" >> do_test
+          echo "env python3 -V" >> do_test
+          echo "env python3 setup.py check_modules" >> do_test
+          echo "env python3 setup.py install" >> do_test
+          echo "which pfu" >> do_test
+          echo "pfu -h" >> do_test
+          echo "env python3 setup.py run_unittest" >> do_test
+          echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
+          chmod +x do_test
+      - name: cat test script
+        run: cat do_test
+      - name: run my script in docker image
+        uses:  daniel-mohr/amd64_opensuse_leap_15.3@v0
         with:
           cmdfile: ./do_test
 
