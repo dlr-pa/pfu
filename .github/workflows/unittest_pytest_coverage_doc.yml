@@ -172,3 +172,31 @@ jobs:
         uses:  ${{ matrix.docker_github_action }}
         with:
           cmdfile: ./do_test
+
+  i386_debian_latest_test:
+    needs: pep8_check
+    # https://github.com/daniel-mohr/i386_debian_latest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: create test script for docker
+        run: |
+          echo "#!/bin/sh -l" > do_test
+          echo "set -e -x" >> do_test
+          echo "DEBIAN_FRONTEND=noninteractive apt-get install -q -y python3-setuptools python3-pip hashdeep python3-pytest python3-pytest-cov python3-pytest-xdist" >> do_test
+          echo "env python3 setup.py check_modules" >> do_test
+          echo "pip3 install ." >> do_test
+          echo "which pfu" >> do_test
+          echo "pfu -h" >> do_test
+          echo "env python3 setup.py run_unittest" >> do_test
+          echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
+          chmod +x do_test
+      - name: cat test script
+        run: cat do_test
+      - name: run my script in docker image
+        uses:  daniel-mohr/i386_debian_latest@v0
+        with:
+          cmdfile: ./do_test
+
+
