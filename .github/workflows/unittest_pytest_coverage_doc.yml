@@ -84,6 +84,27 @@ jobs:
     - name: pytest
       run: env python3 setup.py run_pytest --parallel --coverage
 
+  macos-11_test:
+    needs: pep8_check
+    # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    - name: check all modules available
+      run: env python3 setup.py check_modules
+    - name: install pfu
+      run: sudo python3 setup.py install
+    - name: run pfu
+      run: |
+        which pfu
+        pfu -h
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: install dependencies via pip3
+      run: pip3 install wheel pytest pytest-cov pytest-xdist
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
+
   windows_test:
     needs: pep8_check
     strategy:
