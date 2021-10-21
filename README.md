@@ -35,12 +35,13 @@ and was/is used in this project.
 [^a]: https://en.wikipedia.org/wiki/PK-4_(ISS_experiment)
 [^b]: https://doi.org/10.1063/1.4962696
 
-In the projects PlasmaLab/Ekoplasma [^c] [^d] and COMPACT [^e]
+In the projects PlasmaLab/Ekoplasma [^c] [^d] and COMPACT [^e] [^f]
 it was used and developed in python2.
 
 [^c]: https://complex-plasmas.dlr.de/index.php/plasmalab.html
 [^d]: https://dx.doi.org/10.1063/1.5020392
 [^e]: https://sciences.ucf.edu/physics/microgravity/iss-compact/
+[^f]: https://doi.org/10.1063/5.0062165
 
 
 ### pfu check_checksum
@@ -84,10 +85,7 @@ default rsync, the source and destination paths have to be local. If copy is
 done by "rsync" and this script is run on a windows system, the drive letters
 will be replaced by "/cygdrive/[drive letter]/".
 
-It was used and developed in the project PlasmaLab/Ekoplasma [^f] [^g].
-
-[^f]: https://complex-plasmas.dlr.de/index.php/plasmalab.html
-[^g]: https://dx.doi.org/10.1063/1.5020392
+It was used and developed in the project PlasmaLab/Ekoplasma [^c] [^d] [^f].
 
 It was used 2015 and 2016 on the parabolic flight campaigns of PlasmaLab.
 
