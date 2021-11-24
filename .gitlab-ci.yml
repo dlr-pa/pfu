@@ -148,5 +148,5 @@ deploy_to_github:
     - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
     - mv $github_deploy_key ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
     - repopath=$(mktemp -d)
-    - git clone ${CI_REPOSITORY_URL} $repopath
+    - git clone --mirror ${CI_REPOSITORY_URL} $repopath
     - (cd $repopath && git push --prune --mirror git@github.com:dlr-pa/pfu.git)
