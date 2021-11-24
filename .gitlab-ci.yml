@@ -1,0 +1,152 @@
+variables:
+  DEBIAN_FRONTEND: noninteractive
+  APT_GET_INSTALL: "apt-get install -q -y"
+
+stages:
+  - pre
+  - build
+  - test
+  - deploy
+
+pre-commit:
+  stage: pre
+  image:
+    # https://hub.docker.com/_/debian
+    name: debian:latest
+  script:
+    - date
+    - apt-get update
+    - $APT_GET_INSTALL python3-pip git cargo
+    - pip3 install pre-commit
+    # run pre-commit
+    - pre-commit --version
+    - pre-commit run --all-files
+
+pycodestyle:
+  stage: pre
+  image:
+    # https://hub.docker.com/_/debian
+    name: debian:latest
+  script:
+    - date
+    - apt-get update
+    - $APT_GET_INSTALL pycodestyle
+    # check PEP 8 code style (pycodestyle was formerly called pep8)
+    - pycodestyle --show-source --show-pep8 --statistics $(find -name "*.py")
+
+pylint:
+  stage: pre
+  allow_failure: true
+  image:
+    # https://hub.docker.com/_/debian
+    name: debian:latest
+  script:
+    - date
+    - apt-get update
+    - $APT_GET_INSTALL pylint python3-pytest
+    # run pylint
+    - pylint $(find -name "*.py")
+    - echo -e "\nskipped files:"
+    - echo -e "$(grep -irl skip-file *)"
+
+.debian_based_unittest_template: &debian_based_unittest
+  stage: test
+  rules:
+    - if: '$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  parallel:
+    matrix:
+      - install_method:
+          - basic
+          - pip
+  script:
+    - apt-get update
+    - $APT_GET_INSTALL python3-setuptools hashdeep
+    - test 'basic' = $install_method && $APT_GET_INSTALL python3-setuptools hashdeep
+    - test 'pip' = $install_method && $APT_GET_INSTALL python3-setuptools python3-pip hashdeep
+    - env python3 setup.py check_modules
+    - test 'basic' = $install_method && python3 setup.py install
+    - test 'pip' = $install_method && pip3 install .
+    # run pfu
+    - which pfu
+    - pfu -h
+    # unittest
+    - env python3 setup.py run_unittest
+    # install dependencies for pytest
+    - $APT_GET_INSTALL python3-pytest python3-pytest-cov python3-pytest-xdist
+    # pytest
+    - env python3 setup.py run_pytest --parallel --coverage
+
+ubuntu:18.04_unittest:
+  image:
+    # https://hub.docker.com/_/ubuntu
+    name: ubuntu:18.04
+  <<: *debian_based_unittest
+
+ubuntu:20.04_unittest:
+  image:
+    # https://hub.docker.com/_/ubuntu
+    name: ubuntu:20.04
+  <<: *debian_based_unittest
+
+ubuntu:latest_unittest:
+  image:
+    # https://hub.docker.com/_/ubuntu
+    name: ubuntu:latest
+  <<: *debian_based_unittest
+
+debian:latest_unittest:
+  image:
+    # https://hub.docker.com/_/debian
+    name: debian:latest
+  <<: *debian_based_unittest
+
+i386_debian:latest_unittest:
+  image:
+    # https://hub.docker.com/_/debian
+    name: i386/debian:latest
+  <<: *debian_based_unittest
+
+.suse_based_unittest_template: &suse_based_unittest
+  stage: test
+  rules:
+    - if: '$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - date
+    - zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep
+    - env python3 -V
+    - env python3 setup.py check_modules
+    - env python3 setup.py install
+    - pfu -h
+    - env python3 setup.py run_unittest
+    - env python3 setup.py run_pytest --parallel --coverage
+
+opensuse_leap:15.2_unittest:
+  image:
+    # https://hub.docker.com/r/opensuse/leap
+    name: opensuse/leap:15.2
+  <<: *suse_based_unittest
+
+opensuse_leap:15.3_unittest:
+  image:
+    # https://hub.docker.com/r/opensuse/leap
+    name: opensuse/leap:15.3
+  <<: *suse_based_unittest
+
+deploy_to_github:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  image:
+    # https://hub.docker.com/_/alpine
+    name: alpine:latest
+  script:
+    - date
+    - apk add --no-cache git openssh
+    - mkdir ~/.ssh && chmod 700 ~/.ssh
+    - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+    - mv $github_deploy_key ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+    - repopath=$(mktemp -d)
+    - git clone ${CI_REPOSITORY_URL} $repopath
+    - (cd $repopath && git push --prune --mirror git@github.com:dlr-pa/pfu.git)
