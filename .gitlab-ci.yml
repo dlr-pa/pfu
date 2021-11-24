@@ -8,7 +8,7 @@ stages:
   - test
   - deploy
 
-pre-commit:
+pre-commit_debian:
   stage: pre
   image:
     # https://hub.docker.com/_/debian
@@ -22,7 +22,20 @@ pre-commit:
     - pre-commit --version
     - pre-commit run --all-files
 
-pycodestyle:
+pre-commit_alpine:
+  stage: pre
+  image:
+    # https://hub.docker.com/_/alpine
+    name: alpine:latest
+  script:
+    - date
+    - apk add --no-cache py3-pip git npm bash
+    - pip install pre-commit
+    # run pre-commit
+    - pre-commit --version
+    - pre-commit run --all-files
+
+pycodestyle_debian:
   stage: pre
   image:
     # https://hub.docker.com/_/debian
@@ -32,9 +45,22 @@ pycodestyle:
     - apt-get update
     - $APT_GET_INSTALL pycodestyle
     # check PEP 8 code style (pycodestyle was formerly called pep8)
+    - pycodestyle --version
     - pycodestyle --show-source --show-pep8 --statistics $(find -name "*.py")
 
-pylint:
+pycodestyle_alpine:
+  stage: pre
+  image:
+    # https://hub.docker.com/_/alpine
+    name: alpine:latest
+  script:
+    - date
+    - apk add --no-cache py3-pycodestyle
+    # check PEP 8 code style (pycodestyle was formerly called pep8)
+    - pycodestyle --version
+    - pycodestyle --show-source --show-pep8 --statistics $(find -name "*.py")
+
+pylint_debian:
   stage: pre
   allow_failure: true
   image:
@@ -45,6 +71,22 @@ pylint:
     - apt-get update
     - $APT_GET_INSTALL pylint python3-pytest
     # run pylint
+    - pylint --version
+    - pylint $(find -name "*.py")
+    - echo -e "\nskipped files:"
+    - echo -e "$(grep -irl skip-file *)"
+
+pylint_alpine:
+  stage: pre
+  allow_failure: true
+  image:
+    # https://hub.docker.com/_/alpine
+    name: alpine:latest
+  script:
+    - date
+    - apk add --no-cache py3-pylint py3-setuptools py3-pytest
+    # run pylint
+    - pylint --version
     - pylint $(find -name "*.py")
     - echo -e "\nskipped files:"
     - echo -e "$(grep -irl skip-file *)"
