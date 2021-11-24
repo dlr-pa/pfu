@@ -52,7 +52,7 @@ class ScriptPfuSimscrub(unittest.TestCase):
             'pfu simscrub -h',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=23, check=True)
+            timeout=42, check=True)
         # check begin of help output
         self.assertTrue(cpi.stdout.startswith(
             b'usage: pfu simscrub '))
@@ -72,7 +72,7 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             # e. g. on windows we can expect '\r\n' as line ending,
             # on posix systems we can expect '\n' as line ending
             self.assertEqual(cpi.stdout,
@@ -83,7 +83,7 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
 
     def test_script_pfu_simscrub_2(self):
@@ -109,7 +109,7 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             # e. g. on windows we can expect '\r\n' as line ending,
             # on posix systems we can expect '\n' as line ending
             self.assertEqual(cpi.stdout,
@@ -124,7 +124,7 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()
@@ -143,7 +143,7 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
 
     def test_script_pfu_simscrub_3(self):
@@ -165,7 +165,7 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             # e. g. on windows we can expect '\r\n' as line ending,
             # on posix systems we can expect '\n' as line ending
             self.assertEqual(cpi.stdout,
@@ -180,7 +180,7 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 'pfu simscrub ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
             with open(os.path.join(start_point, 'log')) as fd:
                 data = fd.readlines()

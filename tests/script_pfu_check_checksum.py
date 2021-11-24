@@ -59,7 +59,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'pfu check_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertFalse(checkoutput(cpi.stderr))
             # create checksums
             param = '-dir ' + tmpdir
@@ -67,14 +67,14 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'pfu create_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=False)
+                timeout=42, check=False)
             # check checksums
             param = '-loglevel 20 -dir ' + tmpdir
             cpi = subprocess.run(
                 'pfu check_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertTrue(checkoutput(cpi.stderr))
 
     def test_script_pfu_check_checksum_1(self):
@@ -99,14 +99,14 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                             'pfu create_checksum ' + param,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             shell=True, cwd=tmpdir,
-                            timeout=23, check=False)
+                            timeout=42, check=False)
                         # check checksums
                         param = '-loglevel 20 -dir ' + tmpdir
                         cpi = subprocess.run(
                             'pfu check_checksum ' + param,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             shell=True, cwd=tmpdir,
-                            timeout=23, check=True)
+                            timeout=42, check=True)
                         self.assertTrue(checkoutput(cpi.stderr))
 
     def test_script_pfu_check_checksum_2(self):
@@ -121,7 +121,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
             'sha256sum --version',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=23, check=False)
+            timeout=42, check=False)
         if cpi.returncode != 0:
             self.skipTest('sha256sum not available, skipping test')
             return
@@ -135,7 +135,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'sha256sum -- ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
                 fd.write(cpi.stdout.decode())
             # check checksums
@@ -144,14 +144,14 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'pfu check_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertTrue(checkoutput(cpi.stderr))
             param = '-loglevel 20 -dir ' + tmpdir
             cpi = subprocess.run(
                 'pfu check_checksum ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertTrue(checkoutput(cpi.stderr))
 
     def test_script_pfu_check_checksum_3(self):
@@ -166,7 +166,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
             'sha256sum --version',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=23, check=False)
+            timeout=42, check=False)
         if cpi.returncode != 0:
             self.skipTest('sha256sum not available, skipping test')
             return
@@ -180,7 +180,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'sha256sum --tag -- ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
                 fd.write(cpi.stdout.decode())
             # check checksums
@@ -188,7 +188,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'pfu check_checksum -loglevel 20 -dir .',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertTrue(checkoutput(cpi.stderr))
 
     def test_script_pfu_check_checksum_4(self):
@@ -203,7 +203,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
             'sha256 -s foo',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=23, check=False)
+            timeout=42, check=False)
         if cpi.returncode != 0:
             self.skipTest('sha256 not available, skipping test')
             return
@@ -217,7 +217,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'sha256 -- ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
                 fd.write(cpi.stdout.decode())
             # check checksums
@@ -225,7 +225,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'pfu check_checksum -loglevel 20 -dir .',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertTrue(checkoutput(cpi.stderr))
 
     def test_script_pfu_check_checksum_5(self):
@@ -240,7 +240,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
             'sha256deep -V',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True,
-            timeout=23, check=False)
+            timeout=42, check=False)
         if cpi.returncode != 0:
             self.skipTest('sha256deep not available, skipping test')
             return
@@ -253,7 +253,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'sha256deep -r -l .',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
                 fd.write(cpi.stdout.decode())
             # check checksums
@@ -261,7 +261,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 'pfu check_checksum -loglevel 20 -dir .',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertTrue(checkoutput(cpi.stderr))
 
     def test_script_pfu_check_checksum_6(self):
@@ -278,7 +278,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 cmd + ' --version',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=False)
+                timeout=42, check=False)
             if cpi.returncode != 0:
                 self.skipTest(cmd + ' not available, skipping test')
                 return
@@ -292,7 +292,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                     cmd + ' -- ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir,
-                    timeout=23, check=True)
+                    timeout=42, check=True)
                 with open(os.path.join(tmpdir, '.checksum.' + alg), 'w') as fd:
                     fd.write(cpi.stdout.decode())
                 # check checksums
@@ -302,7 +302,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                     'pfu check_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir,
-                    timeout=23, check=True)
+                    timeout=42, check=True)
                 self.assertTrue(checkoutput(cpi.stderr))
 
     def test_script_pfu_check_checksum_7(self):
@@ -319,7 +319,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 cmd + ' -s foo',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
-                timeout=23, check=False)
+                timeout=42, check=False)
             if cpi.returncode != 0:
                 self.skipTest(cmd + ' not available, skipping test')
                 return
@@ -333,7 +333,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                     cmd + ' -- ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir,
-                    timeout=23, check=True)
+                    timeout=42, check=True)
                 with open(os.path.join(tmpdir, '.checksum.' + alg), 'w') as fd:
                     fd.write(cpi.stdout.decode())
                 # check checksums
@@ -343,7 +343,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                     'pfu check_checksum ' + param,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir,
-                    timeout=23, check=True)
+                    timeout=42, check=True)
                 self.assertTrue(checkoutput(cpi.stderr))
 
     def test_script_pfu_check_checksum_8(self):
@@ -368,14 +368,14 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                         'pfu create_checksum ' + param,
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                         shell=True, cwd=tmpdir,
-                        timeout=23, check=False)
+                        timeout=42, check=False)
                     # check checksums
                     param = '-loglevel 20 -dir ' + tmpdir
                     cpi = subprocess.run(
                         'pfu check_checksum ' + param,
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                         shell=True, cwd=tmpdir,
-                        timeout=23, check=True)
+                        timeout=42, check=True)
                     self.assertTrue(checkoutput(cpi.stderr))
                     # change data
                     for root, _, files in os.walk(tmpdir):
@@ -390,7 +390,7 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                         'pfu check_checksum ' + param,
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                         shell=True, cwd=tmpdir,
-                        timeout=23, check=True)
+                        timeout=42, check=True)
                     self.assertFalse(checkoutput(cpi.stderr))
 
 
