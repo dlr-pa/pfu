@@ -45,7 +45,7 @@ class ScriptPfuSpeedTest(unittest.TestCase):
                 'pfu speed_test ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertTrue(
                 cpi.stderr.endswith(b'finished.' + os.linesep.encode()))
 
@@ -62,7 +62,7 @@ class ScriptPfuSpeedTest(unittest.TestCase):
                 'pfu speed_test ' + param,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=23, check=True)
+                timeout=42, check=True)
             self.assertTrue(
                 cpi.stderr.endswith(b'finished.' + os.linesep.encode()))
 
