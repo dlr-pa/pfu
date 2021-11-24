@@ -8,20 +8,6 @@ stages:
   - test
   - deploy
 
-pre-commit_debian:
-  stage: pre
-  image:
-    # https://hub.docker.com/_/debian
-    name: debian:latest
-  script:
-    - date
-    - apt-get update
-    - $APT_GET_INSTALL python3-pip git cargo
-    - pip3 install pre-commit
-    # run pre-commit
-    - pre-commit --version
-    - pre-commit run --all-files
-
 pre-commit_alpine:
   stage: pre
   image:
@@ -35,19 +21,6 @@ pre-commit_alpine:
     - pre-commit --version
     - pre-commit run --all-files
 
-pycodestyle_debian:
-  stage: pre
-  image:
-    # https://hub.docker.com/_/debian
-    name: debian:latest
-  script:
-    - date
-    - apt-get update
-    - $APT_GET_INSTALL pycodestyle
-    # check PEP 8 code style (pycodestyle was formerly called pep8)
-    - pycodestyle --version
-    - pycodestyle --show-source --show-pep8 --statistics $(find -name "*.py")
-
 pycodestyle_alpine:
   stage: pre
   image:
@@ -60,25 +33,8 @@ pycodestyle_alpine:
     - pycodestyle --version
     - pycodestyle --show-source --show-pep8 --statistics $(find -name "*.py")
 
-pylint_debian:
-  stage: pre
-  allow_failure: true
-  image:
-    # https://hub.docker.com/_/debian
-    name: debian:latest
-  script:
-    - date
-    - apt-get update
-    - $APT_GET_INSTALL pylint python3-pytest
-    # run pylint
-    - pylint --version
-    - pylint $(find -name "*.py")
-    - echo -e "\nskipped files:"
-    - echo -e "$(grep -irl skip-file *)"
-
 pylint_alpine:
   stage: pre
-  allow_failure: true
   image:
     # https://hub.docker.com/_/alpine
     name: alpine:latest
