@@ -244,5 +244,3 @@ jobs:
         uses:  daniel-mohr/i386_debian_latest@v0
         with:
           cmdfile: ./do_test
-
-
