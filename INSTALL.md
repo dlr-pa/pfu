@@ -13,18 +13,18 @@ Email: daniel.mohr@dlr.de
 pfu needs the following python modules (most of them are standard and
 already in your python installation from a package management)
 
- * argparse
- * base64
- * hashlib
- * logging
- * logging.handlers
- * os
- * os.path
- * pickle
- * signal
- * sys
- * threading
- * time
+* argparse
+* base64
+* hashlib
+* logging
+* logging.handlers
+* os
+* os.path
+* pickle
+* signal
+* sys
+* threading
+* time
 
 and the own modules which comes with this package.
 
@@ -49,7 +49,6 @@ by using the modulefinder:
 It is normal that there are many missing modules reported. Please look
 at the details.
 
-
 ### unittests
 
 You can run a few unittests:
@@ -60,7 +59,6 @@ But the script is not tested before installing.
 
 After installation you can run unittests on the scripts as well
 (see after install).
-
 
 ### pytest
 
@@ -73,7 +71,6 @@ But the scripts are not tested before installing.
 After installation you can run these tests on the scripts as well
 (see after install).
 
-
 ## install
 
 ### global-install
@@ -84,7 +81,6 @@ To install this software global to / the following steps are to perform:
     cd pfu-*/
     python3 setup.py install
 
-
 ### home-install
 
 To install this software to your $HOME the following steps are to perform:
@@ -92,7 +88,6 @@ To install this software to your $HOME the following steps are to perform:
     tar xzf pfu-*.tar.*
     cd pfu-*/
     python3 setup.py install --home=~
-
 
 ### hints
 
@@ -121,14 +116,11 @@ Similar for other shells, see
 
 ### unittests (after installation)
 
-
 Now you can run all available unittests (including scripts):
 
     env python3 setup.py run_unittest
 
-
 ### pytest (after installation)
-
 
 Instead of the standard module unittest you can also use pytest to run
 all available unittests (including scripts):
