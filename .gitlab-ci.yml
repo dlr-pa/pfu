@@ -33,17 +33,32 @@ pycodestyle_alpine:
     - pycodestyle --version
     - pycodestyle --show-source --show-pep8 --statistics $(find -name "*.py")
 
-pylint_alpine:
+#pylint_alpine:
+#  stage: pre
+#  image:
+#    # https://hub.docker.com/_/alpine
+#    name: alpine:latest
+#  script:
+#    - date
+#    - apk add --no-cache py3-pylint py3-setuptools py3-pytest
+#    # run pylint
+#    - pylint --version
+#    - pylint $(find -name "*.py")
+#    - echo -e "\nskipped files:"
+#    - echo -e "$(grep -irl skip-file *)"
+
+pylint_debian:
   stage: pre
   image:
-    # https://hub.docker.com/_/alpine
-    name: alpine:latest
+    # https://hub.docker.com/_/debian
+    name: debian:latest
   script:
     - date
-    - apk add --no-cache py3-pylint py3-setuptools py3-pytest
+    - apt-get update
+    - $APT_GET_INSTALL pylint3 python3-pytest
     # run pylint
     - pylint --version
-    - pylint $(find -name "*.py")
+    - pylint --errors-only --verbose $(find -name "*.py")
     - echo -e "\nskipped files:"
     - echo -e "$(grep -irl skip-file *)"
 
@@ -58,6 +73,7 @@ pylint_alpine:
           - basic
           - pip
   script:
+    - date
     - apt-get update
     - $APT_GET_INSTALL python3-setuptools hashdeep
     - test 'basic' = $install_method && $APT_GET_INSTALL python3-setuptools hashdeep
