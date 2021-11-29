@@ -54,6 +54,7 @@ pylint_debian:
     name: debian:latest
   script:
     - date
+    - apt-get update
     - $APT_GET_INSTALL pylint3 python3-pytest
     # run pylint
     - pylint --version
@@ -72,6 +73,7 @@ pylint_debian:
           - basic
           - pip
   script:
+    - date
     - apt-get update
     - $APT_GET_INSTALL python3-setuptools hashdeep
     - test 'basic' = $install_method && $APT_GET_INSTALL python3-setuptools hashdeep
