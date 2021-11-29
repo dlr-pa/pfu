@@ -1,11 +1,11 @@
 #!/bin/bash
 
 if [ 3 -eq $# ]; then
-    echo do $1 $2 $3
-    cd $2
-    f=$3.sha256
-    sha256sum $3 > $f
-    gpg2 --default-key $1 --armor --detach-sign $f
+    echo "do $1 $2 $3"
+    cd "$2" || exit
+    f="$3.sha256"
+    sha256sum "$3" > "$f"
+    gpg2 --default-key "$1" --armor --detach-sign "$f"
 else
     echo "usage:"
     echo "  ./create_gpg_signature [gpg_key] [directory] [filename]"
