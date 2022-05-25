@@ -15,7 +15,7 @@ pre-commit_alpine:
     name: alpine:latest
   script:
     - date
-    - apk add --no-cache py3-pip git npm bash
+    - apk add --no-cache bash gcc git npm py3-pip
     - pip install pre-commit
     # run pre-commit
     - pre-commit --version
