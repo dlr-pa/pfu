@@ -300,8 +300,8 @@ setup(
     author_email='daniel.mohr@dlr.de',
     maintainer='Daniel Mohr',
     maintainer_email='daniel.mohr@dlr.de',
-    url='',
-    download_url='',
+    url='https://gitlab.com/dlr-pa/pfu',
+    download_url='https://gitlab.com/dlr-pa/pfu',
     package_dir={'': 'src'},
     packages=[
         'pfu_module',
