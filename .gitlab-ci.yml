@@ -75,7 +75,6 @@ pylint_debian:
   script:
     - date
     - apt-get update
-    - $APT_GET_INSTALL python3-setuptools hashdeep
     - test 'basic' = $install_method && $APT_GET_INSTALL python3-setuptools hashdeep
     - test 'pip' = $install_method && $APT_GET_INSTALL python3-setuptools python3-pip hashdeep
     - env python3 setup.py check_modules

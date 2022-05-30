@@ -1,6 +1,6 @@
 """
 Author: Daniel Mohr.
-Date: 2017-03-01 (last change).
+Date: 2017-03-01, 2022-05-30 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -10,7 +10,7 @@ import pfu_module.check_checksum
 
 from .create_common_parameter import create_common_parameter
 
-__date__ = "2017-03-01"
+__date__ = "2022-05-30"
 
 
 def check_checksum(args):
@@ -38,7 +38,7 @@ def create_subparser_check_checksum(subparsers):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-03-01 (last change).
+    :Date: 2017-03-01, 2022-05-30 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     # pylint: disable=line-too-long
@@ -80,11 +80,12 @@ def create_subparser_check_checksum(subparsers):
         dest='hash_extension',
         help='Files with the given extension(s) are interpreted as ' +
         'hash files. The files have to be of the format ' +
-        'r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) ' +  # noqa
-        '\(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$", ' +  # noqa
-        'r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$" or ' +  # noqa
+        'r"(?P<hash>[0-9a-zA-Z/+=]+) [ \\*]{1}(?P<filename>.+) ' +  # noqa
+        '\\(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\\)$", ' +  # noqa
+        'r"(?P<hash>[0-9a-zA-Z/+=]+) [ \\*]{1}(?P<filename>.+)$" or ' +  # noqa
         'r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}' +  # noqa
-        '\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$". ' +  # noqa
+        '\\((?P<filename>.+)\\)[ ]{0,1}= ' +
+        '(?P<hash>[0-9a-zA-Z/+=]+)$". ' +  # noqa
         'In the latter case base16 encoding is assumed. ' +
         'The hash types sha1, sha224 and sha384 are only interpreted/used ' +
         'for the BSD-style. default: .md5 .sha256 .sha512 .checksum .sha1',

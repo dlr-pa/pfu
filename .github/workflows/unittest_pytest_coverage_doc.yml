@@ -72,7 +72,7 @@ jobs:
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu
-      run: sudo python3 setup.py install
+      run: sudo pip3 install .
     - name: run pfu
       run: |
         which pfu
@@ -93,7 +93,7 @@ jobs:
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu
-      run: sudo python3 setup.py install
+      run: sudo pip3 install .
     - name: run pfu
       run: |
         which pfu
