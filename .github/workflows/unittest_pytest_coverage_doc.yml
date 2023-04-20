@@ -170,6 +170,7 @@ jobs:
         prepare: pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pytest-xdist
         run: |
           set -e -x
+          cat /etc/os-release
           pwd
           ls -lah
           whoami
@@ -297,7 +298,7 @@ jobs:
         uses:  daniel-mohr/amd64_opensuse_leap_15.5@v0
         with:
           cmdfile: ./do_test
-  
+
   amd64_opensuse_leap_latest_test:
     needs: pep8_check
     # https://github.com/daniel-mohr/amd64_opensuse_leap_latest
@@ -338,6 +339,7 @@ jobs:
         run: |
           echo "#!/bin/sh -l" > do_test
           echo "set -e -x" >> do_test
+          echo "cat /etc/os-release" >> do_test
           echo "DEBIAN_FRONTEND=noninteractive apt-get install -q -y python3-setuptools python3-pip hashdeep python3-pytest python3-pytest-cov python3-pytest-xdist" >> do_test
           echo "env python3 setup.py check_modules" >> do_test
           echo "pip3 install ." >> do_test
