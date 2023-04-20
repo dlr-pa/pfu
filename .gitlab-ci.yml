@@ -131,7 +131,7 @@ i386_debian:latest_unittest:
   script:
     - date
     - cat /etc/os-release
-    - zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep
+    - zypper --non-interactive install which python3 python3-pip python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep
     - env python3 -V
     - env python3 setup.py check_modules
     - env python3 setup.py install --record installed_files.txt
