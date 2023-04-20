@@ -1,22 +1,21 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2021-11-24
+:Date: 2023-04-20
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import distutils  # we need distutils for distutils.errors.DistutilsArgError
 import os
 import sys
 
-from setuptools import Command, setup
+import setuptools
 
 
-class TestWithPytest(Command):
+class TestWithPytest(setuptools.Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-05-17
+    :Date: 2021-05-17, 2023-04-20
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with pytest
@@ -58,7 +57,7 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-08-31
+        :Date: 2021-08-31, 2023-04-20
         """
         # pylint: disable=too-many-branches
         # env python3 setup.py run_pytest
@@ -67,7 +66,7 @@ class TestWithPytest(Command):
         elif self.src == 'local':
             sys.path.insert(0, os.path.abspath('src'))
         else:
-            raise distutils.core.DistutilsArgError(
+            raise Exception(
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))
@@ -120,11 +119,11 @@ class TestWithPytest(Command):
         sys.exit(pytest.main(pyargs, pyplugins))
 
 
-class TestWithUnittest(Command):
+class TestWithUnittest(setuptools.Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-05-14
+    :Date: 2021-05-14, 2023-04-20
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with unittest
@@ -158,7 +157,7 @@ class TestWithUnittest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-08-30
+        :Date: 2021-08-30, 2023-04-20
         """
         # env python3 setup.py run_unittest
         if self.src == 'installed':
@@ -166,7 +165,7 @@ class TestWithUnittest(Command):
         elif self.src == 'local':
             sys.path.insert(0, os.path.abspath('src'))
         else:
-            raise distutils.core.DistutilsArgError(
+            raise Exception(
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))
@@ -195,11 +194,11 @@ class TestWithUnittest(Command):
             sys.exit(1)
 
 
-class CheckModules(Command):
+class CheckModules(setuptools.Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-08
+    :Date: 2017-01-08, 2023-03-31
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     checking for modules need to run the software
@@ -222,7 +221,7 @@ class CheckModules(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2017-01-08
+        :Date: 2017-01-08, 2023-03-31, 2023-04-20
         """
         # pylint: disable=bad-option-value,import-outside-toplevel
         import importlib
@@ -241,56 +240,18 @@ class CheckModules(Command):
             except ImportError:
                 i += 1
                 summary += "module '%s' is not available\n" % module
-                print("module '%s' is not available <---WARNING---" % module)
+                sys.exit(f"module '{module}' is not available <---WARNING---")
         print(
             "\nSummary\n%d modules are not available (not unique)\n%s\n" % (
                 i, summary))
+        sys.exit(0)
 
 
-class CheckModulesModulefinder(Command):
-    """
-    :Author: Daniel Mohr
-    :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-08
-    :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
-
-    checking for modules need to run the scripts (modulefinder)
-    """
-    description = "checking for modules need to run the scripts (modulefinder)"
-    user_options = []
-
-    def initialize_options(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2017-01-08
-        """
-
-    def finalize_options(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2017-01-08
-        """
-
-    def run(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2017-01-08
-        """
-        # pylint: disable=bad-option-value,import-outside-toplevel
-        import modulefinder
-        for script in self.distribution.scripts:
-            print("\nchecking for modules used in '%s':" % script)
-            finder = modulefinder.ModuleFinder()
-            finder.run_script(script)
-            finder.report()
-
-
-setup(
+setuptools.setup(
     name='pfu',
-    version='2021.11.24',
+    version='2023.04.20',
     cmdclass={
         'check_modules': CheckModules,
-        'check_modules_modulefinder': CheckModulesModulefinder,
         'run_unittest': TestWithUnittest,
         'run_pytest': TestWithPytest},
     description='Software to read every file regular (scrubbing).',

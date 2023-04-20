@@ -15,6 +15,7 @@ pre-commit_alpine:
     name: alpine:latest
   script:
     - date
+    - cat /etc/os-release
     - apk add --no-cache bash gcc git musl-dev npm py3-pip python3-dev
     - pip install pre-commit
     # run pre-commit
@@ -28,6 +29,7 @@ pycodestyle_alpine:
     name: alpine:latest
   script:
     - date
+    - cat /etc/os-release
     - apk add --no-cache py3-pycodestyle
     # check PEP 8 code style (pycodestyle was formerly called pep8)
     - pycodestyle --version
@@ -60,7 +62,7 @@ pylint_debian:
     - pylint --version
     - pylint --errors-only --verbose $(find -name "*.py")
     - echo -e "\nskipped files:"
-    - echo -e "$(grep -irl skip-file *)"
+    - echo -e "$(grep -irl skip-file)"
 
 .debian_based_unittest_template: &debian_based_unittest
   stage: test
@@ -74,6 +76,7 @@ pylint_debian:
           - pip
   script:
     - date
+    - cat /etc/os-release
     - apt-get update
     - test 'basic' = $install_method && $APT_GET_INSTALL python3-setuptools hashdeep
     - test 'pip' = $install_method && $APT_GET_INSTALL python3-setuptools python3-pip hashdeep
@@ -90,16 +93,16 @@ pylint_debian:
     # pytest
     - env python3 setup.py run_pytest --parallel --coverage
 
-ubuntu:18.04_unittest:
-  image:
-    # https://hub.docker.com/_/ubuntu
-    name: ubuntu:18.04
-  <<: *debian_based_unittest
-
 ubuntu:20.04_unittest:
   image:
     # https://hub.docker.com/_/ubuntu
     name: ubuntu:20.04
+  <<: *debian_based_unittest
+
+ubuntu:22.04_unittest:
+  image:
+    # https://hub.docker.com/_/ubuntu
+    name: ubuntu:22.04
   <<: *debian_based_unittest
 
 ubuntu:latest_unittest:
@@ -127,24 +130,33 @@ i386_debian:latest_unittest:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   script:
     - date
+    - cat /etc/os-release
     - zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep
     - env python3 -V
     - env python3 setup.py check_modules
-    - env python3 setup.py install
+    - env python3 setup.py install --record installed_files.txt
+    - pfu -h
+    - xargs rm -rf < installed_files.txt
     - pfu -h
     - env python3 setup.py run_unittest
     - env python3 setup.py run_pytest --parallel --coverage
 
-opensuse_leap:15.2_unittest:
+opensuse_leap:15.4_unittest:
   image:
     # https://hub.docker.com/r/opensuse/leap
-    name: opensuse/leap:15.2
+    name: opensuse/leap:15.4
   <<: *suse_based_unittest
 
-opensuse_leap:15.3_unittest:
+opensuse_leap:15.5_unittest:
   image:
     # https://hub.docker.com/r/opensuse/leap
-    name: opensuse/leap:15.3
+    name: opensuse/leap:15.4
+  <<: *suse_based_unittest
+
+opensuse_leap:latest_unittest:
+  image:
+    # https://hub.docker.com/r/opensuse/leap
+    name: opensuse/leap:latest
   <<: *suse_based_unittest
 
 deploy_to_github:
