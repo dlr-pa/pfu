@@ -111,11 +111,11 @@ see [INSTALL](INSTALL.md)
 
 Author: Daniel Mohr.
 
-Date: 2021-11-24 (last change).
+Date: 2023-04-20 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
-Copyright (C) 2015, 2016, 2017, 2018, 2019, 2020, 2021 Daniel Mohr and
+Copyright (C) 2015-2023 Daniel Mohr and
 Deutsches Zentrum fuer Luft- und Raumfahrt e. V., D-51170 Koeln
 
  This program is free software; you can redistribute it and/or
