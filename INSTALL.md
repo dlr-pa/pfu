@@ -1,6 +1,6 @@
 # INSTALL: pfu -- Python File Utilities
 
-Version: 2021-05-28
+Version: 2023-04-20
 
 Author: Daniel Mohr
 
@@ -21,6 +21,7 @@ already in your python installation from a package management)
 * os
 * os.path
 * pickle
+* setuptools
 * signal
 * sys
 * threading
@@ -40,14 +41,6 @@ necessary python modules:
 
 If you want to use this complete software you should have no modules
 which are not available.
-
-Much more information you get from the following small extra command
-by using the modulefinder:
-
-    python3 setup.py check_modules_modulefinder
-
-It is normal that there are many missing modules reported. Please look
-at the details.
 
 ### unittests
 
@@ -81,6 +74,10 @@ To install this software global to / the following steps are to perform:
     cd pfu-*/
     python3 setup.py install
 
+You can also use [pip](https://pip.pypa.io/en/stable/) to install:
+
+    pip3 install .
+
 ### home-install
 
 To install this software to your $HOME the following steps are to perform:
@@ -88,6 +85,14 @@ To install this software to your $HOME the following steps are to perform:
     tar xzf pfu-*.tar.*
     cd pfu-*/
     python3 setup.py install --home=~
+
+You can also use [pip](https://pip.pypa.io/en/stable/) to install:
+
+    pip3 install .
+
+For older versions of pip you need to choose explicit a home install:
+
+    pip3 install --user .
 
 ### hints
 

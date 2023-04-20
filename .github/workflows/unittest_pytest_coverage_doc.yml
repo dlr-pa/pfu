@@ -12,7 +12,7 @@ jobs:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: apt-get update
       run: sudo apt-get update
     - name: install dependencies for PEP 8 code style check (ubuntu packages)
@@ -35,7 +35,7 @@ jobs:
         install_method: [basic, pip]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: apt-get update
       run: sudo apt-get update
     - name: install dependencies (ubuntu packages)
@@ -68,7 +68,7 @@ jobs:
     # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md
     runs-on: macos-10.15
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu
@@ -89,7 +89,28 @@ jobs:
     # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md
     runs-on: macos-11
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - name: check all modules available
+      run: env python3 setup.py check_modules
+    - name: install pfu
+      run: sudo pip3 install .
+    - name: run pfu
+      run: |
+        which pfu
+        pfu -h
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: install dependencies via pip3
+      run: pip3 install wheel pytest pytest-cov pytest-xdist
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
+
+  macos-12_test:
+    needs: pep8_check
+    # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
+    runs-on: macos-12
+    steps:
+    - uses: actions/checkout@v3
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pfu
@@ -112,10 +133,10 @@ jobs:
         # we need setuputils to create binaries for windows
         # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2016-Readme.md
         # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md
-        os: [windows-2016, windows-2019]
+        os: [windows-2019, windows-2022]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: conda init powershell
       run: |
         &($env:CONDA + "\Scripts\conda") init powershell
@@ -137,18 +158,19 @@ jobs:
   freebsd_test:
     needs: pep8_check
     # https://github.com/marketplace/actions/freebsd-vm
-    runs-on: macos-10.15
+    runs-on: macos-12
     name: run tests on FreeBSD
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Test in FreeBSD
       id: test
-      uses: vmactions/freebsd-vm@v0.1.6
+      uses: vmactions/freebsd-vm@v0
       with:
         usesh: true
         prepare: pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pytest-xdist
         run: |
           set -e -x
+          cat /etc/os-release
           pwd
           ls -lah
           whoami
@@ -168,11 +190,12 @@ jobs:
     name: opensuse leap 15.2
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: create test script for docker
         run: |
           echo "#!/bin/sh -l" > do_test
           echo "set -e -x" >> do_test
+          echo "cat /etc/os-release" >> do_test
           echo "zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep" >> do_test
           echo "env python3 -V" >> do_test
           echo "env python3 setup.py check_modules" >> do_test
@@ -196,11 +219,12 @@ jobs:
     name: opensuse leap 15.3
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: create test script for docker
         run: |
           echo "#!/bin/sh -l" > do_test
           echo "set -e -x" >> do_test
+          echo "cat /etc/os-release" >> do_test
           echo "zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep" >> do_test
           echo "env python3 -V" >> do_test
           echo "env python3 setup.py check_modules" >> do_test
@@ -217,17 +241,105 @@ jobs:
         with:
           cmdfile: ./do_test
 
+  amd64_opensuse_leap_154_test:
+    needs: pep8_check
+    # https://github.com/daniel-mohr/amd64_opensuse_leap_15.4
+    runs-on: ubuntu-latest
+    name: opensuse leap 15.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: create test script for docker
+        run: |
+          echo "#!/bin/sh -l" > do_test
+          echo "set -e -x" >> do_test
+          echo "cat /etc/os-release" >> do_test
+          echo "zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep" >> do_test
+          echo "env python3 -V" >> do_test
+          echo "env python3 setup.py check_modules" >> do_test
+          echo "env python3 setup.py install" >> do_test
+          echo "which pfu" >> do_test
+          echo "pfu -h" >> do_test
+          echo "env python3 setup.py run_unittest" >> do_test
+          echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
+          chmod +x do_test
+      - name: cat test script
+        run: cat do_test
+      - name: run my script in docker image
+        uses:  daniel-mohr/amd64_opensuse_leap_15.4@v0
+        with:
+          cmdfile: ./do_test
+
+  amd64_opensuse_leap_155_test:
+    needs: pep8_check
+    # https://github.com/daniel-mohr/amd64_opensuse_leap_15.5
+    runs-on: ubuntu-latest
+    name: opensuse leap 15.5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: create test script for docker
+        run: |
+          echo "#!/bin/sh -l" > do_test
+          echo "set -e -x" >> do_test
+          echo "cat /etc/os-release" >> do_test
+          echo "zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep" >> do_test
+          echo "env python3 -V" >> do_test
+          echo "env python3 setup.py check_modules" >> do_test
+          echo "env python3 setup.py install" >> do_test
+          echo "which pfu" >> do_test
+          echo "pfu -h" >> do_test
+          echo "env python3 setup.py run_unittest" >> do_test
+          echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
+          chmod +x do_test
+      - name: cat test script
+        run: cat do_test
+      - name: run my script in docker image
+        uses:  daniel-mohr/amd64_opensuse_leap_15.5@v0
+        with:
+          cmdfile: ./do_test
+
+  amd64_opensuse_leap_latest_test:
+    needs: pep8_check
+    # https://github.com/daniel-mohr/amd64_opensuse_leap_latest
+    runs-on: ubuntu-latest
+    name: opensuse leap latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: create test script for docker
+        run: |
+          echo "#!/bin/sh -l" > do_test
+          echo "set -e -x" >> do_test
+          echo "cat /etc/os-release" >> do_test
+          echo "zypper --non-interactive install which python3 python3-setuptools python3-pytest python3-pytest-cov python3-pytest-xdist hashdeep" >> do_test
+          echo "env python3 -V" >> do_test
+          echo "env python3 setup.py check_modules" >> do_test
+          echo "env python3 setup.py install" >> do_test
+          echo "which pfu" >> do_test
+          echo "pfu -h" >> do_test
+          echo "env python3 setup.py run_unittest" >> do_test
+          echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
+          chmod +x do_test
+      - name: cat test script
+        run: cat do_test
+      - name: run my script in docker image
+        uses:  daniel-mohr/amd64_opensuse_leap_latest@v1
+        with:
+          cmdfile: ./do_test
+
   i386_debian_latest_test:
     needs: pep8_check
     # https://github.com/daniel-mohr/i386_debian_latest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: create test script for docker
         run: |
           echo "#!/bin/sh -l" > do_test
           echo "set -e -x" >> do_test
+          echo "cat /etc/os-release" >> do_test
           echo "DEBIAN_FRONTEND=noninteractive apt-get install -q -y python3-setuptools python3-pip hashdeep python3-pytest python3-pytest-cov python3-pytest-xdist" >> do_test
           echo "env python3 setup.py check_modules" >> do_test
           echo "pip3 install ." >> do_test
