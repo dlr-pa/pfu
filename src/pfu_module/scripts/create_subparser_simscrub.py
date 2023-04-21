@@ -49,15 +49,15 @@ def create_subparser_simscrub(subparsers):
     myhelp += ""
     myhelp += ""
     epilog = "Author: Daniel Mohr\n"
-    epilog += "Date: %s\n" % __date__
+    epilog += f"Date: {__date__}\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n"
-    epilog += "\n%s" % myhelp
+    epilog += f"\n{myhelp}"
     parser = subparsers.add_parser(
         'simscrub',
         description='This script read every file in the given directory tree.',
         help='This command read every file in the given directory tree.' +
         ' For more help: pfu simscrub -h',
-        epilog="%s" % epilog,
+        epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=simscrub)
     parser.add_argument(
@@ -77,7 +77,7 @@ def create_subparser_simscrub(subparsers):
         required=False,
         dest='config_data_directory',
         help='Set the directory to store configs and data. ' +
-        'default: %s' % cfg_dir,
+        f'default: {cfg_dir}',
         metavar='n')
     del cfg_dir
     parser.add_argument(

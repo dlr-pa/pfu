@@ -54,8 +54,8 @@ def check_chunk_size(value):
         ivalue = int(value)
         if ivalue < 1:
             raise argparse.ArgumentTypeError(
-                "%s is an invalid positive int value " +
-                "(it is also not inf)" % value)
+                f"{value} is an invalid positive int value " +
+                "(it is also not inf)")
     return ivalue
 
 
@@ -78,9 +78,9 @@ def create_subparser_create_checksum(subparsers):
         'create_checksum',
         description=help_create,
         help=help_create+' For more help: pfu create_checksum -h',
-        epilog="Author: Daniel Mohr.\nDate: %s.\n" % __date__ +
+        epilog=f"Author: Daniel Mohr.\nDate: {__date__}.\n" +
         "License: GNU GENERAL PUBLIC LICENSE, " +
-        "Version 3, 29 June 2007.\n\n%s" % myposthelp,
+        f"Version 3, 29 June 2007.\n\n{myposthelp}",
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser_create.add_argument(
         '-directory',

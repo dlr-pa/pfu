@@ -81,12 +81,11 @@ class Scrubbing():
                         if retry <= 0:
                             retry = self._max_retry
                             log.warning(
-                                'IOError: cannot read file '
-                                '"%s" at %i-%i/%i' % (
-                                    file_name,
-                                    data_file.tell(),
-                                    data_file.tell()+chunk_size-1,
-                                    os.path.getsize(file_name)))
+                                'IOError: cannot read file "%s" at %i-%i/%i',
+                                file_name,
+                                data_file.tell(),
+                                data_file.tell()+chunk_size-1,
+                                os.path.getsize(file_name))
                             data_file.seek(
                                 min(data_file.tell()+self._omit_chunk_size,
                                     os.path.getsize(file_name)))
@@ -96,7 +95,7 @@ class Scrubbing():
                         retry = self._max_retry
                         chunk_size = self._chunk_size
         elif not os.access(file_name, os.R_OK):
-            log.info('file "%s" is not readable' % file_name)
+            log.info('file "%s" is not readable', file_name)
 
     def _read_status(self):
         """
@@ -180,7 +179,7 @@ class Scrubbing():
         self._semaphore_lock.acquire()
         if self._scrubbing:
             log = logging.getLogger(
-                "pfu.simscrub."+threading.currentThread().name)
+                "pfu.simscrub." + threading.current_thread().name)
             file_handler = logging.handlers.WatchedFileHandler(
                 os.path.join(self._config_dir, 'log'))  # not thread safe
             file_handler.setFormatter(

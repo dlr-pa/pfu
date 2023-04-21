@@ -133,9 +133,9 @@ class CreateChecksumsClass():
                     out += [(self.encode(cal_chunk_hash.digest()).decode(),
                              '  ',
                              filename,
-                             ' (bytes ', '%i' % last_position,
+                             ' (bytes ', f'{last_position}',
                              ' - ',
-                             '%i' % (data_file.tell()-1), ')')]
+                             f'{data_file.tell()-1}', ')')]
                 last_position = data_file.tell()
             out[0] = (self.encode(cal_hash.digest()).decode(),
                       '  ',
@@ -167,7 +167,7 @@ class CreateChecksumsClass():
                 'IOError during hashing file "%s"', data_file_name)
         if err == 0:
             # store hash in hash_file_name
-            with open(hash_file_name, 'a') as hash_file:
+            with open(hash_file_name, mode='a', encoding='utf-8') as hash_file:
                 for line in out:
                     hash_file.write(''.join(line)+"\n")
                 self.log.verboseinfo(

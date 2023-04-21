@@ -88,9 +88,9 @@ def create_subparser_replicate(subparsers):
         "This correspond to a read/write\n"
     myhelp += "performance of 72 MB/sec."
     epilog = "Author: Daniel Mohr\n"
-    epilog += "Date: %s\n" % __date__
+    epilog += f"Date: {__date__}\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n"
-    epilog += "\n%s" % myhelp
+    epilog += f"\n{myhelp}"
     description = 'This is the command to copy/replicate data/files ' + \
         'from one directory to other directories (one or more). '
     description += 'It uses the command line programs ' + \
@@ -110,7 +110,7 @@ def create_subparser_replicate(subparsers):
         help='This is the command to copy/replicate data/files from ' +
         'one directory to other directories (one or more). ' +
         'For more help: pfu replicate -h',
-        epilog="%s" % epilog,
+        epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=replicate)
     parser.add_argument(

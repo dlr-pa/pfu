@@ -29,5 +29,5 @@ def create_file_list(directory, log):
                     n_absfilenames += n_step
                 absfilenames[i] = absfilename
                 i += 1
-                log.debug("absfilename: %s" % absfilename)
+                log.debug(f"absfilename: {absfilename}")
     return absfilenames[0:i]

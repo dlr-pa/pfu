@@ -44,9 +44,9 @@ def create_subparser_speed_test(subparsers):
     myhelp += "\nExample:\n"
     myhelp += " pfu speed_test -f b -c 2560 -b 4194304"
     epilog = "Author: Daniel Mohr\n"
-    epilog += "Date: %s\n" % __date__
+    epilog += f"Date: {__date__}\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n"
-    epilog += "\n%s" % myhelp
+    epilog += f"\n{myhelp}"
     parser = subparsers.add_parser(
         'speed_test',
         description='This script tries to measure the read and write speed ' +
@@ -54,7 +54,7 @@ def create_subparser_speed_test(subparsers):
         help='This script tries to measure the read and write speed of a ' +
         'storage.' +
         ' For more help: pfu speed_test -h',
-        epilog="%s" % epilog,
+        epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.set_defaults(func=speed_test)
     parser.add_argument(
