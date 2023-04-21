@@ -48,7 +48,7 @@ class MySignalHandler():
         for fct in self._fcts_to_call:
             fct()
         time.sleep(0.1)
-        sys.stderr.write('got signal: %i\n' % signum)
+        sys.stderr.write(f'got signal: {signum}\n')
         sys.exit(0)
 
     def set_alarm(self, count_down_time):

@@ -35,19 +35,20 @@ pycodestyle_alpine:
     - pycodestyle --version
     - pycodestyle --show-source --show-pep8 --statistics $(find -name "*.py")
 
-#pylint_alpine:
-#  stage: pre
-#  image:
-#    # https://hub.docker.com/_/alpine
-#    name: alpine:latest
-#  script:
-#    - date
-#    - apk add --no-cache py3-pylint py3-setuptools py3-pytest
-#    # run pylint
-#    - pylint --version
-#    - pylint $(find -name "*.py")
-#    - echo -e "\nskipped files:"
-#    - echo -e "$(grep -irl skip-file *)"
+pylint_alpine:
+  stage: pre
+  image:
+    # https://hub.docker.com/_/alpine
+    name: alpine:latest
+  script:
+    - date
+    - cat /etc/os-release
+    - apk add --no-cache py3-pylint py3-setuptools py3-pytest
+    # run pylint
+    - pylint --version
+    - pylint --persistent n $(find -name "*.py")
+    - echo -e "\nskipped files:"
+    - echo -e "$(grep -irl skip-file *)"
 
 pylint_debian:
   stage: pre
@@ -56,11 +57,12 @@ pylint_debian:
     name: debian:latest
   script:
     - date
+    - cat /etc/os-release
     - apt-get update
     - $APT_GET_INSTALL pylint3 python3-pytest
     # run pylint
     - pylint --version
-    - pylint --errors-only --verbose $(find -name "*.py")
+    - pylint --errors-only --persistent n $(find -name "*.py")
     - echo -e "\nskipped files:"
     - echo -e "$(grep -irl skip-file)"
 
@@ -86,6 +88,11 @@ pylint_debian:
     # run pfu
     - which pfu
     - pfu -h
+    - pfu simscrub -h
+    - pfu create_checksum -h
+    - pfu check_checksum -h
+    - pfu replicate -h
+    - pfu speed_test -h
     # unittest
     - env python3 setup.py run_unittest
     # install dependencies for pytest
@@ -139,6 +146,11 @@ i386_debian:latest_unittest:
     - xargs rm -rf < installed_files.txt
     - pip3 install .
     - pfu -h
+    - pfu simscrub -h
+    - pfu create_checksum -h
+    - pfu check_checksum -h
+    - pfu replicate -h
+    - pfu speed_test -h
     - env python3 setup.py run_unittest
     - env python3 setup.py run_pytest --parallel --coverage
 
@@ -169,6 +181,7 @@ deploy_to_github:
     name: alpine:latest
   script:
     - date
+    - cat /etc/os-release
     - apk add --no-cache git openssh
     - mkdir ~/.ssh && chmod 700 ~/.ssh
     - ssh-keyscan -H github.com >> ~/.ssh/known_hosts

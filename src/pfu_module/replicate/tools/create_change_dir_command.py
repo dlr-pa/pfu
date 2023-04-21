@@ -19,5 +19,5 @@ def create_change_dir_command(param):
     if platform.system() == "Windows":
         drive_letter = re.findall(r'([a-zA-Z]{1}):[\\\/]{1}', param)
         if len(drive_letter) == 1:
-            change_dir = ("%s:" % drive_letter[0]) + " && cd "
+            change_dir = f"{drive_letter[0]}: && cd "
     return change_dir

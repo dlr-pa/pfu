@@ -24,7 +24,7 @@ def do_scrubbing(args, log):
     """
     if os.path.exists(args.config_data_directory[0]):
         start_points = os.listdir(args.config_data_directory[0])
-        log.debug("start_points: %s" % start_points)
+        log.debug(f"start_points: {start_points}")
         # prepare threads
         semaphore_lock = threading.Semaphore(args.number_of_threads[0])
         event_locks = []

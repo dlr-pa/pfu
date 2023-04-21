@@ -21,7 +21,8 @@ jobs:
       run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
     - name: run pylint
       run: |
-        pylint $(find -name "*.py")
+        pylint --version
+        pylint --persistent n $(find -name "*.py")
         echo -e "\nskipped files: \n$(grep -irl skip-file *)"
 
   ubuntu_test_doc:
@@ -31,7 +32,7 @@ jobs:
         # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
         # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
         # we could also use: ubuntu-latest
-        os: [ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-latest]
         install_method: [basic, pip]
     runs-on: ${{ matrix.os }}
     steps:
@@ -56,6 +57,11 @@ jobs:
       run: |
         which pfu
         pfu -h
+        pfu simscrub -h
+        pfu create_checksum -h
+        pfu check_checksum -h
+        pfu replicate -h
+        pfu speed_test -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies for pytest (ubuntu packages)
@@ -77,6 +83,11 @@ jobs:
       run: |
         which pfu
         pfu -h
+        pfu simscrub -h
+        pfu create_checksum -h
+        pfu check_checksum -h
+        pfu replicate -h
+        pfu speed_test -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies via pip3
@@ -98,6 +109,11 @@ jobs:
       run: |
         which pfu
         pfu -h
+        pfu simscrub -h
+        pfu create_checksum -h
+        pfu check_checksum -h
+        pfu replicate -h
+        pfu speed_test -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies via pip3
@@ -119,6 +135,11 @@ jobs:
       run: |
         which pfu
         pfu -h
+        pfu simscrub -h
+        pfu create_checksum -h
+        pfu check_checksum -h
+        pfu replicate -h
+        pfu speed_test -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies via pip3
@@ -150,6 +171,11 @@ jobs:
       run: |
         Get-Command pfu
         pfu -h
+        pfu simscrub -h
+        pfu create_checksum -h
+        pfu check_checksum -h
+        pfu replicate -h
+        pfu speed_test -h
     - name: unittest
       run: python setup.py run_unittest
     - name: pytest
@@ -179,6 +205,11 @@ jobs:
           python3.8 setup.py install --record installed_files.txt
           which pfu
           pfu -h
+          pfu simscrub -h
+          pfu create_checksum -h
+          pfu check_checksum -h
+          pfu replicate -h
+          pfu speed_test -h
           python3.8 setup.py run_unittest
           python3.8 setup.py run_pytest --parallel --coverage
           cat installed_files.txt | xargs rm -rf && echo "uninstalled/removed: "$(cat installed_files.txt)
@@ -202,6 +233,11 @@ jobs:
           echo "env python3 setup.py install" >> do_test
           echo "which pfu" >> do_test
           echo "pfu -h" >> do_test
+          echo "pfu simscrub -h" >> do_test
+          echo "pfu create_checksum -h" >> do_test
+          echo "pfu check_checksum -h" >> do_test
+          echo "pfu replicate -h" >> do_test
+          echo "pfu speed_test -h" >> do_test
           echo "env python3 setup.py run_unittest" >> do_test
           echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
           chmod +x do_test
@@ -231,6 +267,11 @@ jobs:
           echo "env python3 setup.py install" >> do_test
           echo "which pfu" >> do_test
           echo "pfu -h" >> do_test
+          echo "pfu simscrub -h" >> do_test
+          echo "pfu create_checksum -h" >> do_test
+          echo "pfu check_checksum -h" >> do_test
+          echo "pfu replicate -h" >> do_test
+          echo "pfu speed_test -h" >> do_test
           echo "env python3 setup.py run_unittest" >> do_test
           echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
           chmod +x do_test
@@ -260,6 +301,11 @@ jobs:
           echo "env python3 setup.py install" >> do_test
           echo "which pfu" >> do_test
           echo "pfu -h" >> do_test
+          echo "pfu simscrub -h" >> do_test
+          echo "pfu create_checksum -h" >> do_test
+          echo "pfu check_checksum -h" >> do_test
+          echo "pfu replicate -h" >> do_test
+          echo "pfu speed_test -h" >> do_test
           echo "env python3 setup.py run_unittest" >> do_test
           echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
           chmod +x do_test
@@ -289,6 +335,11 @@ jobs:
           echo "env python3 setup.py install" >> do_test
           echo "which pfu" >> do_test
           echo "pfu -h" >> do_test
+          echo "pfu simscrub -h" >> do_test
+          echo "pfu create_checksum -h" >> do_test
+          echo "pfu check_checksum -h" >> do_test
+          echo "pfu replicate -h" >> do_test
+          echo "pfu speed_test -h" >> do_test
           echo "env python3 setup.py run_unittest" >> do_test
           echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
           chmod +x do_test
@@ -318,6 +369,11 @@ jobs:
           echo "env python3 setup.py install" >> do_test
           echo "which pfu" >> do_test
           echo "pfu -h" >> do_test
+          echo "pfu simscrub -h" >> do_test
+          echo "pfu create_checksum -h" >> do_test
+          echo "pfu check_checksum -h" >> do_test
+          echo "pfu replicate -h" >> do_test
+          echo "pfu speed_test -h" >> do_test
           echo "env python3 setup.py run_unittest" >> do_test
           echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
           chmod +x do_test
@@ -345,6 +401,11 @@ jobs:
           echo "pip3 install ." >> do_test
           echo "which pfu" >> do_test
           echo "pfu -h" >> do_test
+          echo "pfu simscrub -h" >> do_test
+          echo "pfu create_checksum -h" >> do_test
+          echo "pfu check_checksum -h" >> do_test
+          echo "pfu replicate -h" >> do_test
+          echo "pfu speed_test -h" >> do_test
           echo "env python3 setup.py run_unittest" >> do_test
           echo "env python3 setup.py run_pytest --parallel --coverage" >> do_test
           chmod +x do_test

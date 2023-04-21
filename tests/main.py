@@ -44,7 +44,7 @@ class TestModuleImport(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-05-25
         """
-        # pylint: disable=unused-variable,no-self-use
+        # pylint: disable=unused-variable
         # pylint: disable=bad-option-value,import-outside-toplevel
         # pylint: disable=unused-import
         import pfu_module
@@ -84,7 +84,7 @@ class TestScriptExecutable(unittest.TestCase):
                 cmd,
                 shell=True)
             # check at least minimal help output
-            self.assertTrue(len(out) >= 775)
+            self.assertGreaterEqual(len(out), 775)
             # check begin of help output
             self.assertTrue(out.startswith(
                 b'usage: pfu '))

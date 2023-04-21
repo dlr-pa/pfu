@@ -35,7 +35,7 @@ def create_common_parameter(parser):
         help='Set how verbose should be the output to STDOUT. ' +
         'This is the level of logging. Lower numbers give more output. ' +
         'The parameter is a number between 1 and 50. ' +
-        'default: %i (logging.WARNING)' % logging.WARNING,
+        f'default: {logging.WARNING} (logging.WARNING)',
         metavar='i')
     parser.add_argument(
         '-fileloglevel',
@@ -48,5 +48,5 @@ def create_common_parameter(parser):
         help='Set how verbose should be the output to the log file. ' +
         'This is the level of logging. Lower numbers give more output. ' +
         'The parameter is a number between 1 and 50. ' +
-        'default: %i (logging.INFO)' % logging.INFO,
+        f'default: {logging.INFO} (logging.INFO)',
         metavar='i')

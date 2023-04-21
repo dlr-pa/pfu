@@ -106,7 +106,7 @@ class CheckChecksumsClass():
         self.log.setLevel(1)
         self.hash_files = []
         self.data_files = []
-        self.hash_dicts = [dict(), dict()]
+        self.hash_dicts = [{}, {}]
         self.result_number = {'data file without hash': 0,
                               'hash without data file': 0,
                               'data file with matching hash(es)': 0,
@@ -351,7 +351,7 @@ class CheckChecksumsClass():
         if (os.path.isfile(hashfilename) and
                 os.access(hashfilename, os.R_OK)):
             self.log.debug("read hash file \"%s\"", hashfilename)
-            with open(hashfilename, 'rU') as hash_file:
+            with open(hashfilename, mode='rU', encoding='utf-8') as hash_file:
                 for line in hash_file:
                     sres = self.regexps[0].search(line)
                     if sres:  # hash of a chunk
@@ -387,7 +387,7 @@ class CheckChecksumsClass():
         read all hash files already found by the class
         """
         self.log.debug("read_all_hash_files")
-        self.hash_dicts = [dict(), dict()]
+        self.hash_dicts = [{}, {}]
         # self.hash_dicts[0][filename]...
         for filename in self.hash_files:
             self.read_hash_file(filename)

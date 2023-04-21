@@ -126,7 +126,8 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 shell=True,
                 timeout=42, check=True)
             self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
-            with open(os.path.join(start_point, 'log')) as fd:
+            with open(os.path.join(start_point, 'log'),
+                      mode='r', encoding='utf-8') as fd:
                 data = fd.readlines()
             self.assertTrue(data[-1].endswith(
                 'INFO finished scrubbing at 0/10\n'))
@@ -182,7 +183,8 @@ class ScriptPfuSimscrub(unittest.TestCase):
                 shell=True,
                 timeout=42, check=True)
             self.assertEqual(cpi.stdout, b'do_scrubbing' + os.linesep.encode())
-            with open(os.path.join(start_point, 'log')) as fd:
+            with open(os.path.join(start_point, 'log'),
+                      mode='r', encoding='utf-8') as fd:
                 data = fd.readlines()
             with open(os.path.join(start_point, 'status'), 'rb') as fd:
                 data = pickle.load(fd)

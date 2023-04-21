@@ -31,7 +31,7 @@ def bytes_to_human_readable(bytesvalue):
             if bytesvalue >= 1024:
                 bytesvalue /= 1024.0
                 unit = 'GB'
-    return '%f %s' % (bytesvalue, unit)
+    return f'{bytesvalue} {unit}'
 
 
 def speed_test(args):
