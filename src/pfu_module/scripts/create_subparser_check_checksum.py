@@ -55,9 +55,9 @@ def create_subparser_check_checksum(subparsers):
         'check_checksum',
         description=myprehelp,
         help=myprehelp+' For more help: pk4_checksums.py check -h',
-        epilog="Author: Daniel Mohr.\nDate: %s.\nLicense: " % __date__ +
+        epilog=f"Author: Daniel Mohr.\nDate: { __date__}.\nLicense: " +
         "GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n\n" +
-        "%s" % myposthelp,
+        myposthelp,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument(
         '-directory',

@@ -5,6 +5,7 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import argparse
 import os
 import sys
 
@@ -66,7 +67,7 @@ class TestWithPytest(setuptools.Command):
         elif self.src == 'local':
             sys.path.insert(0, os.path.abspath('src'))
         else:
-            raise Exception(
+            raise argparse.ArgumentTypeError(
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))
@@ -165,7 +166,7 @@ class TestWithUnittest(setuptools.Command):
         elif self.src == 'local':
             sys.path.insert(0, os.path.abspath('src'))
         else:
-            raise Exception(
+            raise argparse.ArgumentTypeError(
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))

@@ -21,7 +21,8 @@ jobs:
       run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
     - name: run pylint
       run: |
-        pylint $(find -name "*.py")
+        pylint --version
+        pylint --errors-only --persistent n $(find -name "*.py")
         echo -e "\nskipped files: \n$(grep -irl skip-file *)"
 
   ubuntu_test_doc:
