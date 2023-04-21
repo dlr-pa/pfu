@@ -67,7 +67,8 @@ class ScriptPfuCreateChecksum(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             data_dir = os.path.join(tmpdir, 'data')
             os.mkdir(data_dir)
-            with open(os.path.join(data_dir, 'foo'), 'w') as fd:
+            with open(os.path.join(data_dir, 'foo'),
+                      mode='w', encoding='utf-8') as fd:
                 fd.write('bar')
             param = '-dir ' + data_dir
             subprocess.run(
@@ -75,7 +76,8 @@ class ScriptPfuCreateChecksum(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=42, check=True)
-            with open(os.path.join(data_dir, '.checksum.sha512')) as fd:
+            with open(os.path.join(data_dir, '.checksum.sha512'),
+                      mode='r', encoding='utf-8') as fd:
                 data = fd.readlines()
             self.assertEqual(
                 data[0],
@@ -92,7 +94,8 @@ class ScriptPfuCreateChecksum(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             data_dir = os.path.join(tmpdir, 'data')
             os.mkdir(data_dir)
-            with open(os.path.join(data_dir, 'foo'), 'w') as fd:
+            with open(os.path.join(data_dir, 'foo'),
+                      mode='w', encoding='utf-8') as fd:
                 fd.write('bar')
             param = '-dir ' + data_dir
             param += ' -store many'
@@ -101,7 +104,8 @@ class ScriptPfuCreateChecksum(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=42, check=True)
-            with open(os.path.join(data_dir, 'foo.sha512')) as fd:
+            with open(os.path.join(data_dir, 'foo.sha512'),
+                      mode='r', encoding='utf-8') as fd:
                 data = fd.readlines()
             self.assertEqual(
                 data[0],
@@ -130,7 +134,8 @@ class ScriptPfuCreateChecksum(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmpdir:
                 data_dir = os.path.join(tmpdir, 'data')
                 os.mkdir(data_dir)
-                with open(os.path.join(data_dir, 'foo'), 'w') as fd:
+                with open(os.path.join(data_dir, 'foo'),
+                          mode='w', encoding='utf-8') as fd:
                     fd.write('bar')
                 param = '-dir ' + data_dir
                 param += ' -algorithm ' + alg
@@ -140,7 +145,8 @@ class ScriptPfuCreateChecksum(unittest.TestCase):
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True,
                     timeout=42, check=True)
-                with open(os.path.join(data_dir, '.checksum.' + alg)) as fd:
+                with open(os.path.join(data_dir, '.checksum.' + alg),
+                          mode='r', encoding='utf-8') as fd:
                     data = fd.readlines()
                 self.assertEqual(
                     data[0],
@@ -156,7 +162,8 @@ class ScriptPfuCreateChecksum(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             data_dir = os.path.join(tmpdir, 'data')
             os.mkdir(data_dir)
-            with open(os.path.join(data_dir, 'foo'), 'w') as fd:
+            with open(os.path.join(data_dir, 'foo'),
+                      mode='w', encoding='utf-8') as fd:
                 fd.write('bar')
             param = '-dir ' + data_dir
             param += ' -chunk_size 1'
@@ -165,7 +172,8 @@ class ScriptPfuCreateChecksum(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True,
                 timeout=42, check=True)
-            with open(os.path.join(data_dir, '.checksum.sha512')) as fd:
+            with open(os.path.join(data_dir, '.checksum.sha512'),
+                      mode='r', encoding='utf-8') as fd:
                 data = fd.readlines()
             self.assertEqual(
                 data[0],

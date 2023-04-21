@@ -136,7 +136,8 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
                 timeout=42, check=True)
-            with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
+            with open(os.path.join(tmpdir, '.checksum'),
+                      mode='w', encoding='utf-8') as fd:
                 fd.write(cpi.stdout.decode())
             # check checksums
             param = '-loglevel 20 -dir .'
@@ -181,7 +182,8 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
                 timeout=42, check=True)
-            with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
+            with open(os.path.join(tmpdir, '.checksum'),
+                      mode='w', encoding='utf-8') as fd:
                 fd.write(cpi.stdout.decode())
             # check checksums
             cpi = subprocess.run(
@@ -218,7 +220,8 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
                 timeout=42, check=True)
-            with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
+            with open(os.path.join(tmpdir, '.checksum'),
+                      mode='w', encoding='utf-8') as fd:
                 fd.write(cpi.stdout.decode())
             # check checksums
             cpi = subprocess.run(
@@ -254,7 +257,8 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
                 timeout=42, check=True)
-            with open(os.path.join(tmpdir, '.checksum'), 'w') as fd:
+            with open(os.path.join(tmpdir, '.checksum'),
+                      mode='w', encoding='utf-8') as fd:
                 fd.write(cpi.stdout.decode())
             # check checksums
             cpi = subprocess.run(
@@ -293,7 +297,8 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir,
                     timeout=42, check=True)
-                with open(os.path.join(tmpdir, '.checksum.' + alg), 'w') as fd:
+                with open(os.path.join(tmpdir, '.checksum.' + alg),
+                          mode='w', encoding='utf-8') as fd:
                     fd.write(cpi.stdout.decode())
                 # check checksums
                 param = '-loglevel 20 -dir .'
@@ -334,7 +339,8 @@ class ScriptPfuCheckChecksum(unittest.TestCase):
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir,
                     timeout=42, check=True)
-                with open(os.path.join(tmpdir, '.checksum.' + alg), 'w') as fd:
+                with open(os.path.join(tmpdir, '.checksum.' + alg),
+                          mode='w', encoding='utf-8') as fd:
                     fd.write(cpi.stdout.decode())
                 # check checksums
                 param = '-loglevel 20 -dir .'
