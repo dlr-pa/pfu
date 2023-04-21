@@ -89,7 +89,7 @@ class TestWithPytest(setuptools.Command):
                     nthreads = max(2, nthreads)  # at least two thread
                 else:
                     nthreads = max(2, int(0.5 * os.cpu_count()))
-                pyargs += ['-n %i' % nthreads]
+                pyargs += [f'-n {nthreads}']
             except (ModuleNotFoundError, ImportError):
                 pass
         if self.coverage:
@@ -232,18 +232,17 @@ class CheckModules(setuptools.Command):
         print("checking for the modules mentioned in the 'setup.py':")
         for module in self.distribution.metadata.get_requires():
             if self.verbose:
-                print("try to load %s" % module)
+                print(f"try to load {module}")
             try:
                 importlib.import_module(module)
                 if self.verbose:
                     print("  loaded.")
             except ImportError:
                 i += 1
-                summary += "module '%s' is not available\n" % module
+                summary += f"module '{module}' is not available\n"
                 sys.exit(f"module '{module}' is not available <---WARNING---")
-        print(
-            "\nSummary\n%d modules are not available (not unique)\n%s\n" % (
-                i, summary))
+        print(f"\nSummary\n{i} modules are not available (not unique)\n" +
+              f"{summary}\n")
         sys.exit(0)
 
 
