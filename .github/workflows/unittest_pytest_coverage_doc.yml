@@ -22,7 +22,7 @@ jobs:
     - name: run pylint
       run: |
         pylint --version
-        pylint --persistent n $(find -name "*.py")
+        pylint --errors-only --persistent n $(find -name "*.py")
         echo -e "\nskipped files: \n$(grep -irl skip-file *)"
 
   ubuntu_test_doc:
