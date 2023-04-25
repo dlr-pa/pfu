@@ -194,7 +194,7 @@ freebsd:13:
     - pfu replicate -h
     - pfu speed_test -h
     - python3.9 setup.py run_unittest
-    - python3.9 setup.py run_pytest --parallel --coverage
+    - python3.9 setup.py run_pytest --coverage
 
 deploy_to_github:
   stage: deploy
