@@ -1,7 +1,7 @@
 """
 Author: Daniel Mohr.
 
-Date: 2017-03-07, 2021-05-25 (last change).
+Date: 2017-03-07, 2021-05-25, 2023-04-25 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
@@ -23,7 +23,7 @@ class CheckChecksumsClass():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2017-03-07, 2021-05-25 (last change).
+    :Date: 2017-03-07, 2021-05-25, 2023-04-25 (last change).
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     class to check checksums in directory or directories
@@ -341,7 +341,7 @@ class CheckChecksumsClass():
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
-        :Date: 2017-02-25 (last change).
+        :Date: 2017-02-25, 2023-04-25 (last change).
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         read hash file
@@ -351,7 +351,7 @@ class CheckChecksumsClass():
         if (os.path.isfile(hashfilename) and
                 os.access(hashfilename, os.R_OK)):
             self.log.debug("read hash file \"%s\"", hashfilename)
-            with open(hashfilename, mode='rU', encoding='utf-8') as hash_file:
+            with open(hashfilename, mode='r', encoding='utf-8') as hash_file:
                 for line in hash_file:
                     sres = self.regexps[0].search(line)
                     if sres:  # hash of a chunk
