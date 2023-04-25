@@ -28,8 +28,7 @@ For example, it is compatible with the format produced by
 sha256sum (GNU version) and sha256 (BSD version).
 
 Further it is compatible with the checksum format used in
-[PK-4](https://en.wikipedia.org/wiki/PK-4_(ISS_experiment)) [^a] [^b]
-and was/is used in this project.
+PK-4 [^a] [^b] and was/is used in this project.
 
 [^a]: https://en.wikipedia.org/wiki/PK-4_(ISS_experiment)
 [^b]: https://doi.org/10.1063/1.4962696

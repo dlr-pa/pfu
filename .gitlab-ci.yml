@@ -184,7 +184,7 @@ freebsd:13:
     - cat /etc/os-release
     - freebsd-version
     - pkg -v
-    - pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pytest-xdist devel/py-pip
+    - pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pip
     - pip install .
     - which pfu
     - pfu -h
