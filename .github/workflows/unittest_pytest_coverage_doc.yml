@@ -195,16 +195,17 @@ jobs:
       uses: vmactions/freebsd-vm@v0
       with:
         usesh: true
-        prepare: pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pytest-xdist shells/bash
+        prepare: pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pip
         run: |
           set -e -x
           cat /etc/os-release
+          freebsd-version
           pwd
           ls -lah
           whoami
           freebsd-version
           which python3.9
-          python3.9 setup.py install --record installed_files.txt
+          pip install .
           which pfu
           pfu -h
           pfu simscrub -h
@@ -213,8 +214,7 @@ jobs:
           pfu replicate -h
           pfu speed_test -h
           python3.9 setup.py run_unittest
-          python3.9 setup.py run_pytest --parallel --coverage
-          cat installed_files.txt | xargs rm -rf && echo "uninstalled/removed: "$(cat installed_files.txt)
+          python3.9 setup.py run_pytest --coverage
 
   amd64_opensuse_leap_152_test:
     needs: pep8_check

@@ -172,6 +172,30 @@ opensuse_leap:latest_unittest:
     name: opensuse/leap:latest
   <<: *suse_based_unittest
 
+freebsd:13:
+  stage: test
+  rules:
+    - if: '$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  tags:
+    - FreeBSD-13-amd64
+  script:
+    - date
+    - cat /etc/os-release
+    - freebsd-version
+    - pkg -v
+    - pkg install -y devel/py-setuptools devel/py-pytest devel/py-pytest-cov devel/py-pip
+    - pip install .
+    - which pfu
+    - pfu -h
+    - pfu simscrub -h
+    - pfu create_checksum -h
+    - pfu check_checksum -h
+    - pfu replicate -h
+    - pfu speed_test -h
+    - python3.9 setup.py run_unittest
+    - python3.9 setup.py run_pytest --coverage
+
 deploy_to_github:
   stage: deploy
   rules:
