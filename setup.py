@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@gmx.de
-:Date: 2023-04-20
+:Date: 2023-04-23
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -249,7 +249,7 @@ class CheckModules(setuptools.Command):
 
 setuptools.setup(
     name='pfu',
-    version='2023.04.20',
+    version='2023.04.23',
     cmdclass={
         'check_modules': CheckModules,
         'run_unittest': TestWithUnittest,
