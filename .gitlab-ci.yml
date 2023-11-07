@@ -172,6 +172,29 @@ opensuse_leap:latest_unittest:
     name: opensuse/leap:latest
   <<: *suse_based_unittest
 
+almalinux:latest_unittest:
+  stage: test
+  rules:
+    - if: '$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  image:
+    name: almalinux:latest
+  script:
+    - date
+    - cat /etc/os-release
+    - dnf install -y python3-pip
+    - env python3 setup.py check_modules
+    - pip3 install .
+    # run pfu
+    - pfu -h
+    - pfu simscrub -h
+    - pfu create_checksum -h
+    - pfu check_checksum -h
+    - pfu replicate -h
+    - pfu speed_test -h
+    # unittest
+    - env python3 setup.py run_unittest
+
 freebsd:13:
   stage: test
   rules:
