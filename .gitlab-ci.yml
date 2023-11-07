@@ -59,7 +59,7 @@ pylint_debian:
     - date
     - cat /etc/os-release
     - apt-get update
-    - $APT_GET_INSTALL pylint3 python3-pytest
+    - $APT_GET_INSTALL pylint python3-pytest
     # run pylint
     - pylint --version
     - pylint --errors-only --persistent n $(find -name "*.py")
@@ -84,7 +84,7 @@ pylint_debian:
     - test 'pip' = $install_method && $APT_GET_INSTALL python3-setuptools python3-pip hashdeep
     - env python3 setup.py check_modules
     - test 'basic' = $install_method && python3 setup.py install
-    - test 'pip' = $install_method && pip3 install .
+    - test 'pip' = $install_method && (pip3 install . || pip3 install --break-system-packages .)
     # run pfu
     - which pfu
     - pfu -h
