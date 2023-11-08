@@ -46,7 +46,7 @@ pylint_alpine:
     - apk add --no-cache py3-pylint py3-setuptools py3-pytest
     # run pylint
     - pylint --version
-    - pylint --persistent n $(find -name "*.py")
+    - pylint --disable similarities --jobs 0 --persistent n --recursive y .
     - echo -e "\nskipped files:"
     - echo -e "$(grep -irl skip-file *)"
 
@@ -59,10 +59,10 @@ pylint_debian:
     - date
     - cat /etc/os-release
     - apt-get update
-    - $APT_GET_INSTALL pylint3 python3-pytest
+    - $APT_GET_INSTALL pylint python3-pytest
     # run pylint
     - pylint --version
-    - pylint --errors-only --persistent n $(find -name "*.py")
+    - pylint --disable similarities --jobs 0 --persistent n --recursive y .
     - echo -e "\nskipped files:"
     - echo -e "$(grep -irl skip-file)"
 
@@ -84,7 +84,7 @@ pylint_debian:
     - test 'pip' = $install_method && $APT_GET_INSTALL python3-setuptools python3-pip hashdeep
     - env python3 setup.py check_modules
     - test 'basic' = $install_method && python3 setup.py install
-    - test 'pip' = $install_method && pip3 install .
+    - test 'pip' = $install_method && (pip3 install . || pip3 install --break-system-packages .)
     # run pfu
     - which pfu
     - pfu -h
@@ -171,6 +171,29 @@ opensuse_leap:latest_unittest:
     # https://hub.docker.com/r/opensuse/leap
     name: opensuse/leap:latest
   <<: *suse_based_unittest
+
+almalinux:latest_unittest:
+  stage: test
+  rules:
+    - if: '$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  image:
+    name: almalinux:latest
+  script:
+    - date
+    - cat /etc/os-release
+    - dnf install -y python3-pip
+    - env python3 setup.py check_modules
+    - pip3 install .
+    # run pfu
+    - pfu -h
+    - pfu simscrub -h
+    - pfu create_checksum -h
+    - pfu check_checksum -h
+    - pfu replicate -h
+    - pfu speed_test -h
+    # unittest
+    - env python3 setup.py run_unittest
 
 freebsd:13:
   stage: test
