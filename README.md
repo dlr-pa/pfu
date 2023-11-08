@@ -18,6 +18,8 @@ You can find more information on the web:
 
 * [source code of pfu](https://gitlab.com/dlr-pa/pfu)
 
+* [mirror of pfu](https://github.com/dlr-pa/pfu)
+
 ### pfu create_checksum
 
 This command will create (missing) checksums in a directory tree.
