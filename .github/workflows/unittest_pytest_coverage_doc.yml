@@ -21,11 +21,11 @@ jobs:
       run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
     - name: install pylint
       run: pip install pylint
-    #- name: run pylint
-    #  run: |
-    #    pylint --version
-    #    pylint --persistent n $(find -name "*.py")
-    #    echo -e "\nskipped files: \n$(grep -irl skip-file *)"
+    - name: run pylint
+      run: |
+        pylint --version
+        pylint --jobs 0 --persistent n --recursive y --disable similarities .
+        echo -e "\nskipped files: \n$(grep -irl skip-file *)"
 
   ubuntu_test_doc:
     needs: pep8_check

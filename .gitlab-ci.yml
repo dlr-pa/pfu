@@ -46,7 +46,7 @@ pylint_alpine:
     - apk add --no-cache py3-pylint py3-setuptools py3-pytest
     # run pylint
     - pylint --version
-    - pylint --persistent n $(find -name "*.py")
+    - pylint --disable similarities --jobs 0 --persistent n --recursive y .
     - echo -e "\nskipped files:"
     - echo -e "$(grep -irl skip-file *)"
 
@@ -62,7 +62,7 @@ pylint_debian:
     - $APT_GET_INSTALL pylint python3-pytest
     # run pylint
     - pylint --version
-    - pylint --errors-only --persistent n $(find -name "*.py")
+    - pylint --disable similarities --jobs 0 --persistent n --recursive y .
     - echo -e "\nskipped files:"
     - echo -e "$(grep -irl skip-file)"
 
