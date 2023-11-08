@@ -1,10 +1,10 @@
 # INSTALL: pfu -- Python File Utilities
 
-Version: 2023-04-20
+Version: 2023-11-08
 
 Author: Daniel Mohr
 
-Email: daniel.mohr@dlr.de
+Email: [daniel.mohr@dlr.de](mailto:daniel.mohr@dlr.de)
 
 ## before you install
 
