@@ -30,16 +30,16 @@ sha256sum (GNU version) and sha256 (BSD version).
 Further it is compatible with the checksum format used in
 PK-4 [^a] [^b] and was/is used in this project.
 
-[^a]: https://en.wikipedia.org/wiki/PK-4_(ISS_experiment)
-[^b]: https://doi.org/10.1063/1.4962696
+[^a]: [en.wikipedia.org/wiki/PK-4_(ISS_experiment)](https://en.wikipedia.org/wiki/PK-4_(ISS_experiment))
+[^b]: [doi: 10.1063/1.4962696](https://doi.org/10.1063/1.4962696)
 
 In the projects PlasmaLab/Ekoplasma [^c] [^d] and COMPACT [^e] [^f]
 it was used and developed in python2.
 
-[^c]: https://complex-plasmas.dlr.de/index.php/plasmalab.html
-[^d]: https://dx.doi.org/10.1063/1.5020392
-[^e]: https://sciences.ucf.edu/physics/microgravity/iss-compact/
-[^f]: https://doi.org/10.1063/5.0062165
+[^c]: [complex-plasmas.dlr.de/index.php/plasmalab.html](https://complex-plasmas.dlr.de/index.php/plasmalab.html)
+[^d]: [doi: 10.1063/1.5020392](https://dx.doi.org/10.1063/1.5020392)
+[^e]: [sciences.ucf.edu/physics/microgravity/iss-compact/](https://sciences.ucf.edu/physics/microgravity/iss-compact/)
+[^f]: [doi: 10.1063/5.0062165](https://doi.org/10.1063/5.0062165)
 
 ### pfu check_checksum
 
@@ -111,7 +111,7 @@ see [INSTALL](INSTALL.md)
 
 Author: Daniel Mohr.
 
-Date: 2023-04-20 (last change).
+Date: 2023-11-08 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
@@ -134,7 +134,7 @@ Deutsches Zentrum fuer Luft- und Raumfahrt e. V., D-51170 Koeln
 
 ### Contact Informations
 
-* Daniel Mohr, daniel.mohr@dlr.de
+* Daniel Mohr, [daniel.mohr@dlr.de](mailto:daniel.mohr@dlr.de)
 
 ### Territory
 
